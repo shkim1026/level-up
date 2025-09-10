@@ -1,0 +1,20 @@
+[
+    {
+        "id": "1",
+        "title": "Cowboy Bebop T-Shirt",
+        "price": 20,
+        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg"
+    },
+    {
+        "id": "2",
+        "title": "DanDaDan T-Shirt",
+        "price": 25,
+        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg"
+    },
+    {
+        "id": "3",
+        "title": "Overwatch - Ana T-Shirt",
+        "price": 20,
+        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg"
+    }
+]
