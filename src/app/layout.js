@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import Header from "../components/layout/Header.jsx";
 import "./globals.css";
 import Link from 'next/link'
 
@@ -20,18 +21,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-black`}
       >
-        <header className="w-full bg-white shadow p-4 flex justify-between items-center">
-          <h1 className="text-x1 text-gray-800 font-bold">Level Up</h1>
-          <nav className="text-gray-800">
-            <Link href="/" className="mr-4">Home</Link>
-            <a href="/cart">Cart</a>
-          </nav>
-        </header>
+        <Header />
 
-        <main className="max-w-6x1 mx-auto p-6">{children}</main>
+        <main className="max-w-6x1 mx-auto p-6 bg-white">{children}</main>
         <footer className="w-full bg-gray-100 p-4 text-center text-sm text-gray-600">
           © {new Date().getFullYear()} Level Up Threads
         </footer>

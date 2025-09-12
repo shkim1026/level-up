@@ -16,5 +16,23 @@
         "title": "Overwatch - Ana T-Shirt",
         "price": 20,
         "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg"
+    },
+    {
+        "id": "4",
+        "title": "Overwatch - Tracer T-Shirt",
+        "price": 20,
+        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg"
+    },
+    {
+        "id": "5",
+        "title": "DanDaDan - Japanese T-Shirt",
+        "price": 20,
+        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg"
+    },
+    {
+        "id": "6",
+        "title": "The Cake is a Lie T-Shirt",
+        "price": 20,
+        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg"
     }
 ]
