@@ -1,7 +1,7 @@
 "use client";
 import { FiUser, FiSearch, FiShoppingCart } from 'react-icons/fi';
 import { TfiClose, TfiMenu, TfiShoppingCart, TfiSearch } from 'react-icons/tfi';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header() {
@@ -10,7 +10,9 @@ export default function Header() {
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  const toggleSearchBar = () => setIsSearchBarOpen(!isSearchBarOpen);
+  const toggleSearchBar = () => setIsSearchBarOpen((prev) => !prev);
+
+  const searchButtonRef = useRef(null);
 
   const navLinks = [
     { label: "Shop", href: "/shop" },
@@ -23,6 +25,43 @@ export default function Header() {
     { label: "Best Sellers", href: "/best-sellers" },
     { label: "Shop", href: "/shop" },
   ]
+
+  // Focus on search bar text input and close search bar when clicked outside of div
+  function FocusSearchBar({ isSearchBarOpen, onClose }) {
+    const inputRef = useRef(null);
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+      if (isSearchBarOpen && inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, [isSearchBarOpen])
+
+    useEffect(() => {
+      function handleClickOutside(e) {
+        if (
+          containerRef.current && 
+          !containerRef.current.contains(e.target) &&
+          (!searchButtonRef.current || !searchButtonRef.current.contains(e.target))
+        ) {
+          onClose();
+        }
+      }
+      if (isSearchBarOpen) {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+    }, [isSearchBarOpen, onClose, searchButtonRef]);
+
+    return (
+      <div className="flex grow" ref={containerRef}>
+        <FiSearch className="text-2xl text-gray-500 mr-3"/>
+        <input ref={inputRef} type="text" placeholder="Search For..." className="focus:outline-none grow"/>
+      </div>
+    )
+  }
 
   // Mobile menu animation
   const listVariants = {
@@ -46,7 +85,7 @@ export default function Header() {
       <nav>
         {promoBannerIsOpen && (
           <div className="promoBanner">
-            <p className="text-xs text-center p-2 uppercase bg-black">Free shipping on all orders $200+</p>
+            <p className="text-xs text-center text-white p-2 uppercase bg-black">Free shipping on all orders $200+</p>
           </div>
         )}
 
@@ -121,13 +160,15 @@ export default function Header() {
         </AnimatePresence>
 
         {/* Desktop navigation */}
-        <div className="relative items-center justify-between bg-white h-16 hidden lg:flex">
-          <a href="/" className="w-15 justify-start ml-10"><img src="mockLogo.jpg"/></a>
-          {navLinksDesktop.map(({ label, href }) => (
-            <a key={label} href={href} className="text-black">{label}</a>
-          ))}
+        <div className="relative items-center justify-between bg-white h-16 hidden lg:flex z-50">
+          <div className="flex items-center">
+            <a href="/" className="w-15 justify-start ml-10 mr-10"><img src="mockLogo.jpg"/></a>
+            {navLinksDesktop.map(({ label, href }) => (
+              <a key={label} href={href} className="text-black mr-8">{label}</a>
+            ))}
+          </div>
           <div className="flex gap-5 items-center mr-10 text-black">
-            <button onClick={toggleSearchBar}><FiSearch className="text-2xl cursor-pointer"/></button>
+            <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button><FiUser className="text-2xl cursor-pointer"/></button>
             <button><FiShoppingCart className="text-2xl cursor-pointer" /></button>
           </div>
@@ -139,7 +180,7 @@ export default function Header() {
             <>
               <motion.div
                 key="overlay"
-                className="fixed inset-0 translate-y-30 bg-black z-40"
+                className="absolute inset-0 bg-black z-40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 exit={{ opacity: 0 }}
@@ -148,18 +189,34 @@ export default function Header() {
               />
               <motion.div 
                 className="flex items-center justify-between absolute w-full py-5 border-t border-gray-300 px-6 bg-white text-black z-50"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 50 }}
-                exit={{ opacity: 0, height: 0 }}
+                initial={{ opacity: 0, maxHeight: 0 }}
+                animate={{ opacity: 1, maxHeight: 200 }}
+                exit={{ opacity: 0, maxHeight: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="flex">
-                  <FiSearch className="text-2xl text-gray-500 mr-3"/>
-                  <input type="text" placeholder="Search For..." className="focus:outline-none"/>
-                </div>
-                <button className="flex justify-end">
-                  <TfiClose className="text-lg cursor-pointer justify-end" onClick={() => setIsSearchBarOpen(false)} />
-                </button>
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex-1"
+                >
+                  <FocusSearchBar 
+                    isSearchBarOpen={isSearchBarOpen} 
+                    onClose={() => setIsSearchBarOpen(false)} 
+                    searchButtonRef={searchButtonRef}
+                  />
+                </motion.div>
+                <motion.button 
+                  initial={{ opacity: 0, rotate: -90 }}
+                  animate={{ opacity: 1, rotate: 0 }}
+                  exit={{ opacity: 0, rotate: 90 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex justify-end"
+                  onClick={() => setIsSearchBarOpen(false)}
+                >
+                  <TfiClose className="text-lg cursor-pointer" />
+                </motion.button>
               </motion.div>
             </>
           )}
