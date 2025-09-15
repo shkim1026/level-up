@@ -96,7 +96,7 @@ export default function Header() {
               <TfiMenu className="text-2xl cursor-pointer" />
             </button>
           </div>
-          <a href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="mockLogo.jpg"/></a>
+          <a href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="mockLogo.jpg" alt="logo"/></a>
           <div className="flex gap-5 items-center mr-6 text-black">
             <button><FiUser className="text-2xl cursor-pointer"/></button>
             <button><TfiShoppingCart className="text-2xl cursor-pointer" /></button>
@@ -109,7 +109,7 @@ export default function Header() {
             <>
               {/* Background overlay */}
               <motion.div
-                key="overlay"
+                key="mobile-menu-overlay"
                 className="fixed inset-0 bg-black z-40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
@@ -179,7 +179,7 @@ export default function Header() {
           {isSearchBarOpen && (
             <>
               <motion.div
-                key="overlay"
+                key="desktop-search-bar-overlay"
                 className="absolute inset-0 bg-black z-40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
