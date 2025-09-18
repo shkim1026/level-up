@@ -29,9 +29,10 @@ export default function RootLayout({ children }) {
       >
         <Header />
 
-        <main className="max-w-6x1 mx-auto p-6 bg-white">{children}</main>
+        <main className="max-w-6x1 mx-auto bg-white text-black min-h-screen">{children}</main>
+
         <footer className="w-full bg-gray-100 p-4 text-center text-sm text-gray-600">
-          © {new Date().getFullYear()} Level Up Threads
+          © {new Date().getFullYear()} Level Up
         </footer>
       </body>
     </html>
