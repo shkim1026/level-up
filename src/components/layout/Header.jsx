@@ -160,7 +160,7 @@ export default function Header() {
         </AnimatePresence>
 
         {/* Desktop navigation */}
-        <div className="relative items-center justify-between bg-white h-16 hidden lg:flex z-50">
+        <div className="relative items-center justify-between bg-white h-16 hidden lg:flex z-50 border-b border-gray-300">
           <div className="flex items-center">
             <a href="/" className="w-15 justify-start ml-10 mr-10"><img src="mockLogo.jpg"/></a>
             {navLinksDesktop.map(({ label, href }) => (
@@ -188,7 +188,7 @@ export default function Header() {
                 onClick={() => setIsSearchBarOpen(false)}
               />
               <motion.div 
-                className="flex items-center justify-between absolute w-full py-5 border-t border-gray-300 px-6 bg-white text-black z-50"
+                className="flex items-center justify-between absolute w-full py-5 px-6 bg-white text-black z-50"
                 initial={{ opacity: 0, maxHeight: 0 }}
                 animate={{ opacity: 1, maxHeight: 200 }}
                 exit={{ opacity: 0, maxHeight: 0 }}

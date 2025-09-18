@@ -4,83 +4,143 @@
         "title": "Cowboy Bebop T-Shirt",
         "series": "Cowboy Bebop",
         "price": 20,
-        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg",
-        "hoverImage": "/products/oversized-tie-dye-t-shirt-milky-way-back-68c1d14bb5544.jpg",
+        "image": "/products/mockShirt-main-front.jpg",
+        "hoverImage": "/products/mockShirt-main-back.jpg",
         "sale": 15,
         "featured": true,
         "description": {
             "gen": "The Oversized Tie-Dye T-Shirt embraces two fashion trends in one and is a streetwear essential. The durable shirt is made from 100% heavyweight cotton and has extended sleeves. Create your unique embroidery designs and add this stylish tee to your store.",
             "prop": ["100% US grown cotton", "Oversized fit", "Ribbed neck", "Blank product sourced from Honduras"]
-        }
+        },
+        "carousel": [
+            "/products/mockShirt-main-front.jpg", 
+            "/products/mockShirt-main-back.jpg",
+            "/products/mockShirt-maleModel-front.jpg",
+            "/products/mockShirt-maleModel-back.jpg",
+            "/products/mockShirt-maleModel-close.jpg",
+            "/products/mockShirt-femaleModel-front.jpg",
+            "/products/mockShirt-femaleModel-back.jpg",
+            "/products/mockShirt-femaleModel-close.jpg"
+        ]
     },
     {
         "id": "2",
         "title": "DanDaDan T-Shirt",
         "series": "DanDaDan",
         "price": 25,
-        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg",
-        "hoverImage": "/products/oversized-tie-dye-t-shirt-milky-way-back-68c1d14bb5544.jpg",
+        "image": "/products/mockShirt-main-front.jpg",
+        "hoverImage": "/products/mockShirt-main-back.jpg",
         "sale": null,
         "featured": true,
         "description": {
             "gen": "The Oversized Tie-Dye T-Shirt embraces two fashion trends in one and is a streetwear essential. The durable shirt is made from 100% heavyweight cotton and has extended sleeves. Create your unique embroidery designs and add this stylish tee to your store.",
             "prop": ["100% US grown cotton", "Oversized fit", "Ribbed neck", "Blank product sourced from Honduras"]
-        }
+        },
+        "carousel": [
+            "/products/mockShirt-main-front.jpg", 
+            "/products/mockShirt-main-back.jpg",
+            "/products/mockShirt-maleModel-front.jpg",
+            "/products/mockShirt-maleModel-back.jpg",
+            "/products/mockShirt-maleModel-close.jpg",
+            "/products/mockShirt-femaleModel-front.jpg",
+            "/products/mockShirt-femaleModel-back.jpg",
+            "/products/mockShirt-femaleModel-close.jpg"
+        ]
     },
     {
         "id": "3",
         "title": "Overwatch - Ana T-Shirt",
         "series": "Overwatch",
         "price": 20,
-        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg",
-        "hoverImage": "/products/oversized-tie-dye-t-shirt-milky-way-back-68c1d14bb5544.jpg",
+        "image": "/products/mockShirt-main-front.jpg",
+        "hoverImage": "/products/mockShirt-main-back.jpg",
         "sale": null,
         "featured": true,
         "description": {
             "gen": "The Oversized Tie-Dye T-Shirt embraces two fashion trends in one and is a streetwear essential. The durable shirt is made from 100% heavyweight cotton and has extended sleeves. Create your unique embroidery designs and add this stylish tee to your store.",
             "prop": ["100% US grown cotton", "Oversized fit", "Ribbed neck", "Blank product sourced from Honduras"]
-        }
+        },
+        "carousel": [
+            "/products/mockShirt-main-front.jpg", 
+            "/products/mockShirt-main-back.jpg",
+            "/products/mockShirt-maleModel-front.jpg",
+            "/products/mockShirt-maleModel-back.jpg",
+            "/products/mockShirt-maleModel-close.jpg",
+            "/products/mockShirt-femaleModel-front.jpg",
+            "/products/mockShirt-femaleModel-back.jpg",
+            "/products/mockShirt-femaleModel-close.jpg"
+        ]
     },
     {
         "id": "4",
         "title": "Overwatch - Tracer T-Shirt",
         "series": "Overwatch",
         "price": 20,
-        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg",
-        "hoverImage": "/products/oversized-tie-dye-t-shirt-milky-way-back-68c1d14bb5544.jpg",
+        "image": "/products/mockShirt-main-front.jpg",
+        "hoverImage": "/products/mockShirt-main-back.jpg",
         "sale": null,
         "featured": true,
         "description": {
             "gen": "The Oversized Tie-Dye T-Shirt embraces two fashion trends in one and is a streetwear essential. The durable shirt is made from 100% heavyweight cotton and has extended sleeves. Create your unique embroidery designs and add this stylish tee to your store.",
             "prop": ["100% US grown cotton", "Oversized fit", "Ribbed neck", "Blank product sourced from Honduras"]
-        }
+        },
+        "carousel": [
+            "/products/mockShirt-main-front.jpg", 
+            "/products/mockShirt-main-back.jpg",
+            "/products/mockShirt-maleModel-front.jpg",
+            "/products/mockShirt-maleModel-back.jpg",
+            "/products/mockShirt-maleModel-close.jpg",
+            "/products/mockShirt-femaleModel-front.jpg",
+            "/products/mockShirt-femaleModel-back.jpg",
+            "/products/mockShirt-femaleModel-close.jpg"
+        ]
     },
     {
         "id": "5",
         "title": "DanDaDan - Japanese T-Shirt",
         "series": "DanDaDan",
         "price": 20,
-        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg",
-        "hoverImage": "/products/oversized-tie-dye-t-shirt-milky-way-back-68c1d14bb5544.jpg",
+        "image": "/products/mockShirt-main-front.jpg",
+        "hoverImage": "/products/mockShirt-main-back.jpg",
         "sale": null,
         "featured": true,
         "description": {
             "gen": "The Oversized Tie-Dye T-Shirt embraces two fashion trends in one and is a streetwear essential. The durable shirt is made from 100% heavyweight cotton and has extended sleeves. Create your unique embroidery designs and add this stylish tee to your store.",
             "prop": ["100% US grown cotton", "Oversized fit", "Ribbed neck", "Blank product sourced from Honduras"]
-        }
+        },
+        "carousel": [
+            "/products/mockShirt-main-front.jpg", 
+            "/products/mockShirt-main-back.jpg",
+            "/products/mockShirt-maleModel-front.jpg",
+            "/products/mockShirt-maleModel-back.jpg",
+            "/products/mockShirt-maleModel-close.jpg",
+            "/products/mockShirt-femaleModel-front.jpg",
+            "/products/mockShirt-femaleModel-back.jpg",
+            "/products/mockShirt-femaleModel-close.jpg"
+        ]
     },
     {
         "id": "6",
         "title": "The Cake is a Lie T-Shirt",
         "series": "Portal",
         "price": 20,
-        "image": "/products/oversized-tie-dye-t-shirt-milky-way-front-68c1d14bb54a1.jpg",
-        "hoverImage": "/products/oversized-tie-dye-t-shirt-milky-way-back-68c1d14bb5544.jpg",
+        "image": "/products/mockShirt-main-front.jpg",
+        "hoverImage": "/products/mockShirt-main-back.jpg",
         "sale": null,
         "featured": false,
         "description": {
             "gen": "The Oversized Tie-Dye T-Shirt embraces two fashion trends in one and is a streetwear essential. The durable shirt is made from 100% heavyweight cotton and has extended sleeves. Create your unique embroidery designs and add this stylish tee to your store.",
             "prop": ["100% US grown cotton", "Oversized fit", "Ribbed neck", "Blank product sourced from Honduras"]
-        }
+        },
+        "carousel": [
+            "/products/mockShirt-main-front.jpg", 
+            "/products/mockShirt-main-back.jpg",
+            "/products/mockShirt-maleModel-front.jpg",
+            "/products/mockShirt-maleModel-back.jpg",
+            "/products/mockShirt-maleModel-close.jpg",
+            "/products/mockShirt-femaleModel-front.jpg",
+            "/products/mockShirt-femaleModel-back.jpg",
+            "/products/mockShirt-femaleModel-close.jpg"
+        ]
     }
 ]

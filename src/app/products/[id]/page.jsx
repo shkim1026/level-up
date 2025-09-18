@@ -2,10 +2,19 @@
 
 import products from "@/data/mockProducts.json";
 import Image from "next/image";
-import React, { useState, use } from "react";
+import React, { useState, use, useRef, useEffect } from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import "@splidejs/react-splide/css";
 
 export default function ProductDetails({ params }) {
+  const { id } = use(params);
+  const product = products.find((p) => p.id === id);
+
+  if (!product) {
+    return <p className="p-8 text-red-500">Product not found. ID: {params.id}</p>
+  }
+
   const [quantity, setQuantity] = useState(1);
   const decrement = () => setQuantity(prev => Math.max(1, prev - 1));
   const increment = () => setQuantity(prev => prev + 1);
@@ -19,25 +28,59 @@ export default function ProductDetails({ params }) {
     }
   };
 
-  const { id } = use(params);
-  const product = products.find((p) => p.id === id);
+  const mainRef = useRef(null);
+  const thumbnailRef = useRef(null);
 
-  if (!product) {
-    return <p className="p-8 text-red-500">Product not found. ID: {params.id}</p>
-  }
+  useEffect(() => {
+    if (mainRef.current && thumbnailRef.current && mainRef.current.splide && thumbnailRef.current.splide) {
+      thumbnailRef.current.splide.sync(mainRef.current.splide);
+    }
+  }, []);
 
   return (
-    <div className="p-8 max-w-2x1 mx-auto flex">
-      <div className="relative w-[400px] h-[400px] mx-auto">
-        <Image 
-            src={product.image}
-            alt={product.title}
-            fill
-            className="rounded-lg object-cover"
-        />
+    <div className="p-8 flex items-center justify-center">
+      <div className="w-[500px] h-[600px] ml-auto mr-20 flex flex-col items-center place-content-between">
+        <Splide
+          options={{
+            type: "fade",
+            pagination: false,
+            arrows: false,
+            heightRatio: 1,
+          }}
+          ref={mainRef}
+          aria-label="Main carousel"
+        >
+          {product.carousel.map((image, index) => (
+            <SplideSlide key={index}>
+              <img src={image} alt={`Main ${index + 1}`} />
+            </SplideSlide>
+          ))}
+        </Splide>
+
+        <Splide
+          id="thumbnail-carousel"
+          options={{
+            rewind: false,
+            perPage: 6,
+            gap: "1rem",
+            pagination: false,
+            arrows: true,
+            isNavigation: true,
+            focus: "center",
+          }}
+          ref={thumbnailRef}
+          aria-label="Product carousel with thumbnails"
+          className="justify-end"
+        >
+          {product.carousel.map((image, index) => (
+            <SplideSlide key={index}>
+              <img src={image} alt={`Thumbnail ${index + 1}`} />
+            </SplideSlide>
+          ))}
+        </Splide>
       </div>
 
-      <div className="max-w-md">
+      <div className="max-w-md mr-auto">
         <h2 className="mt-6 text-sm text-gray-400">
           {product.series}
         </h2>
@@ -91,12 +134,12 @@ export default function ProductDetails({ params }) {
         </div>
 
         <div className="border rounded-sm border-gray-400 text-gray-500 mt-6 flex max-w-fit">
-          <button className="p-3 cursor-pointer" onClick={decrement}>
+          <button className="p-3 cursor-pointer hover:bg-gray-300" onClick={decrement}>
             <span className="sr-only">Decrease quantity</span>
             <FiMinus />
           </button>
           <input type="text" className="max-w-8 text-center" value={quantity} onChange={handleChange}/>
-          <button className="p-3 cursor-pointer" onClick={increment}>
+          <button className="p-3 cursor-pointer hover:bg-gray-300" onClick={increment}>
             <span className="sr-only">Increase quantity</span>
             <FiPlus />
           </button>
