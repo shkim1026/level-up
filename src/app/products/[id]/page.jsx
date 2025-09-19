@@ -1,7 +1,6 @@
 "use client";
 
 import products from "@/data/mockProducts.json";
-import Image from "next/image";
 import React, { useState, use, useRef, useEffect } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { FiMinus, FiPlus } from "react-icons/fi";
@@ -38,8 +37,8 @@ export default function ProductDetails({ params }) {
   }, []);
 
   return (
-    <div className="p-8 flex items-center justify-center">
-      <div className="w-[500px] h-[600px] ml-auto mr-20 flex flex-col items-center place-content-between">
+    <div className="px-8 mx-auto lg:w-[1200px] lg:flex lg:pt-5">
+      <div className="mx-auto flex flex-col items-center place-content-between md:w-[600px] md:h-[700px] lg:mr-20 lg:ml-auto">
         <Splide
           options={{
             type: "fade",
@@ -80,7 +79,7 @@ export default function ProductDetails({ params }) {
         </Splide>
       </div>
 
-      <div className="max-w-md mr-auto">
+      <div className="mr-auto lg:max-w-md">
         <h2 className="mt-6 text-sm text-gray-400">
           {product.series}
         </h2>
