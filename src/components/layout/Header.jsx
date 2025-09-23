@@ -15,7 +15,7 @@ export default function Header() {
   const searchButtonRef = useRef(null);
 
   const navLinks = [
-    { label: "Shop", href: "/shop" },
+    { label: "Shop", href: "/apparel" },
     { label: "About", href: "/about" },
     { label: "Cart", href: "/cart" },
   ];
@@ -23,7 +23,7 @@ export default function Header() {
   const navLinksDesktop = [
     { label: "New Arrivals", href: "/new-arrivals" },
     { label: "Best Sellers", href: "/best-sellers" },
-    { label: "Shop", href: "/shop" },
+    { label: "Shop", href: "/apparel" },
   ]
 
   // Focus on search bar text input and close search bar when clicked outside of div

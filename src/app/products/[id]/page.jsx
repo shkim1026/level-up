@@ -144,7 +144,7 @@ export default function ProductDetails({ params }) {
           </button>
         </div>
 
-        <button className="mt-7 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition w-full">
+        <button className="mt-7 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition w-full cursor-pointer">
           Add to Cart
         </button>
       </div>
