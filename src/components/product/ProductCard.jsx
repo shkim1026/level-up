@@ -6,7 +6,10 @@ export default function ProductCard({ product }) {
   return (
     <Link href={`/products/${product.id}`} className="block">
       <div className="rounded-2x1 p-4 bg-white flex flex-col items-center group">
-        <div className="relative w-[200px] h-[200px]">
+        <div className="relative w-full aspect-square">
+        {product.sale && (
+          <p className="absolute right-px z-10 bg-red-500 px-1 rounded-sm text-white">Sale</p>
+        )}
           <Image
             src={product.image}
             alt={product.title}

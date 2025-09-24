@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ProductGrid from "@/components/product/ProductGrid";
 import mockProducts from "@/data/mockProducts.json"
 import FilterDropdown from "@/components/filters/FilterDropdown";
+import FilterDrawer from "@/components/filters/FilterDrawer";
 
 export default function Apparel() {
   const defaultSort = "popularity";
@@ -39,7 +40,11 @@ export default function Apparel() {
 
   return (
     <>
-      <FilterDropdown onChange={handleSort} value={sortBy} />
+      <div className="flex place-content-between mx-6 pt-8">
+        <FilterDrawer products={products} />
+        <FilterDropdown onChange={handleSort} value={sortBy} />
+      </div>
+
       <ProductGrid products={products}/>
     </>
   )
