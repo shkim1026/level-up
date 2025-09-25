@@ -17,7 +17,7 @@ const FilterDropdown = ({ onChange, value }) => {
   };
 
   return (
-    <div className="flex flex-col gap-1 w-full max-w-[10rem]">
+    <div className="flex flex-col gap-1 w-full max-w-[10rem] mb-1">
       <label className="text-sm font-medium text-gray-700 sr-only">Sort By</label>
       <select
         value={selected}

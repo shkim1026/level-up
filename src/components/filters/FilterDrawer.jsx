@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-export default function FilterDrawer( {products} ) {
+export default function FilterDrawer({ products, filters, onFilterChange }) {
   const [open, setOpen] = useState(false);
 
   return (
     <div>
       <button
-        className="px-4 py-1 border text-black rounded-lg"
+        className="px-4 py-1 border text-black rounded-lg cursor-pointer"
         onClick={() => setOpen(true)}
       >
         Filters
@@ -33,7 +33,14 @@ export default function FilterDrawer( {products} ) {
           <div className="flex gap-2 items-center">
             {[...new Set(products.map((product) => product.series))].map((series) => (
               <div className="flex items-center" key={series}>
-                <input className="appearance-none peer " type="checkbox" id={series} value={series} />
+                <input 
+                  className="appearance-none peer" 
+                  type="checkbox" 
+                  id={series} 
+                  value={series} 
+                  checked={filters.series.includes(series)}
+                  onChange={() => onFilterChange("series", series)}
+                />
                 <label htmlFor={series} className="flex items-center gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold">
                   {series}
                 </label>
@@ -46,11 +53,44 @@ export default function FilterDrawer( {products} ) {
           <div className="flex gap-2 items-center">
             {[...new Set(products.map((product) => product.category))].map((category) => (
               <div className="flex items-center" key={category}>
-                <input className="appearance-none peer " type="checkbox" id={category} value={category} />
+                <input 
+                  className="appearance-none peer" 
+                  type="checkbox" 
+                  id={category} 
+                  value={category}
+                  checked={filters.categories.includes(category)}
+                  onChange={() => onFilterChange("categories", category)}
+                />
                 <label htmlFor={category} className="flex items-center gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold">
                   {category}
                 </label>
               </div>
+            ))}
+          </div>
+        </div>
+        <div className="px-5 mt-10">
+          <h3 className="font-medium mb-2 font-semibold">Price</h3>
+          <div className="flex gap-2 items-center">
+            {[
+              { id: "10-30", label: "$10 - $30", min: 10, max: 30 },
+              { id: "30-50", label: "$30 - $50", min: 30, max: 50 },
+              { id: "50+", label: "$50+", min: 50, max: Infinity },
+            ]
+              .filter((range) => products.some((product) => product.price >= range.min && product.price <= range.max))
+              .map((range) => (
+                <div className="flex items-center" key={range.id}>
+                  <input 
+                    className="appearance-none peer " 
+                    type="checkbox" 
+                    id={range.id} 
+                    value={range.id} 
+                    checked={filters.priceRanges.includes(range.id)}
+                    onChange={() => onFilterChange("priceRanges", range.id)}
+                  />
+                  <label htmlFor={range.id} className="flex items-center gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold">
+                    {range.label}
+                  </label>
+                </div>
             ))}
           </div>
         </div>

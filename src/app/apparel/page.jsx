@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductGrid from "@/components/product/ProductGrid";
 import mockProducts from "@/data/mockProducts.json"
 import FilterDropdown from "@/components/filters/FilterDropdown";
@@ -38,10 +38,60 @@ export default function Apparel() {
     setProducts(sortProducts(products, value));
   };
 
+  const [filters, setFilters] = useState({
+    series: [],
+    categories: [],
+    priceRanges: [],
+  })
+
+  const priceRanges = [
+    { id: "10-30", label: "$10 - $30", min: 10, max: 30 },
+    { id: "30-50", label: "$30 - $50", min: 30, max: 50 },
+    { id: "50+", label: "$50+", min: 50, max: Infinity },
+  ]
+
+  function applyFiltersAndSort(items, sortKey, activeFilters) {
+    let filtered = [...items]
+
+    if (activeFilters.series.length > 0) {
+      filtered = filtered.filter((p) => activeFilters.series.includes(p.series));
+    }
+    if (activeFilters.categories.length > 0) {
+      filtered = filtered.filter((p) => activeFilters.categories.includes(p.category));
+    }
+    if (activeFilters.priceRanges.length > 0) {
+      filtered = filtered.filter((p) => 
+        activeFilters.priceRanges.some((rangeId) => {
+          const range = priceRanges.find((r) => r.id === rangeId);
+          const productPrice = p.sale ?? p.price;
+          return productPrice >= range.min && productPrice <= range.max;
+        })
+      );
+    }
+
+    return sortProducts(filtered, sortKey);
+  } 
+
+  const handleFilterChange = (type, value) => {
+    setFilters((prev) => {
+      const alreadySelected = prev[type].includes(value);
+      const updatedValues = alreadySelected
+        ? prev[type].filter((v) => v !== value)
+        : [...prev[type], value];
+
+      return { ...prev, [type]: updatedValues }
+    });
+  };
+
+  React.useEffect(() => {
+    const newProducts = applyFiltersAndSort(mockProducts, sortBy, filters);
+    setProducts(newProducts);
+  }, [filters, sortBy]);
+
   return (
     <>
       <div className="flex place-content-between mx-6 pt-8">
-        <FilterDrawer products={products} />
+        <FilterDrawer products={products} filters={filters} onFilterChange={handleFilterChange} />
         <FilterDropdown onChange={handleSort} value={sortBy} />
       </div>
 
