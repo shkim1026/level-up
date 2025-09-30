@@ -1,16 +1,30 @@
 import { useState } from "react";
+import { TfiClose } from 'react-icons/tfi';
 
-export default function FilterDrawer({ products, filters, onFilterChange }) {
+export default function FilterDrawer({ products, filters, onFilterChange, handleFilterRemove }) {
   const [open, setOpen] = useState(false);
+  console.log(filters, 'filters')
 
   return (
-    <div>
+    <div className="flex items-center">
       <button
         className="px-4 py-1 border text-black rounded-lg cursor-pointer"
         onClick={() => setOpen(true)}
       >
         Filters
       </button>
+
+      <div className="ml-4 flex">
+        {[...filters.series, ...filters.categories, ...filters.priceRanges].map((filter) => (
+          <div 
+            className="flex items-center space-between border rounded-lg cursor-pointer px-2 py-1 ml-2"
+            key={filter}
+          >
+            {filter}
+            <span className="text-[10px] pl-2" onClick={() => handleFilterRemove(filter)}><TfiClose /></span>
+          </div>
+        ))}
+      </div>
 
       {/* Overlay */}
       {open && (
@@ -26,7 +40,7 @@ export default function FilterDrawer({ products, filters, onFilterChange }) {
       >
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-lg font-semibold">Filters</h2>
-          <button onClick={() => setOpen(false)}>X</button>
+          <button className="cursor-pointer" onClick={() => setOpen(false)}><TfiClose /></button>
         </div>
         <div className="px-5 mt-10">
           <h3 className="font-medium mb-2 font-semibold">Series</h3>

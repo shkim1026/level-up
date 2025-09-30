@@ -4,6 +4,7 @@
         "title": "Cowboy Bebop T-Shirt",
         "series": "Cowboy Bebop",
         "category": "t-shirt",
+        "type": "apparel",
         "price": 20,
         "image": "/products/mockShirt-main-front.jpg",
         "hoverImage": "/products/mockShirt-main-back.jpg",
@@ -24,13 +25,15 @@
             "/products/mockShirt-femaleModel-close.jpg"
         ],
         "popularity": 100,
-        "rating": 4.8
+        "rating": 4.8,
+        "new": true
     },
     {
         "id": "2",
         "title": "DanDaDan T-Shirt",
         "series": "DanDaDan",
         "category": "t-shirt",
+         "type": "apparel",
         "price": 25,
         "image": "/products/mockShirt-main-front.jpg",
         "hoverImage": "/products/mockShirt-main-back.jpg",
@@ -51,13 +54,15 @@
             "/products/mockShirt-femaleModel-close.jpg"
         ],
         "popularity": 90,
-        "rating": 4.6
+        "rating": 4.6,
+        "new": true
     },
     {
         "id": "3",
         "title": "Overwatch - Ana T-Shirt",
         "series": "Overwatch",
         "category": "t-shirt",
+         "type": "apparel",
         "price": 20,
         "image": "/products/mockShirt-main-front.jpg",
         "hoverImage": "/products/mockShirt-main-back.jpg",
@@ -78,13 +83,15 @@
             "/products/mockShirt-femaleModel-close.jpg"
         ],
         "popularity": 88,
-        "rating": 4.8
+        "rating": 4.8,
+        "new": true
     },
     {
         "id": "4",
         "title": "Overwatch - Tracer T-Shirt",
         "series": "Overwatch",
         "category": "t-shirt",
+        "type": "apparel",
         "price": 20,
         "image": "/products/mockShirt-main-front.jpg",
         "hoverImage": "/products/mockShirt-main-back.jpg",
@@ -105,13 +112,15 @@
             "/products/mockShirt-femaleModel-close.jpg"
         ],
         "popularity": 31,
-        "rating": 4.4
+        "rating": 4.4,
+        "new": true
     },
     {
         "id": "5",
         "title": "DanDaDan - Japanese Jacket",
         "series": "DanDaDan",
         "category": "jacket",
+         "type": "apparel",
         "price": 80,
         "image": "/products/mockShirt-main-front.jpg",
         "hoverImage": "/products/mockShirt-main-back.jpg",
@@ -132,13 +141,15 @@
             "/products/mockShirt-femaleModel-close.jpg"
         ],
         "popularity": 69,
-        "rating": 4.0
+        "rating": 4.0,
+        "new": true
     },
     {
         "id": "6",
         "title": "The Cake is a Lie Sweatshirt",
         "series": "Portal",
         "category": "sweatshirt",
+        "type": "apparel",
         "price": 45,
         "image": "/products/mockShirt-main-front.jpg",
         "hoverImage": "/products/mockShirt-main-back.jpg",
@@ -159,6 +170,7 @@
             "/products/mockShirt-femaleModel-close.jpg"
         ],
         "popularity": 42,
-        "rating": 4.2
+        "rating": 4.2,
+        "new": true
     }
 ]
