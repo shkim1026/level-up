@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { TfiClose } from 'react-icons/tfi';
 
-export default function FilterDrawer({ products, filters, onFilterChange, handleFilterRemove }) {
+export default function FilterDrawer({ products, filters, onFilterChange, handleFilterRemove, allProducts }) {
   const [open, setOpen] = useState(false);
   console.log(filters, 'filters')
-
+  const allSeries = [...new Set(allProducts.map((product) => product.series))];
+  const allCategories = [...new Set(allProducts.map((product) => product.category))];
+  
   return (
     <div className="flex items-center">
       <button
@@ -17,7 +19,7 @@ export default function FilterDrawer({ products, filters, onFilterChange, handle
       <div className="ml-4 flex">
         {[...filters.series, ...filters.categories, ...filters.priceRanges].map((filter) => (
           <div 
-            className="flex items-center space-between border rounded-lg cursor-pointer px-2 py-1 ml-2"
+            className="flex items-center space-between border rounded-lg cursor-pointer px-2 py-1 ml-2 uppercase text-sm"
             key={filter}
           >
             {filter}
@@ -45,7 +47,7 @@ export default function FilterDrawer({ products, filters, onFilterChange, handle
         <div className="px-5 mt-10">
           <h3 className="font-medium mb-2 font-semibold">Series</h3>
           <div className="flex gap-2 items-center">
-            {[...new Set(products.map((product) => product.series))].map((series) => (
+            {/* {[...new Set(products.map((product) => product.series))].map((series) => (
               <div className="flex items-center" key={series}>
                 <input 
                   className="appearance-none peer" 
@@ -59,13 +61,31 @@ export default function FilterDrawer({ products, filters, onFilterChange, handle
                   {series}
                 </label>
               </div>
+            ))} */}
+            {allSeries.map((series) => (
+              <div className="flex items-center" key={series}>
+                <input 
+                  className="appearance-none peer" 
+                  type="checkbox" 
+                  id={series} 
+                  value={series} 
+                  checked={filters.series.includes(series)}
+                  onChange={() => onFilterChange("series", series)}
+                />
+                <label 
+                  htmlFor={series} 
+                  className="flex items-center uppercase text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold whitespace-nowrap"
+                >
+                  {series}
+                </label>
+              </div>
             ))}
           </div>
         </div>
         <div className="px-5 mt-10">
           <h3 className="font-medium mb-2 font-semibold">Categories</h3>
           <div className="flex gap-2 items-center">
-            {[...new Set(products.map((product) => product.category))].map((category) => (
+            {/* {[...new Set(products.map((product) => product.category))].map((category) => (
               <div className="flex items-center" key={category}>
                 <input 
                   className="appearance-none peer" 
@@ -76,6 +96,21 @@ export default function FilterDrawer({ products, filters, onFilterChange, handle
                   onChange={() => onFilterChange("categories", category)}
                 />
                 <label htmlFor={category} className="flex items-center gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold">
+                  {category}
+                </label>
+              </div>
+            ))} */}
+            {allCategories.map((category) => (
+              <div className="flex items-center" key={category}>
+                <input 
+                  className="appearance-none peer"
+                  type="checkbox"
+                  id={category}
+                  value={category}
+                  checked={filters.categories.includes(category)}
+                  onChange={() => onFilterChange("categories", category)}
+                />
+                <label htmlFor={category} className="flex items-center uppercase text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold whitespace-nowrap">
                   {category}
                 </label>
               </div>
@@ -101,7 +136,7 @@ export default function FilterDrawer({ products, filters, onFilterChange, handle
                     checked={filters.priceRanges.includes(range.id)}
                     onChange={() => onFilterChange("priceRanges", range.id)}
                   />
-                  <label htmlFor={range.id} className="flex items-center gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold">
+                  <label htmlFor={range.id} className="flex items-center text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold">
                     {range.label}
                   </label>
                 </div>

@@ -5,6 +5,12 @@ import React, { useState, use, useRef, useEffect } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import "@splidejs/react-splide/css";
+import { Raleway } from "next/font/google";
+
+const raleway = Raleway({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+});
 
 export default function ProductDetails({ params }) {
   const { id } = use(params);
@@ -83,7 +89,7 @@ export default function ProductDetails({ params }) {
         <h2 className="mt-6 text-sm text-gray-400">
           {product.series}
         </h2>
-        <h1 className="text-2xl font-semibold">{product.title}</h1>
+        <h1 className={`text-2xl font-semibold ${raleway.className} tracking-wide uppercase`}>{product.title}</h1>
 
         {product.sale ? (
           <div className="flex items-center mt-2">
@@ -144,7 +150,7 @@ export default function ProductDetails({ params }) {
           </button>
         </div>
 
-        <button className="mt-7 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition w-full cursor-pointer">
+        <button className="mt-7 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition w-full cursor-pointer uppercase tracking-wide">
           Add to Cart
         </button>
       </div>

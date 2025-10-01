@@ -1,6 +1,12 @@
 "use Client";
 import Image from "next/image";
 import Link from "next/link";
+import { Raleway } from "next/font/google";
+
+const raleway = Raleway({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+});
 
 export default function ProductCard({ product }) {
   return (
@@ -24,7 +30,7 @@ export default function ProductCard({ product }) {
           />
         </div>
         <h2 className="mt-4 text-sm text-gray-800 font-semibold">{product.series}</h2>
-        <h3 className="text-md text-black">{product.title}</h3>
+        <h3 className={`text-md text-black text-center ${raleway.className}`}>{product.title}</h3>
         {product.sale ? (
           <div className="flex items-center">
             <p className="text-gray-500 line-through mr-2">${product.price}</p>

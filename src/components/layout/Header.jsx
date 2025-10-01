@@ -164,7 +164,7 @@ export default function Header() {
           <div className="flex items-center">
             <a href="/" className="w-15 justify-start ml-10 mr-10"><img src="mockLogo.jpg"/></a>
             {navLinksDesktop.map(({ label, href }) => (
-              <a key={label} href={href} className="text-black mr-8">{label}</a>
+              <a key={label} href={href} className="text-black mr-8 uppercase text-sm tracking-wide">{label}</a>
             ))}
           </div>
           <div className="flex gap-5 items-center mr-10 text-black">

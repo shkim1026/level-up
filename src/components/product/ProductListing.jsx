@@ -116,7 +116,13 @@ export default function ProductListing({ initialProducts = mockProducts }) {
   return (
     <>
       <div className="flex place-content-between mx-6 pt-8">
-        <FilterDrawer products={products} filters={filters} onFilterChange={handleFilterChange} handleFilterRemove={handleFilterRemove}/>
+        <FilterDrawer 
+          allProducts={initialProducts}
+          products={products} 
+          filters={filters} 
+          onFilterChange={handleFilterChange} 
+          handleFilterRemove={handleFilterRemove}
+      />
         <FilterDropdown onChange={handleSort} value={sortBy} />
       </div>
 
