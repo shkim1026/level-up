@@ -86,7 +86,7 @@ export default function ProductDetails({ params }) {
       </div>
 
       <div className="mr-auto lg:max-w-md">
-        <h2 className="mt-6 text-sm text-gray-400">
+        <h2 className="mt-6 mb-2 text-sm text-gray-400">
           {product.series}
         </h2>
         <h1 className={`text-2xl font-semibold ${raleway.className} tracking-wide uppercase`}>{product.title}</h1>

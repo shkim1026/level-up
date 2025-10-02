@@ -12,6 +12,7 @@ export default function ProductListing({ initialProducts = mockProducts }) {
   
   const [sortBy, setSortBy] = useState(defaultSort);
   const [products, setProducts] = useState(initialProducts);
+  const [lastChangedFilter, setLastChangedFilter] = useState(null);
 
   const [filters, setFilters] = useState({
     series: [],
@@ -81,6 +82,8 @@ export default function ProductListing({ initialProducts = mockProducts }) {
         : [...prev[type], value];
       return { ...prev, [type]: updatedValues }
     });
+
+    setLastChangedFilter(type);
   };
 
   const handleFilterRemove = (value) => {
@@ -122,6 +125,7 @@ export default function ProductListing({ initialProducts = mockProducts }) {
           filters={filters} 
           onFilterChange={handleFilterChange} 
           handleFilterRemove={handleFilterRemove}
+          lastChangedFilter={lastChangedFilter}
       />
         <FilterDropdown onChange={handleSort} value={sortBy} />
       </div>

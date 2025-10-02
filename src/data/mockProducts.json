@@ -26,7 +26,7 @@
         ],
         "popularity": 100,
         "rating": 4.8,
-        "new": true
+        "new": false
     },
     {
         "id": "2",
@@ -171,6 +171,35 @@
         ],
         "popularity": 42,
         "rating": 4.2,
+        "new": true
+    },
+    {
+        "id": "7",
+        "title": "Ramyunster T-shirt",
+        "series": "Myunster",
+        "category": "sweatshirt",
+        "type": "apparel",
+        "price": 35,
+        "image": "/products/mockShirt-main-front.jpg",
+        "hoverImage": "/products/mockShirt-main-back.jpg",
+        "sale": null,
+        "featured": false,
+        "description": {
+            "gen": "The Oversized Tie-Dye T-Shirt embraces two fashion trends in one and is a streetwear essential. The durable shirt is made from 100% heavyweight cotton and has extended sleeves. Create your unique embroidery designs and add this stylish tee to your store.",
+            "prop": ["100% US grown cotton", "Oversized fit", "Ribbed neck", "Blank product sourced from Honduras"]
+        },
+        "carousel": [
+            "/products/mockShirt-main-front.jpg", 
+            "/products/mockShirt-main-back.jpg",
+            "/products/mockShirt-maleModel-front.jpg",
+            "/products/mockShirt-maleModel-back.jpg",
+            "/products/mockShirt-maleModel-close.jpg",
+            "/products/mockShirt-femaleModel-front.jpg",
+            "/products/mockShirt-femaleModel-back.jpg",
+            "/products/mockShirt-femaleModel-close.jpg"
+        ],
+        "popularity": 55,
+        "rating": 4.9,
         "new": true
     }
 ]

@@ -14,7 +14,7 @@ export default function ProductCard({ product }) {
       <div className="rounded-2x1 p-4 bg-white flex flex-col items-center group">
         <div className="relative w-full aspect-square">
         {product.sale && (
-          <p className="absolute right-px z-10 bg-red-500 px-1 rounded-sm text-white">Sale</p>
+          <p className="absolute right-px z-10 bg-red-500 px-3 py-1 rounded-sm text-white text-sm lowercase">Sale</p>
         )}
           <Image
             src={product.image}
