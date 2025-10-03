@@ -183,7 +183,7 @@
         "image": "/products/mockShirt-main-front.jpg",
         "hoverImage": "/products/mockShirt-main-back.jpg",
         "sale": null,
-        "featured": false,
+        "featured": true,
         "description": {
             "gen": "The Oversized Tie-Dye T-Shirt embraces two fashion trends in one and is a streetwear essential. The durable shirt is made from 100% heavyweight cotton and has extended sleeves. Create your unique embroidery designs and add this stylish tee to your store.",
             "prop": ["100% US grown cotton", "Oversized fit", "Ribbed neck", "Blank product sourced from Honduras"]

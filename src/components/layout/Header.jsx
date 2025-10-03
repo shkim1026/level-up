@@ -15,6 +15,8 @@ export default function Header() {
   const searchButtonRef = useRef(null);
 
   const navLinks = [
+    { label: "New Arrivals", href: "/new-arrivals" },
+    { label: "Best Sellers", href: "/best-sellers" },
     { label: "Shop", href: "/apparel" },
     { label: "About", href: "/about" },
     { label: "Cart", href: "/cart" },
@@ -74,10 +76,19 @@ export default function Header() {
         when: "beforeChildren",
       },
     },
+    exit: {
+      opacity: 0,
+      x: -20,
+      transition: {
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+      },
+    },
   };
   const itemVariants = {
     hidden: { opacity: 0, x: -20 },
     visible: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -20 },
   };
 
   return (
@@ -131,6 +142,7 @@ export default function Header() {
                   variants={listVariants} 
                   initial="hidden" 
                   animate="visible"
+                  exit="exit"
                 >
                   <TfiClose className="text-lg cursor-pointer mb-10" onClick={() => setIsMobileMenuOpen(false)} />
                   
@@ -140,17 +152,20 @@ export default function Header() {
                     placeholder="Search..." 
                     className="w-full border rounded-sm p-1 bg-gray-200"
                     variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
                   />
 
                   {navLinks.map(({ label, href }) => (
                     <motion.li
                       key={label}
-                      className="py-3 mb-0"
+                      className="py-3 mb-0 uppercase text-sm"
                       variants={itemVariants}
                     >
-                      <a href={href} className="hover:text-gray-400">
+                      <a href={href} className="cursor-pointer hover:text-gray-400">
                         {label}
                       </a>
+                      <hr className="text-gray-300 mt-6"/>
                     </motion.li>
                   ))}
                 </motion.ul>
