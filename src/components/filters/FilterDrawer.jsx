@@ -4,19 +4,13 @@ import { TfiClose } from 'react-icons/tfi';
 export default function FilterDrawer({ products, filters, onFilterChange, handleFilterRemove, allProducts, lastChangedFilter }) {
   const [open, setOpen] = useState(false);
   
-  const allSeries = [...new Set(allProducts.map((p) => p.series))];
-  const visibleSeries = [...new Set(products.map((p) => p.series))];
+  const allSeries = [...new Set(allProducts.map((p) => p.metafields.series))];
+  const visibleSeries = [...new Set(products.map((p) => p.metafields.series))];
   const seriesOptions = lastChangedFilter === "series" ? allSeries : visibleSeries;
 
-  const allCategories = [...new Set(allProducts.map((p) => p.category))];
-  const visibleCategories = [...new Set(products.map((p) => p.category))];
+  const allCategories = [...new Set(allProducts.map((p) => p.metafields.category))];
+  const visibleCategories = [...new Set(products.map((p) => p.metafields.category))];
   const categoryOptions = lastChangedFilter === "categories" ? allCategories : visibleCategories;
-
-  
-  console.log('lastChangedFilter:', lastChangedFilter);
-  console.log('allSeries:', allSeries);
-  console.log('visibleSeries:', visibleSeries);
-  console.log('seriesOptions (used):', seriesOptions);
   
   return (
     <div className="flex items-center">

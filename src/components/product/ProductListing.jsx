@@ -31,16 +31,16 @@ export default function ProductListing({ initialProducts = mockProducts }) {
 
     switch (sortKey) {
       case "popularity":
-        sorted.sort((a, b) => b.popularity - a.popularity);
+        sorted.sort((a, b) => b.metafields.popularity - a.metafields.popularity);
         break;
       case "rating":
-        sorted.sort((a, b) => b.rating - a.rating);
+        sorted.sort((a, b) => b.metafields.rating - a.metafields.rating);
         break;
       case "priceLowHigh":
-        sorted.sort((a, b) => (a.sale ?? a.price) - (b.sale ?? b.price));
+        sorted.sort((a, b) => (a.compare_at_price ?? a.price) - (b.compare_at_price ?? b.price));
         break;
       case "priceHighLow":
-        sorted.sort((a, b) => (b.sale ?? b.price) - (a.sale ?? a.price));
+        sorted.sort((a, b) => (b.compare_at_price ?? b.price) - (a.compare_at_price ?? a.price));
         break;
       default:
         break;
@@ -57,16 +57,16 @@ export default function ProductListing({ initialProducts = mockProducts }) {
     let filtered = [...items]
 
     if (activeFilters.series.length > 0) {
-      filtered = filtered.filter((p) => activeFilters.series.includes(p.series));
+      filtered = filtered.filter((p) => activeFilters.series.includes(p.metafields.series));
     }
     if (activeFilters.categories.length > 0) {
-      filtered = filtered.filter((p) => activeFilters.categories.includes(p.category));
+      filtered = filtered.filter((p) => activeFilters.categories.includes(p.metafields.category));
     }
     if (activeFilters.priceRanges.length > 0) {
       filtered = filtered.filter((p) => 
         activeFilters.priceRanges.some((rangeId) => {
           const range = priceRanges.find((r) => r.id === rangeId);
-          const productPrice = p.sale ?? p.price;
+          const productPrice = p.compare_at_price ?? p.price;
           return productPrice >= range.min && productPrice <= range.max;
         })
       );
@@ -105,11 +105,11 @@ export default function ProductListing({ initialProducts = mockProducts }) {
     let scopedProducts = initialProducts;
 
     if  (pathname.includes("/apparel")) {
-      scopedProducts = scopedProducts.filter((p) => p.type === "apparel")
+      scopedProducts = scopedProducts.filter((p) => p.type === "Apparel")
     } else if (pathname.includes("/new-arrivals")) {
-      scopedProducts = scopedProducts.filter((p) => p.new === true )
+      scopedProducts = scopedProducts.filter((p) => p.metafields.new === true )
     } else if (pathname.includes("/best-sellers")) {
-      scopedProducts = scopedProducts.filter((p) => p.popularity >= 80 )
+      scopedProducts = scopedProducts.filter((p) => p.metafields.popularity >= 80 )
     }
 
     const newProducts = applyFiltersAndSort(scopedProducts, sortBy, filters);

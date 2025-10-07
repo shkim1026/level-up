@@ -13,11 +13,13 @@ const raleway = Raleway({
 });
 
 export default function ProductDetails({ params }) {
+  const formattedPrice = (priceInCents) => `$${(priceInCents / 100).toFixed(2)}`;
+
   const { id } = use(params);
-  const product = products.find((p) => p.id === id);
+  const product = products.find((p) => p.id === Number(id));
 
   if (!product) {
-    return <p className="p-8 text-red-500">Product not found. ID: {params.id}</p>
+    return <p className="p-8 text-red-500">Product not found. ID: {id}</p>
   }
 
   const [quantity, setQuantity] = useState(1);
@@ -55,9 +57,9 @@ export default function ProductDetails({ params }) {
           ref={mainRef}
           aria-label="Main carousel"
         >
-          {product.carousel.map((image, index) => (
+          {product.images.map((image, index) => (
             <SplideSlide key={index}>
-              <img src={image} alt={`Main ${index + 1}`} />
+              <img src={image.src} alt={`Main ${index + 1}`} />
             </SplideSlide>
           ))}
         </Splide>
@@ -77,9 +79,9 @@ export default function ProductDetails({ params }) {
           aria-label="Product carousel with thumbnails"
           className="justify-end"
         >
-          {product.carousel.map((image, index) => (
+          {product.images.map((image, index) => (
             <SplideSlide key={index}>
-              <img src={image} alt={`Thumbnail ${index + 1}`} />
+              <img src={image.src} alt={`Thumbnail ${index + 1}`} />
             </SplideSlide>
           ))}
         </Splide>
@@ -87,23 +89,23 @@ export default function ProductDetails({ params }) {
 
       <div className="mr-auto lg:max-w-md">
         <h2 className="mt-6 mb-2 text-sm text-gray-400">
-          {product.series}
+          {product.metafields.series}
         </h2>
         <h1 className={`text-2xl font-semibold ${raleway.className} tracking-wide uppercase`}>{product.title}</h1>
 
-        {product.sale ? (
+        {product.compare_at_price ? (
           <div className="flex items-center mt-2">
-              <p className="text-red-500 text-xl mr-2">${product.sale}</p>
-              <p className="text-gray-500 line-through">${product.price}</p>
+              <p className="text-red-500 text-xl mr-2">{formattedPrice(product.compare_at_price)}</p>
+              <p className="text-gray-500 line-through">{formattedPrice(product.price)}</p>
           </div>
         ) : (
-          <p className="mt-2 text-xl">${product.price}</p>
+          <p className="mt-2 text-xl">{formattedPrice(product.price)}</p>
         )}
         <hr className="text-gray-300 mt-4"/>
         <div>
-          <p className="text-sm mt-5">{product.description.gen}</p>
+          <p className="text-sm mt-5">{product.body_html}</p>
           <ul>
-            {product.description.prop.map((listItem) => (
+            {product.metafields["product-features"].map((listItem) => (
               <li className="text-sm mt-2 ml-3 list-disc" key={listItem}>{listItem}</li>
             ))}
           </ul>
@@ -115,26 +117,19 @@ export default function ProductDetails({ params }) {
             <button className="underline">Size Chart</button>
           </div>
           <div className="mt-3 flex">
-            <div>
-              <input type="radio" value="S" id="S" name="size" className="sr-only peer" defaultChecked={true}></input>
-              <label htmlFor="S" className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-black peer-checked:border-black hover:bg-gray-300 rounded-sm cursor-pointer">S</label>
-            </div>
-            <div>
-              <input type="radio" value="M" id="M" name="size" className="sr-only peer"></input>
-              <label htmlFor="M" className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-black peer-checked:border-black hover:bg-gray-300 rounded-sm cursor-pointer">M</label>
-            </div>
-            <div>
-              <input type="radio" value="L" id="L" name="size" className="sr-only peer"></input>
-              <label htmlFor="L" className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-black peer-checked:border-black hover:bg-gray-300 rounded-sm cursor-pointer">L</label>
-            </div>
-            <div>
-              <input type="radio" value="XL" id="XL" name="size" className="sr-only peer"></input>
-              <label htmlFor="XL" className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-black peer-checked:border-black hover:bg-gray-300 rounded-sm cursor-pointer">XL</label>
-            </div>
-            <div>
-              <input type="radio" value="XXL" id="XXL" name="size" className="sr-only peer"></input>
-              <label htmlFor="XXL" className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-black peer-checked:border-black hover:bg-gray-300 rounded-sm cursor-pointer">XXL</label>
-            </div>
+            {product.variants.map((variant, index) => {
+              const sizeInitial = variant.title
+                .split(" ")
+                .map((word) => word[0])
+                .join("");
+              
+              return (
+                <div key={variant.id}>
+                  <input type="radio" value={variant.title} id={variant.id} name="size" className="sr-only peer" defaultChecked={index === 0}></input>
+                  <label htmlFor={variant.id} className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-black peer-checked:border-black hover:bg-gray-300 rounded-sm cursor-pointer">{sizeInitial}</label>
+                </div>
+              );
+            })}
           </div>
         </div>
 
