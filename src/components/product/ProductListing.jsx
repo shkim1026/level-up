@@ -1,136 +1,89 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import mockProducts from "@/data/mockProducts.json";
 import ProductGrid from "@/components/product/ProductGrid";
-import FilterDropdown from "@/components/filters/FilterDropdown";
 import FilterDrawer from "@/components/filters/FilterDrawer";
+import dynamic from "next/dynamic";
+import { useProductContext } from "@/context/ProductContext";
 
-export default function ProductListing({ initialProducts = mockProducts }) {
+export default function ProductListing() {
+  const {
+    filters,
+    handleFilterChange,
+    handleFilterRemove,
+    lastChangedFilter,
+    setLastChangedFilter,
+    setProductsForPage,
+    filteredProducts,
+  } = useProductContext();
+
   const pathname = usePathname();
   const defaultSort = "popularity";
-  
   const [sortBy, setSortBy] = useState(defaultSort);
-  const [products, setProducts] = useState(initialProducts);
-  const [lastChangedFilter, setLastChangedFilter] = useState(null);
+  const [scopedProducts, setScopedProducts] = useState(mockProducts);
 
-  const [filters, setFilters] = useState({
-    series: [],
-    categories: [],
-    priceRanges: [],
-  })
+  const FilterDropdown = dynamic(() => import("@/components/filters/FilterDropdown"), { ssr: false });
 
-  const priceRanges = [
-    { id: "10-30", label: "$10 - $30", min: 10, max: 30 },
-    { id: "30-50", label: "$30 - $50", min: 30, max: 50 },
-    { id: "50+", label: "$50+", min: 50, max: Infinity },
-  ]
-
+  // Sort logic
   function sortProducts(items, sortKey) {
-    let sorted = [...items];
-
+    const sorted = [...items];
     switch (sortKey) {
       case "popularity":
-        sorted.sort((a, b) => b.metafields.popularity - a.metafields.popularity);
-        break;
+        return sorted.sort((a, b) => b.metafields.popularity - a.metafields.popularity);
       case "rating":
-        sorted.sort((a, b) => b.metafields.rating - a.metafields.rating);
-        break;
+        return sorted.sort((a, b) => b.metafields.rating - a.metafields.rating);
       case "priceLowHigh":
-        sorted.sort((a, b) => (a.compare_at_price ?? a.price) - (b.compare_at_price ?? b.price));
-        break;
+        return sorted.sort(
+          (a, b) => (a.compare_at_price ?? a.price) - (b.compare_at_price ?? b.price)
+        );
       case "priceHighLow":
-        sorted.sort((a, b) => (b.compare_at_price ?? b.price) - (a.compare_at_price ?? a.price));
-        break;
+        return sorted.sort(
+          (a, b) => (b.compare_at_price ?? b.price) - (a.compare_at_price ?? a.price)
+        );
       default:
-        break;
+        return sorted;
     }
-    return sorted;
   }
 
   const handleSort = (value) => {
     setSortBy(value);
-    setProducts(sortProducts(products, value));
   };
 
-  function applyFiltersAndSort(items, sortKey, activeFilters) {
-    let filtered = [...items]
-
-    if (activeFilters.series.length > 0) {
-      filtered = filtered.filter((p) => activeFilters.series.includes(p.metafields.series));
-    }
-    if (activeFilters.categories.length > 0) {
-      filtered = filtered.filter((p) => activeFilters.categories.includes(p.metafields.category));
-    }
-    if (activeFilters.priceRanges.length > 0) {
-      filtered = filtered.filter((p) => 
-        activeFilters.priceRanges.some((rangeId) => {
-          const range = priceRanges.find((r) => r.id === rangeId);
-          const productPrice = p.compare_at_price ?? p.price;
-          return productPrice >= range.min && productPrice <= range.max;
-        })
-      );
-    }
-    return sortProducts(filtered, sortKey);
-  } 
-
-  const handleFilterChange = (type, value) => {
-    setFilters((prev) => {
-      const alreadySelected = prev[type].includes(value);
-      const updatedValues = alreadySelected
-        ? prev[type].filter((v) => v !== value)
-        : [...prev[type], value];
-      return { ...prev, [type]: updatedValues }
-    });
-
-    setLastChangedFilter(type);
-  };
-
-  const handleFilterRemove = (value) => {
-    setFilters((prev) => {
-      if (prev.series.includes(value)) {
-        return {...prev, series: prev.series.filter((v) => v !== value) };
-      }
-      if (prev.categories.includes(value)) {
-        return {...prev, categories: prev.categories.filter((v) => v !== value) };
-      }
-      if (prev.priceRanges.includes(value)) {
-        return {...prev, priceRanges: prev.priceRanges.filter((v) => v !== value)};
-      }
-      return prev;
-    })
-  }
-
+  // Scope products based on the current page
   useEffect(() => {
-    let scopedProducts = initialProducts;
+    let scoped = mockProducts;
 
-    if  (pathname.includes("/apparel")) {
-      scopedProducts = scopedProducts.filter((p) => p.type === "Apparel")
+    if (pathname.includes("/apparel")) {
+      scoped = scoped.filter((p) => p.type === "Apparel");
     } else if (pathname.includes("/new-arrivals")) {
-      scopedProducts = scopedProducts.filter((p) => p.metafields.new === true )
+      scoped = scoped.filter((p) => p.metafields.new === true);
     } else if (pathname.includes("/best-sellers")) {
-      scopedProducts = scopedProducts.filter((p) => p.metafields.popularity >= 80 )
+      scoped = scoped.filter((p) => p.metafields.popularity >= 80);
     }
 
-    const newProducts = applyFiltersAndSort(scopedProducts, sortBy, filters);
-    setProducts(newProducts);
-  }, [filters, sortBy, pathname, initialProducts]);
+    setScopedProducts(scoped);
+    setProductsForPage(scoped); // <-- This updates the context with correct data
+  }, [pathname, setProductsForPage]);
+
+  // Sort the filtered products
+  const displayedProducts = sortProducts(filteredProducts, sortBy);
 
   return (
     <>
       <div className="flex place-content-between mx-6 pt-8">
-        <FilterDrawer 
-          allProducts={initialProducts}
-          products={products} 
-          filters={filters} 
-          onFilterChange={handleFilterChange} 
+        <FilterDrawer
+          allProducts={scopedProducts}
+          products={displayedProducts}
+          filters={filters}
+          onFilterChange={handleFilterChange}
           handleFilterRemove={handleFilterRemove}
           lastChangedFilter={lastChangedFilter}
-      />
+        />
         <FilterDropdown onChange={handleSort} value={sortBy} />
       </div>
 
-      <ProductGrid products={products} />
+      <ProductGrid products={displayedProducts} />
     </>
-  )
+  );
 }

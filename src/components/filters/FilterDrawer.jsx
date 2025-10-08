@@ -1,15 +1,26 @@
+"use client";
 import { useState } from "react";
 import { TfiClose } from 'react-icons/tfi';
+import { useProductContext } from "@/context/ProductContext";
 
-export default function FilterDrawer({ products, filters, onFilterChange, handleFilterRemove, allProducts, lastChangedFilter }) {
+export default function FilterDrawer() {
   const [open, setOpen] = useState(false);
+
+  const {
+    productsForPage,
+    filteredProducts,
+    filters,
+    handleFilterChange,
+    handleFilterRemove,
+    lastChangedFilter,
+  } = useProductContext();
   
-  const allSeries = [...new Set(allProducts.map((p) => p.metafields.series))];
-  const visibleSeries = [...new Set(products.map((p) => p.metafields.series))];
+  const allSeries = [...new Set(productsForPage.map((p) => p.metafields.series))];
+  const visibleSeries = [...new Set(filteredProducts.map((p) => p.metafields.series))];
   const seriesOptions = lastChangedFilter === "series" ? allSeries : visibleSeries;
 
-  const allCategories = [...new Set(allProducts.map((p) => p.metafields.category))];
-  const visibleCategories = [...new Set(products.map((p) => p.metafields.category))];
+  const allCategories = [...new Set(productsForPage.map((p) => p.metafields.category))];
+  const visibleCategories = [...new Set(filteredProducts.map((p) => p.metafields.category))];
   const categoryOptions = lastChangedFilter === "categories" ? allCategories : visibleCategories;
   
   return (
@@ -21,12 +32,12 @@ export default function FilterDrawer({ products, filters, onFilterChange, handle
         Filters
       </button>
 
-      <p className="mx-3 font-[500]">{products.length} {products.length === 1 ? "result" : "results"}</p>
+      <p className="mx-3 font-[500]">{filteredProducts.length} {filteredProducts.length === 1 ? "result" : "results"}</p>
 
       <div className="flex">
         {[...filters.series, ...filters.categories, ...filters.priceRanges].map((filter) => (
           <div 
-            className="flex items-center space-between border rounded-lg cursor-pointer px-2 py-1 uppercase text-sm"
+            className="flex items-center border rounded-lg cursor-pointer px-2 py-1 uppercase text-sm"
             key={filter}
           >
             {filter}
@@ -62,7 +73,7 @@ export default function FilterDrawer({ products, filters, onFilterChange, handle
                   id={series} 
                   value={series} 
                   checked={filters.series.includes(series)}
-                  onChange={() => onFilterChange("series", series)}
+                  onChange={() => handleFilterChange("series", series)}
                 />
                 <label 
                   htmlFor={series} 
@@ -85,7 +96,7 @@ export default function FilterDrawer({ products, filters, onFilterChange, handle
                   id={category}
                   value={category}
                   checked={filters.categories.includes(category)}
-                  onChange={() => onFilterChange("categories", category)}
+                  onChange={() => handleFilterChange("categories", category)}
                 />
                 <label htmlFor={category} className="flex items-center uppercase text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold whitespace-nowrap">
                   {category}
@@ -98,11 +109,16 @@ export default function FilterDrawer({ products, filters, onFilterChange, handle
           <h3 className="font-medium mb-2 font-semibold">Price</h3>
           <div className="flex flex-wrap gap-2 items-center">
             {[
-              { id: "10-30", label: "$10 - $30", min: 10, max: 30 },
-              { id: "30-50", label: "$30 - $50", min: 30, max: 50 },
-              { id: "50+", label: "$50+", min: 50, max: Infinity },
+              { id: "10-30", label: "$10 - $30", min: 1000, max: 3000 },
+              { id: "30-50", label: "$30 - $50", min: 3000, max: 5000 },
+              { id: "50+", label: "$50+", min: 5000, max: Infinity },
             ]
-              .filter((range) => products.some((product) => product.price >= range.min && product.price <= range.max))
+              .filter((range) => 
+                filteredProducts.some((product) => {
+                  const productPrice = product.compare_at_price ?? product.price;
+                  return productPrice >= range.min && productPrice <= range.max
+                })
+              )
               .map((range) => (
                 <div className="flex items-center" key={range.id}>
                   <input 
@@ -111,9 +127,9 @@ export default function FilterDrawer({ products, filters, onFilterChange, handle
                     id={range.id} 
                     value={range.id} 
                     checked={filters.priceRanges.includes(range.id)}
-                    onChange={() => onFilterChange("priceRanges", range.id)}
+                    onChange={() => handleFilterChange("priceRanges", range.id)}
                   />
-                  <label htmlFor={range.id} className="flex items-center text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold">
+                  <label htmlFor={range.id} className="flex items-center text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold whitespace-nowrap">
                     {range.label}
                   </label>
                 </div>
