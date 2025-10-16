@@ -3,11 +3,16 @@ import { FiUser, FiSearch, FiShoppingCart } from 'react-icons/fi';
 import { TfiClose, TfiMenu, TfiShoppingCart, TfiSearch } from 'react-icons/tfi';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SearchResults from '../searchbar/SearchResults';
+import Products from '@/data/mockProducts.json';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [promoBannerIsOpen, setPromoBannerIsOpen] = useState(true);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  const barRef = useRef(null);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearchBar = () => setIsSearchBarOpen((prev) => !prev);
@@ -28,8 +33,24 @@ export default function Header() {
     { label: "Shop", href: "/apparel" },
   ]
 
+  // Search bar query
+  useEffect(() => {
+    if (query.trim() === "") {
+      setResults([]);
+      return;
+    }
+    const timeout = setTimeout(() => {
+      const filtered = Products.filter((p) => 
+        p.title.toLowerCase().includes(query.toLowerCase())
+      );
+      setResults(filtered);
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [query]);
+
   // Focus on search bar text input and close search bar when clicked outside of div
-  function FocusSearchBar({ isSearchBarOpen, onClose }) {
+  function FocusSearchBar({ isSearchBarOpen, onClose, query, setQuery }) {
     const inputRef = useRef(null);
     const containerRef = useRef(null);
 
@@ -60,7 +81,14 @@ export default function Header() {
     return (
       <div className="flex grow" ref={containerRef}>
         <FiSearch className="text-2xl text-gray-500 mr-3"/>
-        <input ref={inputRef} type="text" placeholder="Search For..." className="focus:outline-none grow"/>
+        <input 
+          ref={inputRef} 
+          type="text" 
+          placeholder="Search For..." 
+          className="focus:outline-none grow uppercase" 
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
       </div>
     )
   }
@@ -195,14 +223,16 @@ export default function Header() {
             <>
               <motion.div
                 key="desktop-search-bar-overlay"
-                className="absolute inset-0 bg-black z-40"
+                className="fixed inset-0 bg-black z-40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 onClick={() => setIsSearchBarOpen(false)}
               />
+
               <motion.div 
+                ref={barRef}
                 className="flex items-center justify-between absolute w-full py-5 px-6 bg-white text-black z-50"
                 initial={{ opacity: 0, maxHeight: 0 }}
                 animate={{ opacity: 1, maxHeight: 200 }}
@@ -220,6 +250,8 @@ export default function Header() {
                     isSearchBarOpen={isSearchBarOpen} 
                     onClose={() => setIsSearchBarOpen(false)} 
                     searchButtonRef={searchButtonRef}
+                    query={query}
+                    setQuery={setQuery}
                   />
                 </motion.div>
                 <motion.button 
@@ -233,6 +265,8 @@ export default function Header() {
                   <TfiClose className="text-lg cursor-pointer" />
                 </motion.button>
               </motion.div>
+
+              <SearchResults anchorRef={barRef} isSearchBarOpen={isSearchBarOpen} results={results} query={query}/>
             </>
           )}
         </AnimatePresence>

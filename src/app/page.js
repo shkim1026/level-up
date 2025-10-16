@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 
-const MotionImage = motion(Image);
+const MotionImage = motion.create(Image);
 const ProductCard = dynamic(() => import("@/components/product/ProductCard"));
 
 const productVariants = {

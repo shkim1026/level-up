@@ -7,6 +7,7 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import "@splidejs/react-splide/css";
 import { Raleway } from "next/font/google";
 import RelatedProducts from "@/components/product/RelatedProducts";
+import { formattedPrice } from "@/utils/FormatPrice";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -14,7 +15,6 @@ const raleway = Raleway({
 });
 
 export default function ProductDetails({ params }) {
-  const formattedPrice = (priceInCents) => `$${(priceInCents / 100).toFixed(2)}`;
 
   const { id } = use(params);
   const product = products.find((p) => p.id === Number(id));
@@ -128,7 +128,7 @@ export default function ProductDetails({ params }) {
                 return (
                   <div key={variant.id}>
                     <input type="radio" value={variant.title} id={variant.id} name="size" className="sr-only peer" defaultChecked={index === 0}></input>
-                    <label htmlFor={variant.id} className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-black peer-checked:border-black hover:bg-gray-300 rounded-sm cursor-pointer">{sizeInitial}</label>
+                    <label htmlFor={variant.id} className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-black peer-checked:hover:text-white peer-checked:hover:bg-gray-800 peer-checked:border-black hover:bg-gray-300 rounded-sm cursor-pointer">{sizeInitial}</label>
                   </div>
                 );
               })}
