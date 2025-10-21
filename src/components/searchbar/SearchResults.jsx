@@ -5,6 +5,7 @@ import { formattedPrice } from "@/utils/FormatPrice";
 
 export default function SearchResults({ anchorRef, isSearchBarOpen, results, query }) {
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0});
+  const collections = new Set(results.map((r) => r.metafields.category))
 
   // Tracks dropdown position relative to anchor during animation
   useLayoutEffect(() => {
@@ -23,7 +24,7 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
       setPosition({
         top: rect.bottom + window.scrollY,
         left: rect.left + window.scrollX,
-        width: 850,
+        width: rect.width,
       });
     };
 
@@ -56,34 +57,50 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
 
   return createPortal(
     <motion.div 
-      className="absolute bg-white z-50 shadow-lg rounded-b-lg overflow-y-auto"
-      style={position}
+      className="absolute bg-white z-50 shadow-lg rounded-b-lg overflow-y-auto w-full lg:w-[800px] px-6"
+      style={{top: position.top, left: position.left,}}
       initial={{opacity: 0, maxHeight: 0 }}
       animate={{ opacity: 1, maxHeight: 350 }}
       exit={{ opacity: 0, maxHeight: 0 }}
       transition={{ duration: 0.3 }}
     >
       {results?.length ? (
-        <ul>
-          {results.map((r) => (
-            <a key={r.id} href={`/products/${r.id}`}>
-              <li className="p-3 hover:bg-gray-100 cursor-pointer flex">
-                <img src={r.image.src} className="w-25 h-25"/>
-                <div className="flex flex-col ml-5">
-                  <h4 className="text-black font-medium">{r.title}</h4>
-                  {r.compare_at_price ? (
-                    <div className="flex items-center">
-                      <p className="text-red-500">{formattedPrice(r.compare_at_price)}</p>
-                      <p className="text-gray-600 ml-2 line-through">{formattedPrice(r.price)}</p>
-                    </div>
-                  ) : (
-                    <p className="text-black">{formattedPrice(r.price)}</p>
-                  )}
-                </div>
-              </li>
-            </a>
-          ))}
-        </ul>
+        <>
+          <ul>
+            <p className="text-black font-medium text-gray-700 text-sm underline">Collections</p>
+            <div className="flex flex-column">
+            {[...collections].map((category) => (
+              <a key={category} href={""}>
+                <li className="p-3 hover:bg-gray-100 cursor-pointer">
+                  <p className="text-black">{category}</p>
+                </li>
+              </a>
+            ))}
+            </div>
+          </ul>
+          <hr className="mb-3 text-gray-200"/>
+          <ul>
+            <p className="text-black font-medium text-gray-700 text-sm underline">Products</p>
+            {results.map((r) => (
+              <a key={r.id} href={`/products/${r.id}`}>
+                <li className="p-3 hover:bg-gray-100 cursor-pointer flex">
+                  <img src={r.image.src} className="w-25 h-25"/>
+                  <div className="flex flex-col ml-5 justify-center">
+                    <h4 className="text-black font-medium">{r.title}</h4>
+                    {r.compare_at_price ? (
+                      <div className="flex items-center">
+                        <p className="text-red-500">{formattedPrice(r.compare_at_price)}</p>
+                        <p className="text-gray-600 ml-2 line-through">{formattedPrice(r.price)}</p>
+                      </div>
+                    ) : (
+                      <p className="text-black">{formattedPrice(r.price)}</p>
+                    )}
+                  </div>
+                </li>
+              </a>
+            ))}
+          </ul>
+        </>
       ) : query.trim() ? (
         <div className="p-3 text-gray-500">No results found</div>
       ) : null}

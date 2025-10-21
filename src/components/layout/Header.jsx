@@ -50,7 +50,7 @@ export default function Header() {
   }, [query]);
 
   // Focus on search bar text input and close search bar when clicked outside of div
-  function FocusSearchBar({ isSearchBarOpen, onClose, query, setQuery }) {
+  function FocusSearchBar({ isSearchBarOpen, onClose, query, setQuery, searchButtonRef }) {
     const inputRef = useRef(null);
     const containerRef = useRef(null);
 
@@ -123,13 +123,13 @@ export default function Header() {
     <header>
       <nav>
         {promoBannerIsOpen && (
-          <div className="promoBanner">
+          <div className="promoBanner z-50">
             <p className="text-xs text-center text-white p-2 uppercase bg-black">Free shipping on all orders $200+</p>
           </div>
         )}
 
         {/* Mobile Navigation */}
-        <div className="relative flex items-center justify-between bg-white h-16 lg:hidden">
+        <div className="relative flex items-center justify-between bg-white h-16 lg:hidden z-50">
           <div className="flex gap-5 items-center ml-6 text-black">
             <button onClick={toggleMobileMenu}>
               <TfiMenu className="text-2xl cursor-pointer" />
@@ -137,6 +137,7 @@ export default function Header() {
           </div>
           <a href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="mockLogo.jpg" alt="logo"/></a>
           <div className="flex gap-5 items-center mr-6 text-black">
+            <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button><FiUser className="text-2xl cursor-pointer"/></button>
             <button><TfiShoppingCart className="text-2xl cursor-pointer" /></button>
           </div>
@@ -173,16 +174,6 @@ export default function Header() {
                   exit="exit"
                 >
                   <TfiClose className="text-lg cursor-pointer mb-10" onClick={() => setIsMobileMenuOpen(false)} />
-                  
-                  <motion.input 
-                    key="mobile-search-bar"
-                    type="text" 
-                    placeholder="Search..." 
-                    className="w-full border rounded-sm p-1 bg-gray-200"
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                  />
 
                   {navLinks.map(({ label, href }) => (
                     <motion.li

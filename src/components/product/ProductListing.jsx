@@ -7,7 +7,7 @@ import FilterDrawer from "@/components/filters/FilterDrawer";
 import dynamic from "next/dynamic";
 import { useProductContext } from "@/context/ProductContext";
 
-export default function ProductListing() {
+export default function ProductListing({ products: externalProducts }) {
   const {
     filters,
     handleFilterChange,
@@ -52,14 +52,16 @@ export default function ProductListing() {
 
   // Scope products based on the current page
   useEffect(() => {
-    let scoped = mockProducts;
+    let scoped = externalProducts || mockProducts;
 
-    if (pathname.includes("/apparel")) {
-      scoped = scoped.filter((p) => p.type === "Apparel");
-    } else if (pathname.includes("/new-arrivals")) {
-      scoped = scoped.filter((p) => p.metafields.new === true);
-    } else if (pathname.includes("/best-sellers")) {
-      scoped = scoped.filter((p) => p.metafields.popularity >= 80);
+    if (!externalProducts) {
+      if (pathname.includes("/apparel")) {
+        scoped = scoped.filter((p) => p.type === "Apparel");
+      } else if (pathname.includes("/new-arrivals")) {
+        scoped = scoped.filter((p) => p.metafields.new === true);
+      } else if (pathname.includes("/best-sellers")) {
+        scoped = scoped.filter((p) => p.metafields.popularity >= 80);
+      }
     }
 
     setScopedProducts(scoped);

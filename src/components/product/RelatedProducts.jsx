@@ -35,7 +35,7 @@ export default function RelatedProducts({ allProducts, currentProduct }) {
       <hr className="my-13 text-gray-300"/>
       <h1 className="flex justify-center uppercase text-2xl text-gray-600 font-medium tracking-wider">Related Products</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-1">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-1">
         {related.map((product, i) => (
           <motion.div
             key={product.id}
