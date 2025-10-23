@@ -1,8 +1,10 @@
 "use client";
+
 import { FiUser, FiSearch, FiShoppingCart } from 'react-icons/fi';
 import { TfiClose, TfiMenu, TfiShoppingCart, TfiSearch } from 'react-icons/tfi';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from "next/navigation";
 import SearchResults from '../searchbar/SearchResults';
 import Products from '@/data/mockProducts.json';
 
@@ -13,6 +15,7 @@ export default function Header() {
   const barRef = useRef(null);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const router = useRouter();
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearchBar = () => setIsSearchBarOpen((prev) => !prev);
@@ -48,6 +51,14 @@ export default function Header() {
 
     return () => clearTimeout(timeout);
   }, [query]);
+
+  // Handle search query router
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && query.trim() !== "") {
+      e.preventDefault();
+      router.push(`/search?query=${encodeURIComponent(query)}`);
+    }
+  };
 
   // Focus on search bar text input and close search bar when clicked outside of div
   function FocusSearchBar({ isSearchBarOpen, onClose, query, setQuery, searchButtonRef }) {
@@ -88,6 +99,7 @@ export default function Header() {
           className="focus:outline-none grow uppercase" 
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
       </div>
     )

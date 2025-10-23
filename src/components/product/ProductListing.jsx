@@ -7,7 +7,7 @@ import FilterDrawer from "@/components/filters/FilterDrawer";
 import dynamic from "next/dynamic";
 import { useProductContext } from "@/context/ProductContext";
 
-export default function ProductListing({ products: externalProducts }) {
+export default function ProductListing({ products: externalProducts, query }) {
   const {
     filters,
     handleFilterChange,
@@ -82,9 +82,9 @@ export default function ProductListing({ products: externalProducts }) {
           handleFilterRemove={handleFilterRemove}
           lastChangedFilter={lastChangedFilter}
         />
+        {query && <h1 className="flex items-center font-medium">Results for: {query}</h1>}
         <FilterDropdown onChange={handleSort} value={sortBy} />
       </div>
-
       <ProductGrid products={displayedProducts} />
     </>
   );
