@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 import { useLayoutEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { formattedPrice } from "@/utils/FormatPrice";
+// import { formattedPrice } from "@/utils/FormatPrice";
 
 export default function SearchResults({ anchorRef, isSearchBarOpen, results, query }) {
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0});

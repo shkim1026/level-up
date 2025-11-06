@@ -1,10 +1,13 @@
+import { fetchAllShopifyProducts } from "@/data/fetchAllShopifyProducts";
 import { ProductProvider } from "@/context/ProductContext";
 import ProductListing from "@/components/product/ProductListing";
 
-export default function BestSellersPage() {
+export default async function BestSellersPage() {
+  const products = await fetchAllShopifyProducts();
+  
   return (
-    <ProductProvider>
-      <ProductListing />
+    <ProductProvider initialProducts={products}>
+      <ProductListing products={products}/>
     </ProductProvider>
   )
 }

@@ -12,6 +12,7 @@ export default function FilterDrawer() {
     filters,
     handleFilterChange,
     handleFilterRemove,
+    handleClearFilters,
     lastChangedFilter,
   } = useProductContext();
   
@@ -19,8 +20,8 @@ export default function FilterDrawer() {
   const visibleSeries = [...new Set(filteredProducts.map((p) => p.metafields.series))];
   const seriesOptions = lastChangedFilter === "series" ? allSeries : visibleSeries;
 
-  const allCategories = [...new Set(productsForPage.map((p) => p.metafields.category))];
-  const visibleCategories = [...new Set(filteredProducts.map((p) => p.metafields.category))];
+  const allCategories = [...new Set(productsForPage.map((p) => p.metafields.categories))];
+  const visibleCategories = [...new Set(filteredProducts.map((p) => p.metafields.categories))];
   const categoryOptions = lastChangedFilter === "categories" ? allCategories : visibleCategories;
   
   return (
@@ -65,8 +66,8 @@ export default function FilterDrawer() {
         <div className="px-5 mt-10">
           <h3 className="font-medium mb-2 font-semibold">Series</h3>
           <div className="flex flex-wrap gap-2 items-center">
-            {seriesOptions.map((series) => (
-              <div className="flex items-center" key={series}>
+            {seriesOptions.map((series, index) => (
+              <div className="flex items-center" key={index}>
                 <input 
                   className="appearance-none peer" 
                   type="checkbox" 
@@ -88,8 +89,8 @@ export default function FilterDrawer() {
         <div className="px-5 mt-10">
           <h3 className="font-medium mb-2 font-semibold">Categories</h3>
           <div className="flex flex-wrap gap-2 items-center">
-            {categoryOptions.map((category) => (
-              <div className="flex items-center" key={category}>
+            {categoryOptions.map((category, index) => (
+              <div className="flex items-center" key={index}>
                 <input 
                   className="appearance-none peer"
                   type="checkbox"
@@ -109,9 +110,9 @@ export default function FilterDrawer() {
           <h3 className="font-medium mb-2 font-semibold">Price</h3>
           <div className="flex flex-wrap gap-2 items-center">
             {[
-              { id: "10-30", label: "$10 - $30", min: 1000, max: 3000 },
-              { id: "30-50", label: "$30 - $50", min: 3000, max: 5000 },
-              { id: "50+", label: "$50+", min: 5000, max: Infinity },
+              { id: "10-30", label: "$10 - $30", min: 10, max: 30 },
+              { id: "30-50", label: "$30 - $50", min: 30, max: 50 },
+              { id: "50+", label: "$50+", min: 50, max: Infinity },
             ]
               .filter((range) => 
                 filteredProducts.some((product) => {
@@ -135,6 +136,9 @@ export default function FilterDrawer() {
                 </div>
             ))}
           </div>
+        </div>
+        <div className="px-5 mt-10">
+          <button className="underline font-semibold cursor-pointer text-sm" onClick={handleClearFilters}>Clear All</button>
         </div>
       </div>
     </div>

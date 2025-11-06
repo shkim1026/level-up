@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import mockProducts from "@/data/mockProducts.json";
 import ProductGrid from "@/components/product/ProductGrid";
 import FilterDrawer from "@/components/filters/FilterDrawer";
 import dynamic from "next/dynamic";
@@ -21,7 +20,7 @@ export default function ProductListing({ products: externalProducts, query }) {
   const pathname = usePathname();
   const defaultSort = "popularity";
   const [sortBy, setSortBy] = useState(defaultSort);
-  const [scopedProducts, setScopedProducts] = useState(mockProducts);
+  const [scopedProducts, setScopedProducts] = useState(externalProducts ?? []);
 
   const FilterDropdown = dynamic(() => import("@/components/filters/FilterDropdown"), { ssr: false });
 
@@ -30,16 +29,16 @@ export default function ProductListing({ products: externalProducts, query }) {
     const sorted = [...items];
     switch (sortKey) {
       case "popularity":
-        return sorted.sort((a, b) => b.metafields.popularity - a.metafields.popularity);
+        return sorted.sort((a, b) => (b.metafields?.popularity ?? 0) - (a.metafields.popularity ?? 0));
       case "rating":
-        return sorted.sort((a, b) => b.metafields.rating - a.metafields.rating);
+        return sorted.sort((a, b) => (b.metafields?.rating ?? 0) - (a.metafields?.rating ?? 0));
       case "priceLowHigh":
         return sorted.sort(
-          (a, b) => (a.compare_at_price ?? a.price) - (b.compare_at_price ?? b.price)
+          (a, b) => (a.price ?? 0) - (b.price ?? 0)
         );
       case "priceHighLow":
         return sorted.sort(
-          (a, b) => (b.compare_at_price ?? b.price) - (a.compare_at_price ?? a.price)
+          (a, b) => (b.price ?? 0) - (a.price ?? 0)
         );
       default:
         return sorted;
@@ -52,24 +51,24 @@ export default function ProductListing({ products: externalProducts, query }) {
 
   // Scope products based on the current page
   useEffect(() => {
-    let scoped = externalProducts || mockProducts;
+    if (!externalProducts?.length) return;
 
-    if (!externalProducts) {
-      if (pathname.includes("/apparel")) {
-        scoped = scoped.filter((p) => p.type === "Apparel");
-      } else if (pathname.includes("/new-arrivals")) {
-        scoped = scoped.filter((p) => p.metafields.new === true);
-      } else if (pathname.includes("/best-sellers")) {
-        scoped = scoped.filter((p) => p.metafields.popularity >= 80);
-      }
+    let products = [...externalProducts];
+
+    if (pathname.includes("/apparel")) {
+      // products = products.filter((p) => p.type === "Apparel");
+    } else if (pathname.includes("/new-arrivals")) {
+      products = products.filter((p) => p.metafields.new === true);
+    } else if (pathname.includes("/best-sellers")) {
+      products = products.filter((p) => p.metafields.popularity >= 80);
     }
 
-    setScopedProducts(scoped);
-    setProductsForPage(scoped); // <-- This updates the context with correct data
-  }, [pathname, setProductsForPage]);
+    setScopedProducts(products);
+    setProductsForPage(products);
+  }, [pathname, externalProducts, setProductsForPage]);
 
   // Sort the filtered products
-  const displayedProducts = sortProducts(filteredProducts, sortBy);
+  const displayedProducts = sortProducts(filteredProducts?.length ? filteredProducts : scopedProducts, sortBy);
 
   return (
     <>

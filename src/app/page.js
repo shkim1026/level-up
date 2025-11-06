@@ -1,9 +1,10 @@
 "use client"
 
-import mockProducts from "@/data/mockProducts.json";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { fetchFeaturedShopifyProducts } from "@/data/fetchFeaturedShopifyProducts";
 
 const MotionImage = motion.create(Image);
 const ProductCard = dynamic(() => import("@/components/product/ProductCard"));
@@ -14,6 +15,17 @@ const productVariants = {
 };
 
 export default function HomePage() {
+  const [products, setProducts] = useState([]);
+
+useEffect(() => {
+  fetchFeaturedShopifyProducts().then((data) => {
+    setProducts(data);
+  });
+}, []);
+
+
+  console.log(products, "products in homepage:")
+  setTimeout(() => console.log(products.map(p => p.metafields.edges), "homepage metafields"))
   return (
     <div>
       <div className="relative w-full min-h-[50vh] flex flex-col justify-center items-center text-white">
@@ -33,8 +45,7 @@ export default function HomePage() {
 
       <h1 className="text-3x1 text-black font-bold mb-6 p-6">Featured Products</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-1">
-        {mockProducts.map((product, i) => 
-          product.metafields.featured && (
+        {products.map((product, i) => (
             <motion.div
               key={product.id}
               variants={productVariants}

@@ -1,12 +1,13 @@
-import { ProductProvider } from "@/context/ProductContext";
-import ProductListing from "@/components/product/ProductListing";
-import { mockProducts } from "@/data/mockProducts";
+import { fetchAllShopifyProducts } from "@/data/fetchAllShopifyProducts";
+import ApparelClient from "./ApparelClient";
 
-
-export default function ApparelPage() {
-  return (
-    <ProductProvider initialProducts={mockProducts}>
-      <ProductListing />
-    </ProductProvider>
-  )
+export default async function ApparelPage() {
+  try {
+    const products = await fetchAllShopifyProducts();
+    console.log("Shopify products:", products)
+    return <ApparelClient initialProducts={products} />
+  } catch (error) {
+    console.log("Failed to fetch Shopify products:", error);
+    return <div>Error loading products</div>
+  }
 }

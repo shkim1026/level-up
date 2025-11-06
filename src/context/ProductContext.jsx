@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useMemo } from "react";
 const ProductContext = createContext();
 
 export const ProductProvider = ({ initialProducts = [], children }) => {
-  const [productsForPage, setProductsForPage] = useState(initialProducts);
+  const [productsForPage, setProductsForPage] = useState(initialProducts ?? []);
   const [filters, setFilters] = useState({ categories: [], series: [], priceRanges:[] });
   const [lastChangedFilter, setLastChangedFilter] = useState(null);
 
@@ -35,16 +35,21 @@ export const ProductProvider = ({ initialProducts = [], children }) => {
     });
   };
 
+  const handleClearFilters = () => {
+    setFilters({ categories: [], series: [], priceRanges: [] });
+  } 
+
   const priceRanges = [
-    { id: "10-30", min: 1000, max: 3000 },
-    { id: "30-50", min: 3000, max: 5000 },
-    { id: "50+", min: 5000, max: Infinity },
+    { id: "10-30", min: 10, max: 30 },
+    { id: "30-50", min: 30, max: 50 },
+    { id: "50+", min: 50, max: Infinity },
   ]
 
   const filteredProducts = useMemo(() => {
+    if (!productsForPage?.length) return [];
     return productsForPage.filter((p) => {
       const matchesCategory =
-        filters.categories.length === 0 || filters.categories.includes(p.metafields.category);
+        filters.categories.length === 0 || filters.categories.includes(p.metafields.categories);
       const matchesSeries = 
         filters.series.length === 0 || filters.series.includes(p.metafields.series);
       const matchesPrice = 
@@ -67,6 +72,7 @@ export const ProductProvider = ({ initialProducts = [], children }) => {
         setFilters,
         handleFilterChange,
         handleFilterRemove,
+        handleClearFilters,
         lastChangedFilter,
         setLastChangedFilter,
       }}

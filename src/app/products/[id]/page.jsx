@@ -7,7 +7,7 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import "@splidejs/react-splide/css";
 import { Raleway } from "next/font/google";
 import RelatedProducts from "@/components/product/RelatedProducts";
-import { formattedPrice } from "@/utils/FormatPrice";
+// import { formattedPrice } from "@/utils/FormatPrice";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -17,7 +17,7 @@ const raleway = Raleway({
 export default function ProductDetails({ params }) {
 
   const { id } = use(params);
-  const product = products.find((p) => p.id === Number(id));
+  const product = products.find((p) => p.handle === id);
 
   if (!product) {
     return <p className="p-8 text-red-500">Product not found. ID: {id}</p>
