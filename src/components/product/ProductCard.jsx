@@ -32,12 +32,14 @@ export default function ProductCard({ product }) {
           ) : (
             <div className="bg-gray-200 rounded-lg w-full h-full flex items-center justify-center text-gray-500">No Image</div>
           )}
-          {/* <Image
-            src={product.metafields["hover-image"].src}
-            alt={product.title}
-            fill
-            className="rounded-lg object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          /> */}
+          {product.images?.[1] && (
+            <Image
+              src={product.images[1].url}
+              alt={product.images[1].altText}
+              fill
+              className="rounded-lg object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+          )}
         </div>
       </Link>
 

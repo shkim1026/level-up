@@ -27,10 +27,11 @@ export async function fetchFeaturedShopifyProducts() {
                 }
               }
               metafields(identifiers: [
-                {namespace: "guru", key: "popularity"},
-                {namespace: "guru", key: "rating"},
-                {namespace: "guru", key: "new"},
-                {namespace: "guru", key: "series"}
+                {namespace: "global", key: "popularity"},
+                {namespace: "global", key: "rating"},
+                {namespace: "global", key: "new"},
+                {namespace: "global", key: "series"},
+                {namespace: "global", key: "categories"}
               ]) {
                 key
                 namespace

@@ -15,9 +15,19 @@ export async function fetchAllShopifyProducts() {
               url
               altText
             }
-            variants(first: 1) {
+            images(first: 10) {
               edges {
                 node {
+                  url
+                  altText
+                }
+              }
+            }
+            variants(first: 10) {
+              edges {
+                node {
+                  id
+                  title
                   price {
                     amount
                     currencyCode
@@ -25,6 +35,10 @@ export async function fetchAllShopifyProducts() {
                   compareAtPrice {
                     amount
                     currencyCode
+                  }
+                  selectedOptions {
+                    name
+                    value
                   }
                 }
               }
@@ -84,6 +98,23 @@ export async function fetchAllShopifyProducts() {
           handle: node.handle,
           description: node.description,
           image: node.featuredImage?.url || "",
+          images: node.images
+            ? node.images.edges.map(edge => ({
+              url: edge.node.url || null,
+              altText: edge.node.altText || "",
+            }))
+            : [],
+          variants: node.variants?.edges.map(edge => ({
+            id: edge.node.id,
+            title: edge.node.title,
+            price: edge.node.price?.amount || "0.00",
+            compareAtPrice: edge.node.compareAtPrice?.amount || null,
+            currency: edge.node.price?.currencyCode || "USD",
+            options: edge.node.selectedOptions.map(opt => ({
+              name: opt.name,
+              value: opt.value,
+            })),
+          })) || [],
           price: node.variants.edges[0]?.node.price.amount || "0.00",
           compareAtPrice: node.variants.edges[0]?.node.compareAtPrice?.amount || null,
           currency: node.variants.edges[0]?.node.price.currencyCode || "USD",
