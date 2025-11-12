@@ -43,7 +43,7 @@ export default function ProductCard({ product }) {
         </div>
       </Link>
 
-      <Link href={`/collections/${product.handle}`}>
+      <Link href={`/collections/${slugify(product.metafields.series)}`}>
         <h2 className="mb-2 text-xs text-gray-800 font-semibold uppercase">
           {product.metafields.series}
         </h2>

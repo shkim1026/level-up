@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function SearchResults({ anchorRef, isSearchBarOpen, results, query }) {
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0});
-  const collections = new Set(results.map((r) => r.metafields.category))
+  const collections = new Set(results.map((r) => r.metafields.categories))
 
   // Tracks dropdown position relative to anchor during animation
   useLayoutEffect(() => {
@@ -82,18 +82,18 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
           <ul>
             <p className="text-black font-medium text-gray-700 text-sm underline">Products</p>
             {results.map((r) => (
-              <a key={r.id} href={`/products/${r.id}`}>
+              <a key={r.id} href={`/products/${r.handle}`}>
                 <li className="p-3 hover:bg-gray-100 cursor-pointer flex">
-                  <img src={r.image.src} className="w-25 h-25"/>
+                  <img src={r.image} className="w-25 h-25"/>
                   <div className="flex flex-col ml-5 justify-center">
                     <h4 className="text-black font-medium">{r.title}</h4>
-                    {r.compare_at_price ? (
+                    {r.compareAtPrice ? (
                       <div className="flex items-center">
-                        <p className="text-red-500">{formattedPrice(r.compare_at_price)}</p>
-                        <p className="text-gray-600 ml-2 line-through">{formattedPrice(r.price)}</p>
+                        <p className="text-red-500">${r.price}</p>
+                        <p className="text-gray-600 ml-2 line-through">${r.compareAtPrice}</p>
                       </div>
                     ) : (
-                      <p className="text-black">{formattedPrice(r.price)}</p>
+                      <p className="text-black">${r.price}</p>
                     )}
                   </div>
                 </li>

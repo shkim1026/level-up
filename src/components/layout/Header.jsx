@@ -6,21 +6,21 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from "next/navigation";
 import SearchResults from '../searchbar/SearchResults';
-import Products from '@/data/mockProducts.json';
+import { fetchAllShopifyProducts } from '@/data/fetchAllShopifyProducts';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [promoBannerIsOpen, setPromoBannerIsOpen] = useState(true);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
-  const barRef = useRef(null);
+  const [products, setProducts] = useState([]);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const barRef = useRef(null);
+  const searchButtonRef = useRef(null);
   const router = useRouter();
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearchBar = () => setIsSearchBarOpen((prev) => !prev);
-
-  const searchButtonRef = useRef(null);
 
   const navLinks = [
     { label: "New Arrivals", href: "/new-arrivals" },
@@ -36,6 +36,19 @@ export default function Header() {
     { label: "Shop", href: "/apparel" },
   ]
 
+  // Fetch products on mount
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const data = await fetchAllShopifyProducts();
+        setProducts(data);
+      } catch (error) {
+        console.log("Error fetching products:", error);
+      }
+    }
+    loadProducts();
+  }, []);
+
   // Search bar query
   useEffect(() => {
     if (query.trim() === "") {
@@ -43,16 +56,16 @@ export default function Header() {
       return;
     }
     const timeout = setTimeout(() => {
-      const filtered = Products.filter((p) => 
+      const filtered = products.filter((p) => 
         p.title.toLowerCase().includes(query.toLowerCase())
       );
       setResults(filtered);
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [query]);
+  }, [query, products]);
 
-  // Handle search query router
+  // Handle search query enter key router
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && query.trim() !== "") {
       e.preventDefault();
@@ -60,7 +73,7 @@ export default function Header() {
     }
   };
 
-  // Focus on search bar text input and close search bar when clicked outside of div
+  // Focus on search bar text input and outside-click handler
   function FocusSearchBar({ isSearchBarOpen, onClose, query, setQuery, searchButtonRef }) {
     const inputRef = useRef(null);
     const containerRef = useRef(null);

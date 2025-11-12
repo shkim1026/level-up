@@ -11,6 +11,7 @@ export async function fetchAllShopifyProducts() {
             title
             handle
             description
+            tags
             featuredImage {
               url
               altText
@@ -119,6 +120,7 @@ export async function fetchAllShopifyProducts() {
           compareAtPrice: node.variants.edges[0]?.node.compareAtPrice?.amount || null,
           currency: node.variants.edges[0]?.node.price.currencyCode || "USD",
           metafields,
+          tags: node.tags || [],
         };
       }) || [];
 
