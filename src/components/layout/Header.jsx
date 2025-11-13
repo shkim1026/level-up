@@ -70,6 +70,7 @@ export default function Header() {
     if (e.key === "Enter" && query.trim() !== "") {
       e.preventDefault();
       router.push(`/search?query=${encodeURIComponent(query)}`);
+      setIsSearchBarOpen(false);
     }
   };
 

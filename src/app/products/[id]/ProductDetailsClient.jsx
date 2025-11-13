@@ -1,12 +1,15 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import "@splidejs/react-splide/css";
 import { Raleway } from "next/font/google";
 import RelatedProducts from "@/components/product/RelatedProducts";
+import SizeChartPopup from "@/components/ui/SizePopupChart";
 import formatSizeLabel from "@/utils/FormatSizeLabel";
+import { slugify } from "@/utils/Slugify";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -82,9 +85,11 @@ export default function ProductDetailsClient({ product, allProducts }) {
 
         {/* --- Product Info --- */}
         <div className="mr-auto lg:max-w-md">
-          <h2 className="mt-6 mb-2 text-sm text-gray-400">
-            {product.metafields.series}
-          </h2>
+          <Link href={`/collections/${slugify(product.metafields.series)}`}>
+            <h2 className="mt-6 mb-2 text-sm text-gray-400 hover:text-gray-600">
+              {product.metafields.series}
+            </h2>
+          </Link>
           <h1
             className={`text-2xl font-semibold ${raleway.className} tracking-wide uppercase`}
           >
@@ -126,7 +131,7 @@ export default function ProductDetailsClient({ product, allProducts }) {
           <div>
             <div className="flex justify-between text-sm gap-2 mt-4">
               <legend>Size:</legend>
-              <button className="underline">Size Chart</button>
+              <SizeChartPopup />
             </div>
             <div className="mt-3 flex">
               {product.variants.map((variant, index) => {

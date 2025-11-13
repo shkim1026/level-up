@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 import { useLayoutEffect, useState } from "react";
 import { motion } from "framer-motion";
-// import { formattedPrice } from "@/utils/FormatPrice";
+import { slugify } from "@/utils/Slugify";
 
 export default function SearchResults({ anchorRef, isSearchBarOpen, results, query }) {
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0});
@@ -70,7 +70,7 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
             <p className="text-black font-medium text-gray-700 text-sm underline">Collections</p>
             <div className="flex flex-column">
             {[...collections].map((category) => (
-              <a key={category} href={""}>
+              <a key={category} href={`/collections/${slugify(category)}`}>
                 <li className="p-3 hover:bg-gray-100 cursor-pointer">
                   <p className="text-black">{category}</p>
                 </li>
@@ -84,7 +84,10 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
             {results.map((r) => (
               <a key={r.id} href={`/products/${r.handle}`}>
                 <li className="p-3 hover:bg-gray-100 cursor-pointer flex">
-                  <img src={r.image} className="w-25 h-25"/>
+                  {r.image 
+                    ? <img src={r.image} className="w-25 h-25"/>
+                    : <div className="bg-gray-200 rounded-lg w-25 h-25 flex items-center justify-center text-gray-500">No Image</div>
+                  }
                   <div className="flex flex-col ml-5 justify-center">
                     <h4 className="text-black font-medium">{r.title}</h4>
                     {r.compareAtPrice ? (

@@ -1,4 +1,5 @@
-"use Client";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Raleway } from "next/font/google";
@@ -44,7 +45,7 @@ export default function ProductCard({ product }) {
       </Link>
 
       <Link href={`/collections/${slugify(product.metafields.series)}`}>
-        <h2 className="mb-2 text-xs text-gray-800 font-semibold uppercase">
+        <h2 className="mb-2 text-xs text-gray-800 font-semibold uppercase hover:underline">
           {product.metafields.series}
         </h2>
       </Link>
