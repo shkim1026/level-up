@@ -13,12 +13,16 @@ export default function CartDrawer() {
 
   useEffect(() => {
     if (isOpen) {
+      const scrollBarWidth = window.innerWidth - document.body.offsetWidth;
       document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
     } else {
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     }
     return () => {
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     };
   }, [isOpen]);
 
@@ -28,7 +32,7 @@ export default function CartDrawer() {
         <>
           {/* Overlay */}
           <motion.div
-            className="fixed inset-0 bg-black/40 z-40"
+            className="fixed inset-0 bg-black/40 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
