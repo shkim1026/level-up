@@ -41,8 +41,12 @@ export function CartProvider({ children }) {
     setIsOpen(true);
   };
 
-  const removeFromCart = (id) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  const removeFromCart = (id, selectedSize) => {
+    setCartItems((prev) => 
+      prev.filter(
+        (item) => !(item.id === id && item.selectedSize === selectedSize)
+      )
+    );
   };
 
   const decreaseCartQuantity = (id, selectedSize) => {

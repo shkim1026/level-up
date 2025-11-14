@@ -167,7 +167,14 @@ export default function Header() {
           <div className="flex gap-5 items-center mr-6 text-black">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button><FiUser className="text-2xl cursor-pointer"/></button>
-            <button><TfiShoppingCart className="text-2xl cursor-pointer" onClick={toggleCart}/></button>
+            <button onClick={toggleCart} className="relative">
+              <TfiShoppingCart className="text-2xl cursor-pointer" />
+              {cartItems.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {cartItems.length}
+                </span>
+              )}
+            </button>
           </div>
         </div>
 
@@ -232,7 +239,14 @@ export default function Header() {
           <div className="flex gap-5 items-center mr-10 text-black">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button><FiUser className="text-2xl cursor-pointer"/></button>
-            <button><FiShoppingCart className="text-2xl cursor-pointer" onClick={toggleCart}/></button>
+            <button onClick={toggleCart} className="relative">
+              <TfiShoppingCart className="text-2xl cursor-pointer" />
+              {cartItems.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                  {cartItems.length}
+                </span>
+              )}
+            </button>
           </div>
         </div>
 

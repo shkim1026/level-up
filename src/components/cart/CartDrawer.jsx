@@ -74,7 +74,7 @@ export default function CartDrawer() {
                       <div className="flex justify-between">
                         <p className="font-semibold text-sm text-black">{item.title}</p>
                         <button
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => removeFromCart(item.id, item.selectedSize)}
                           className="text-gray-600 cursor-pointer hover:text-black"
                         >
                           <TfiTrash />
