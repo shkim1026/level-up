@@ -57,7 +57,7 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
 
   return createPortal(
     <motion.div 
-      className="absolute bg-white z-50 shadow-lg rounded-b-lg overflow-y-auto w-full lg:w-[800px] px-6"
+      className="absolute bg-white z-50 shadow-lg rounded-b-lg overflow-y-auto w-full lg:w-[800px] px-10"
       style={{top: position.top, left: position.left,}}
       initial={{opacity: 0, maxHeight: 0 }}
       animate={{ opacity: 1, maxHeight: 350 }}

@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from "next/navigation";
 import SearchResults from '../searchbar/SearchResults';
 import { fetchAllShopifyProducts } from '@/data/fetchAllShopifyProducts';
+import { useCart } from "@/components/cart/CartContext";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,6 +19,7 @@ export default function Header() {
   const barRef = useRef(null);
   const searchButtonRef = useRef(null);
   const router = useRouter();
+  const { toggleCart, cartItems } = useCart();
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearchBar = () => setIsSearchBarOpen((prev) => !prev);
@@ -165,7 +167,7 @@ export default function Header() {
           <div className="flex gap-5 items-center mr-6 text-black">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button><FiUser className="text-2xl cursor-pointer"/></button>
-            <button><TfiShoppingCart className="text-2xl cursor-pointer" /></button>
+            <button><TfiShoppingCart className="text-2xl cursor-pointer" onClick={toggleCart}/></button>
           </div>
         </div>
 
@@ -230,7 +232,7 @@ export default function Header() {
           <div className="flex gap-5 items-center mr-10 text-black">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button><FiUser className="text-2xl cursor-pointer"/></button>
-            <button><FiShoppingCart className="text-2xl cursor-pointer" /></button>
+            <button><FiShoppingCart className="text-2xl cursor-pointer" onClick={toggleCart}/></button>
           </div>
         </div>
 
@@ -250,7 +252,7 @@ export default function Header() {
 
               <motion.div 
                 ref={barRef}
-                className="flex items-center justify-between absolute w-full py-5 px-6 bg-white text-black z-50"
+                className="flex items-center justify-between absolute w-full py-5 px-10 bg-white text-black z-50"
                 initial={{ opacity: 0, maxHeight: 0 }}
                 animate={{ opacity: 1, maxHeight: 200 }}
                 exit={{ opacity: 0, maxHeight: 0 }}

@@ -10,6 +10,7 @@ import RelatedProducts from "@/components/product/RelatedProducts";
 import SizeChartPopup from "@/components/ui/SizePopupChart";
 import formatSizeLabel from "@/utils/FormatSizeLabel";
 import { slugify } from "@/utils/Slugify";
+import { useCart } from "@/components/cart/CartContext";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -18,8 +19,12 @@ const raleway = Raleway({
 
 export default function ProductDetailsClient({ product, allProducts }) {
   const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState(
+    product.variants?.[0]?.options?.[0]?.value || null
+  )
   const mainRef = useRef(null);
   const thumbnailRef = useRef(null);
+  const { addToCart } = useCart();
 
   const decrement = () => setQuantity(prev => Math.max(1, prev - 1));
   const increment = () => setQuantity(prev => prev + 1);
@@ -135,16 +140,19 @@ export default function ProductDetailsClient({ product, allProducts }) {
             </div>
             <div className="mt-3 flex">
               {product.variants.map((variant, index) => {
-                const sizeInitial = formatSizeLabel(variant.options[0].value);
+                const sizeValue = variant.options[0].value;
+                const sizeInitial = formatSizeLabel(sizeValue);
+                
                 return (
-                  <div key={variant.options[0].value}>
+                  <div key={variant.id}>
                     <input
                       type="radio"
-                      value={variant.options[0].value}
+                      value={sizeValue}
                       id={variant.id}
                       name="size"
                       className="sr-only peer"
                       defaultChecked={index === 0}
+                      onChange={() => setSelectedSize(sizeValue)}
                     />
                     <label
                       htmlFor={variant.id}
@@ -176,7 +184,10 @@ export default function ProductDetailsClient({ product, allProducts }) {
             </button>
           </div>
 
-          <button className="mt-7 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition w-full cursor-pointer uppercase tracking-wide">
+          <button 
+            className="mt-7 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition w-full cursor-pointer uppercase tracking-wide"
+            onClick={() => addToCart({...product, quantity, selectedSize})}
+          >
             Add to Cart
           </button>
         </div>
