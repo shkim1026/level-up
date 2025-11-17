@@ -72,7 +72,7 @@ export default function ProductListing({ products: externalProducts, query }) {
 
   return (
     <>
-      <div className="flex place-content-between mx-6 pt-8">
+      <div className="flex place-content-between mx-10 pt-8">
         <FilterDrawer
           allProducts={scopedProducts}
           products={displayedProducts}
