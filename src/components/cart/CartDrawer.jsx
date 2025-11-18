@@ -68,15 +68,19 @@ export default function CartDrawer() {
                     key={`${item.id}-${item.selectedSize}`}
                     className="flex items-center border-b pb-2"
                   >
-                    <Image 
-                      src={item.image}
-                      alt={item.title}
-                      width={80}
-                      height={80}
-                    />
+                    <a href={`/products/${item.handle}`}>
+                      <Image 
+                        src={item.image}
+                        alt={item.title}
+                        width={80}
+                        height={80}
+                      />
+                    </a>
                     <div className="flex flex-col w-full">
                       <div className="flex justify-between">
-                        <p className="font-semibold text-sm text-black">{item.title}</p>
+                        <a href={`/products/${item.handle}`}>
+                          <p className="font-semibold text-sm text-black hover:text-gray-600">{item.title}</p>
+                        </a>
                         <button
                           onClick={() => removeFromCart(item.id, item.selectedSize)}
                           className="text-gray-600 cursor-pointer hover:text-black"
@@ -116,7 +120,7 @@ export default function CartDrawer() {
             </div>
             {/* Footer  */}
             <div className="border-t p-4">
-              <button className="w-full bg-black py-3 font-bold cursor-pointer" disabled={cartItems.length === 0}>
+              <button className="w-full bg-black py-3 font-bold cursor-pointer hover:bg-gray-800 disabled:bg-gray-500" disabled={cartItems.length === 0}>
                 Checkout <span>(${getCartTotal().toFixed(2)})</span>
               </button>
             </div>
