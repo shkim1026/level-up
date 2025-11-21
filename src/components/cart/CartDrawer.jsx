@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "./CartContext";
 import Image from "next/image";
+import Link from "next/link";
 import { TfiClose, TfiTrash } from 'react-icons/tfi';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { useEffect } from "react";
@@ -120,9 +121,14 @@ export default function CartDrawer() {
             </div>
             {/* Footer  */}
             <div className="border-t p-4">
-              <button className="w-full bg-black py-3 font-bold cursor-pointer hover:bg-gray-800 disabled:bg-gray-500" disabled={cartItems.length === 0}>
-                Checkout <span>(${getCartTotal().toFixed(2)})</span>
-              </button>
+              <Link href="/checkout">
+                <button 
+                  className="w-full bg-black py-3 font-bold cursor-pointer hover:bg-gray-800 disabled:bg-gray-500" 
+                  disabled={cartItems.length === 0}
+                >
+                  Checkout <span>(${getCartTotal().toFixed(2)})</span>
+                </button>
+              </Link>
             </div>
           </motion.div>
         </>

@@ -11,6 +11,7 @@ import SizeChartPopup from "@/components/ui/SizePopupChart";
 import formatSizeLabel from "@/utils/FormatSizeLabel";
 import { slugify } from "@/utils/Slugify";
 import { useCart } from "@/components/cart/CartContext";
+import PageTitle from "@/utils/PageTitle";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -41,10 +42,10 @@ export default function ProductDetailsClient({ product, allProducts }) {
     }
   }, []);
 
-  console.log(product.variants, "product variants")
-
   return (
     <>
+      <PageTitle title={product.title} />
+
       <div className="px-8 mx-auto lg:w-[1200px] lg:flex lg:pt-5">
         {/* --- Image Gallery --- */}
         <div className="mx-auto flex flex-col items-center place-content-between md:w-[600px] md:h-[700px] lg:mr-20 lg:ml-auto">

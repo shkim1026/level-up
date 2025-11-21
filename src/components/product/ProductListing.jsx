@@ -5,6 +5,7 @@ import ProductGrid from "@/components/product/ProductGrid";
 import FilterDrawer from "@/components/filters/FilterDrawer";
 import dynamic from "next/dynamic";
 import { useProductContext } from "@/context/ProductContext";
+import PageTitle from "@/utils/PageTitle";
 
 export default function ProductListing({ products: externalProducts, query }) {
   const {
@@ -21,6 +22,7 @@ export default function ProductListing({ products: externalProducts, query }) {
   const defaultSort = "popularity";
   const [sortBy, setSortBy] = useState(defaultSort);
   const [scopedProducts, setScopedProducts] = useState(externalProducts ?? []);
+  const [tabTitle, setTabTitle] = useState("");
 
   const FilterDropdown = dynamic(() => import("@/components/filters/FilterDropdown"), { ssr: false });
 
@@ -54,24 +56,31 @@ export default function ProductListing({ products: externalProducts, query }) {
     if (!externalProducts?.length) return;
 
     let products = [...externalProducts];
+    let newTabTitle = "";
 
     if (pathname.includes("/apparel")) {
-      // products = products.filter((p) => p.type === "Apparel");
+      newTabTitle = "Shop"
     } else if (pathname.includes("/new-arrivals")) {
       products = products.filter((p) => p.metafields.new === true);
+      newTabTitle = "New Arrivals"
     } else if (pathname.includes("/best-sellers")) {
       products = products.filter((p) => p.metafields.popularity >= 80);
+      newTabTitle = "Best Sellers"
     }
 
     setScopedProducts(products);
     setProductsForPage(products);
+    setTabTitle(newTabTitle);
   }, [pathname, externalProducts, setProductsForPage]);
+
 
   // Sort the filtered products
   const displayedProducts = sortProducts(filteredProducts?.length ? filteredProducts : scopedProducts, sortBy);
 
   return (
     <>
+      <PageTitle title={tabTitle} />
+
       <div className="flex place-content-between mx-10 pt-8">
         <FilterDrawer
           allProducts={scopedProducts}

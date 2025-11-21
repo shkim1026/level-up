@@ -12,14 +12,14 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: "Level Up Threads",
-  description: "Level up with Level Up Threads",
+  description: "Level up Your Threads",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <title>Level Up</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body

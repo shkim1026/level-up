@@ -163,7 +163,7 @@ export default function Header() {
               <TfiMenu className="text-2xl cursor-pointer" />
             </button>
           </div>
-          <a href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="mockLogo.jpg" alt="logo"/></a>
+          <a href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="Level up logo.png" alt="logo"/></a>
           <div className="flex gap-5 items-center mr-6 text-black">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button><FiUser className="text-2xl cursor-pointer"/></button>
@@ -231,7 +231,7 @@ export default function Header() {
         {/* Desktop navigation */}
         <div className="relative items-center justify-between bg-white h-16 hidden lg:flex z-50 border-b border-gray-300">
           <div className="flex items-center">
-            <a href="/" className="w-15 justify-start ml-10 mr-10"><img src="mockLogo.jpg"/></a>
+            <a href="/" className="w-15 justify-start ml-10 mr-10"><img src="Level up logo.png"/></a>
             {navLinksDesktop.map(({ label, href }) => (
               <a key={label} href={href} className="text-black mr-8 uppercase text-sm tracking-wide">{label}</a>
             ))}
