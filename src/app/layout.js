@@ -1,4 +1,3 @@
-import Header from "../components/layout/Header.jsx";
 import "./globals.css";
 import Link from 'next/link'
 import { Montserrat } from "next/font/google";
@@ -26,7 +25,6 @@ export default function RootLayout({ children }) {
         className={`${montserrat.className} antialiased bg-white text-black`}
       >
         <CartProvider>
-          <Header />
 
           <main className="max-w-6x1 mx-auto bg-white text-black min-h-screen">
             {children}

@@ -7,7 +7,6 @@ export const CartContext = createContext();
 export function CartProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  console.log("cart items:", cartItems)
 
   useEffect(() => {
     const saved = localStorage.getItem("cartItems");

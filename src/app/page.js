@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { fetchFeaturedShopifyProducts } from "@/data/fetchFeaturedShopifyProducts";
+import Header from "@/components/layout/Header";
 
 const MotionImage = motion.create(Image);
 const ProductCard = dynamic(() => import("@/components/product/ProductCard"));
@@ -23,11 +24,10 @@ useEffect(() => {
   });
 }, []);
 
-
-  console.log(products, "products in homepage:")
-  setTimeout(() => console.log(products.map(p => p.metafields.edges), "homepage metafields"))
   return (
     <div>
+      <Header />
+      
       <div className="relative w-full min-h-[50vh] flex flex-col justify-center items-center text-white">
         <MotionImage 
           src="/mockHero.jpg"

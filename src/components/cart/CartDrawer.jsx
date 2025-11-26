@@ -49,7 +49,7 @@ export default function CartDrawer() {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
             {/* Header */}
-            <div className="flex justify-between items-center p-4 border-b">
+            <div className="flex justify-between items-center px-5 py-8 border-b">
               <h2 className="text-xl font-semibold text-black">Your Cart <span>({cartItems.length} items)</span></h2>
               
               <button className="text-black cursor-pointer" onClick={toggleCart}>
@@ -121,9 +121,9 @@ export default function CartDrawer() {
             </div>
             {/* Footer  */}
             <div className="border-t p-4">
-              <Link href="/checkout">
+              <Link href="/checkout" onClick={toggleCart}>
                 <button 
-                  className="w-full bg-black py-3 font-bold cursor-pointer hover:bg-gray-800 disabled:bg-gray-500" 
+                  className="w-full bg-black py-3 font-bold cursor-pointer hover:bg-gray-800 disabled:bg-gray-500 text-white" 
                   disabled={cartItems.length === 0}
                 >
                   Checkout <span>(${getCartTotal().toFixed(2)})</span>
