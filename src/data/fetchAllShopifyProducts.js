@@ -1,5 +1,8 @@
-const SHOPIFY_API_URL = "https://level-up-272060.myshopify.com/api/2025-01/graphql.json";
-const SHOPIFY_STOREFRONT_TOKEN = "1d84dfaddf78568b1eeea0f9782ff43e";
+const SHOPIFY_API_URL = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/api/2025-01/graphql.json`;
+const SHOPIFY_STOREFRONT_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN;
+
+console.log("Domain2:", process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN);
+console.log("Token2:", process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN);
 
 export async function fetchAllShopifyProducts() {
   const query = `
