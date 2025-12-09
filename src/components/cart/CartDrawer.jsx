@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import formatSizeLabel from "@/utils/FormatSizeLabel";
 
 export default function CartDrawer() {
-  const { isOpen, toggleCart, cartItems, removeFromCart, decreaseCartQuantity, increaseCartQuantity, getCartTotal } = useCart();
+  const { isOpen, toggleCart, closeCart, cartItems, removeFromCart, decreaseCartQuantity, increaseCartQuantity, getCartTotal } = useCart();
 
   useEffect(() => {
     if (isOpen) {
@@ -37,7 +37,7 @@ export default function CartDrawer() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={toggleCart}
+            onClick={closeCart}
           />
 
           {/* Drawer Panel */}

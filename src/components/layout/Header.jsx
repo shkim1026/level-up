@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import SearchResults from '../searchbar/SearchResults';
 import { fetchAllShopifyProducts } from '@/data/fetchAllShopifyProducts';
 import { useCart } from "@/components/cart/CartContext";
+import Link from 'next/link';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -163,7 +164,7 @@ export default function Header() {
               <TfiMenu className="text-2xl cursor-pointer" />
             </button>
           </div>
-          <a href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="Level up logo.png" alt="logo"/></a>
+          <Link href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="Level up logo.png" alt="logo"/></Link>
           <div className="flex gap-5 items-center mr-6 text-black">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button><FiUser className="text-2xl cursor-pointer"/></button>
@@ -231,9 +232,33 @@ export default function Header() {
         {/* Desktop navigation */}
         <div className="relative items-center justify-between bg-white h-16 hidden lg:flex z-50 border-b border-gray-300">
           <div className="flex items-center">
-            <a href="/" className="w-15 justify-start ml-10 mr-10"><img src="Level up logo.png"/></a>
+            <Link href="/" className="w-15 justify-start ml-10 mr-10"><img src="Level up logo.png"/></Link>
             {navLinksDesktop.map(({ label, href }) => (
-              <a key={label} href={href} className="text-black mr-8 uppercase text-sm tracking-wide">{label}</a>
+              <Link 
+                key={label} 
+                href={href} 
+                className="
+                  relative
+                  text-black 
+                  font-semibold
+                  mr-8 
+                  uppercase 
+                  text-sm 
+                  tracking-wide 
+                  duration-300 
+                  before:absolute 
+                  before:-bottom-6
+                  before:left-0 
+                  before:w-0 
+                  before:h-0.75 
+                  before:bg-black 
+                  before:transition-all 
+                  before:duration-300 
+                  hover:before:w-full
+                "
+              >
+                {label}
+              </Link>
             ))}
           </div>
           <div className="flex gap-5 items-center mr-10 text-black">

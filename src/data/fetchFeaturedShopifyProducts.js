@@ -1,9 +1,6 @@
 const SHOPIFY_API_URL = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/api/2025-01/graphql.json`;
 const SHOPIFY_STOREFRONT_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN;
 
-console.log("Domain:", process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN);
-console.log("Token:", process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN);
-
 export async function fetchFeaturedShopifyProducts() {
   const query = `
     {
@@ -18,6 +15,14 @@ export async function fetchFeaturedShopifyProducts() {
               featuredImage {
                 url
                 altText
+              }
+              images(first: 10) {
+                edges {
+                  node {
+                    url
+                    altText
+                  }
+                }
               }
               variants(first: 1) {
                 edges {
@@ -85,6 +90,12 @@ export async function fetchFeaturedShopifyProducts() {
           handle: node.handle,
           description: node.description,
           image: node.featuredImage?.url || "",
+          images: node.images
+            ? node.images.edges.map(edge => ({
+              url: edge.node.url || null,
+              altText: edge.node.altText || "",
+            }))
+            : [],
           price: node.variants.edges[0]?.node.price.amount || "0.00",
           currency: node.variants.edges[0]?.node.price.currencyCode || "USD",
           metafields,

@@ -3,8 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa";
+import { useState } from "react";
 
 export default function CheckoutComponent({ cartItems = [] }) {
+  const [code, setCode] = useState("");
+
   return (
     <main className="flex flex-col max-w-6xl mx-auto">
     {/* Progress nav */}
@@ -223,6 +226,39 @@ export default function CheckoutComponent({ cartItems = [] }) {
                 </div>
               ))
             )}
+          </div>
+
+          {/* Discount Code */}
+          <div className="flex">
+            <div className="relative w-full mr-5">
+              <input 
+                type="text"  
+                id="discount"
+                placeholder=" "
+                className="peer border border-gray-400 bg-white px-3 pt-5 pb-1 rounded-lg w-full top-3"
+                onChange={(e) => setCode(e.target.value)}
+              />
+              <label 
+                htmlFor="discount" 
+                className="
+                  absolute left-3 top-2 text-gray-500 transition-all duration-200 
+                  peer-placeholder-shown:top-3 peer-placeholder-shown-text-base 
+                  peer-focus:top-1 peer-focus:text-sm 
+                  peer-not-placeholder-shown:top-1 peer-not-placeholder-show:text-xs
+                "
+              >
+                Discount code or gift card
+              </label>
+            </div>
+            <button 
+              disabled={!code.trim()}
+              className={`
+                border border-gray-400 rounded-lg font-semibold px-3
+                ${!code.trim()
+                  ? "text-gray-400 bg-gray-100 cursor-not-allowed"
+                  : "text-white bg-blue-600 hover:bg-blue-800 cursor-pointer"}
+              `}
+            >Apply</button>
           </div>
 
           {/* Total */}

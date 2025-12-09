@@ -19,6 +19,8 @@ export function CartProvider({ children }) {
 
   const toggleCart = () => setIsOpen((prev) => !prev);
 
+  const closeCart = () => setIsOpen(false);
+
   const addToCart = (item) => {
     setCartItems((prev) => {
       const existingItem = prev.find(
@@ -81,6 +83,7 @@ export function CartProvider({ children }) {
       value={{ 
         isOpen, 
         toggleCart, 
+        closeCart,
         cartItems, 
         addToCart, 
         removeFromCart, 

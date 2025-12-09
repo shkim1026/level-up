@@ -9,8 +9,6 @@ export default function SiteLayout({ children }) {
       <main className="max-w-6x1 mx-auto bg-white text-black min-h-screen">
         {children}
       </main>
-
-      <CartDrawer />
     </>
   );
 }
