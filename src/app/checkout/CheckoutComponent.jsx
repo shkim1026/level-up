@@ -40,9 +40,9 @@ export default function CheckoutComponent({ cartItems = [] }) {
         </ol>
       </nav>
 
-      <div className="w-full min-h-screen grid grid-cols-1 md:grid-cols-2 gap-8 p-8 bg-gray-50">  
+      <div className="w-full min-h-screen grid grid-cols-1 md:grid-cols-2 gap-8 p-8 bg-white">  
         {/* Left: Customer Info */}
-        <div className="bg-white rounded-2xl shadow p-6 space-y-6">
+        <div className="bg-gray-50 rounded-2xl shadow p-6 space-y-6">
           <h2 className="text-xl font-bold">Contact</h2>
 
           <div className="space-y-4">

@@ -8,20 +8,21 @@ export default function CartComponent() {
   const { cartItems, removeFromCart, decreaseCartQuantity, increaseCartQuantity, getCartTotal } = useCart();
   console.log(cartItems, "cartItems:")
   return (
-    <main className="mx-auto max-w-6xl">
+    <main className="mx-auto max-w-7xl">
       <h1 className="flex justify-center text-3xl font-semibold uppercase py-10">Cart</h1>
       {cartItems.length === 0 ? (
         <p className="flex justify-center">Your cart is empty.</p>
       ) : (
-        <div className="pb-10">
+        <div className="pb-10 mx-4 md:mx-8">
           <div>
+            {/* Table Heading */}
             <div className="hidden md:grid border-b border-gray-300 grid-cols-5 gap-4 text-gray-500 uppercase text-sm pb-3">
               <p className="mr-auto font-normal">Product</p>
               <p className="col-start-4 mx-auto font-normal">Quantity</p>
               <p className="col-start-5 ml-auto font-normal">Total</p>
             </div>
 
-            <div className="px-4">
+            <div>
               {cartItems.map((item, index) => (
                 <div key={index} className="border-b border-gray-300 md:grid grid-cols-5 gap-4">
                   <div className="flex mx-auto col-start-1 col-end-3">
@@ -104,7 +105,7 @@ export default function CartComponent() {
             </div>
           </div>
 
-          <div className="ml-auto py-4 px-4 md:text-right">
+          <div className="ml-auto py-4 md:text-right">
             <div>
               <span className="pr-2">Total:</span>
               <span>${getCartTotal().toFixed(2)} USD</span>
@@ -112,9 +113,11 @@ export default function CartComponent() {
             <p className="text-xs text-gray-500 pt-2">Taxes and shipping calculated at checkout</p>
           </div>
 
-          <Link href="/checkout">
-            <button className="text-white py-3 px-5 bg-black rounded-lg uppercase text-sm cursor-pointer hover:bg-gray-800 w-full overflow-hidden mx-4 text-center md:ml-auto md:w-fit">Checkout</button>
-          </Link>
+          <div className="md:flex md:justify-end">
+            <Link href="/checkout">
+              <button className="text-white py-3 px-5 bg-black rounded-lg uppercase text-sm cursor-pointer hover:bg-gray-800 w-full text-center md:w-fit">Checkout</button>
+            </Link>
+          </div>
         </div>
       )}
     </main>

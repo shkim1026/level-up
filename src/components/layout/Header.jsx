@@ -158,7 +158,7 @@ export default function Header() {
         )}
 
         {/* Mobile Navigation */}
-        <div className="relative flex items-center justify-between bg-white h-16 lg:hidden z-50">
+        <div className="relative flex items-center justify-between bg-white h-16 lg:hidden z-50 border-b border-gray-300">
           <div className="flex gap-5 items-center ml-6 text-black">
             <button onClick={toggleMobileMenu}>
               <TfiMenu className="text-2xl cursor-pointer" />
@@ -263,7 +263,9 @@ export default function Header() {
           </div>
           <div className="flex gap-5 items-center mr-10 text-black">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
-            <button><FiUser className="text-2xl cursor-pointer"/></button>
+            <Link href="/authentication/login">
+              <div><FiUser className="text-2xl cursor-pointer"/></div>
+            </Link>
             <button onClick={toggleCart} className="relative">
               <TfiShoppingCart className="text-2xl cursor-pointer" />
               {cartItems.length > 0 && (
