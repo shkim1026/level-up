@@ -39,6 +39,11 @@ export default function Header() {
     { label: "Shop", href: "/apparel" },
   ]
 
+  function handleShopifyLogin() {
+    window.location.href =
+      `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/account/login`;
+  }
+
   // Fetch products on mount
   useEffect(() => {
     async function loadProducts() {
@@ -167,7 +172,7 @@ export default function Header() {
           <Link href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="Level up logo.png" alt="logo"/></Link>
           <div className="flex gap-5 items-center mr-6 text-black">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
-            <button><FiUser className="text-2xl cursor-pointer"/></button>
+            <button onClick={handleShopifyLogin}><FiUser className="text-2xl cursor-pointer"/></button>
             <button onClick={toggleCart} className="relative">
               <TfiShoppingCart className="text-2xl cursor-pointer" />
               {cartItems.length > 0 && (
@@ -263,9 +268,11 @@ export default function Header() {
           </div>
           <div className="flex gap-5 items-center mr-10 text-black">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
-            <Link href="/authentication/login">
-              <div><FiUser className="text-2xl cursor-pointer"/></div>
-            </Link>
+
+            <button onClick={handleShopifyLogin}>
+              <FiUser className="text-2xl cursor-pointer"/>
+            </button>
+
             <button onClick={toggleCart} className="relative">
               <TfiShoppingCart className="text-2xl cursor-pointer" />
               {cartItems.length > 0 && (

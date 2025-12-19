@@ -23,6 +23,8 @@ export default function ProductDetailsClient({ product, allProducts }) {
   const [selectedSize, setSelectedSize] = useState(
     product.variants?.[0]?.options?.[0]?.value || null
   )
+  const [variantId, setVariantId] = useState("");
+
   const mainRef = useRef(null);
   const thumbnailRef = useRef(null);
   const { addToCart } = useCart();
@@ -153,7 +155,10 @@ export default function ProductDetailsClient({ product, allProducts }) {
                       name="size"
                       className="sr-only peer"
                       defaultChecked={index === 0}
-                      onChange={() => setSelectedSize(sizeValue)}
+                      onChange={() => {
+                        setVariantId(variant.id); 
+                        setSelectedSize(sizeValue);
+                      }}
                     />
                     <label
                       htmlFor={variant.id}
@@ -187,7 +192,7 @@ export default function ProductDetailsClient({ product, allProducts }) {
 
           <button 
             className="mt-7 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition w-full cursor-pointer uppercase tracking-wide"
-            onClick={() => addToCart({...product, quantity, selectedSize})}
+            onClick={() => addToCart({...product, quantity, selectedSize, variantId})}
           >
             Add to Cart
           </button>

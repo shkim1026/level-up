@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "./CartContext";
+import { getOrCreateCart } from "@/lib/shopify/cart";
 import Image from "next/image";
-import Link from "next/link";
 import { TfiClose, TfiTrash } from 'react-icons/tfi';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { useEffect } from "react";
@@ -11,6 +12,24 @@ import formatSizeLabel from "@/utils/FormatSizeLabel";
 
 export default function CartDrawer() {
   const { isOpen, toggleCart, closeCart, cartItems, removeFromCart, decreaseCartQuantity, increaseCartQuantity, getCartTotal } = useCart();
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
+  async function handleCheckout() {
+    if (!cartItems.length) return;
+
+    try {
+      setIsRedirecting(true);
+
+      const cart = await getOrCreateCart(cartItems);
+
+      closeCart();
+
+      window.location.href = cart.checkoutUrl;
+    } catch (error) {
+      console.error("Cart checkout failed:", error);
+      setIsRedirecting(false);
+    }
+  }
 
   useEffect(() => {
     if (isOpen) {
@@ -26,6 +45,8 @@ export default function CartDrawer() {
       document.body.style.paddingRight = "";
     };
   }, [isOpen]);
+
+  console.log(cartItems, "cart items")
 
   return (
     <AnimatePresence>
@@ -121,14 +142,16 @@ export default function CartDrawer() {
             </div>
             {/* Footer  */}
             <div className="border-t p-4">
-              <Link href="/checkout" onClick={toggleCart}>
-                <button 
-                  className="w-full bg-black py-3 font-bold cursor-pointer hover:bg-gray-800 disabled:bg-gray-500 text-white" 
-                  disabled={cartItems.length === 0}
-                >
-                  Checkout <span>(${getCartTotal().toFixed(2)})</span>
-                </button>
-              </Link>
+              <button 
+                onClick={handleCheckout}
+                disabled={cartItems.length === 0 || isRedirecting}
+                className="w-full bg-black py-3 font-bold cursor-pointer hover:bg-gray-800 disabled:bg-gray-500 text-white" 
+              >
+                {isRedirecting 
+                  ? "Redirecting..."
+                  : <>Checkout <span>(${getCartTotal().toFixed(2)})</span></>
+                }
+              </button>
             </div>
           </motion.div>
         </>
