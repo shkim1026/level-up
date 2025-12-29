@@ -1,10 +1,10 @@
 
 import { fetchAllShopifyProducts } from "@/data/fetchAllShopifyProducts";
-import ProductDetailsClient from "./ProductDetailsClient";
+import ProductDetails from "./ProductDetails";
 import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
 import { Suspense } from "react";
 
-export default async function ProductDetails({ params }) {
+export default async function ProductDetailsPage({ params }) {
 
   const { id } = await params;
 
@@ -17,7 +17,7 @@ export default async function ProductDetails({ params }) {
 
   return (
     <Suspense fallback={<ProductDetailsSkeleton />}>
-      <ProductDetailsClient product={product} allProducts={products} />
+      <ProductDetails product={product} allProducts={products} />
     </Suspense>
   )
 }
