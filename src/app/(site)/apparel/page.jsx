@@ -1,11 +1,16 @@
 import { Suspense } from "react";
 import ProductGridSkeleton from "@/components/product/ProductGridSkeleton";
-import ApparelData from "./ApparelData"; 
+import { fetchAllShopifyProducts } from "@/data/fetchAllShopifyProducts";
+import { ProductProvider } from "@/context/ProductContext";
+import ProductListing from "@/components/product/ProductListing";
 
-export default function ApparelPage() {
+export default async function ApparelPage() {
+  const products = await fetchAllShopifyProducts();
   return (
     <Suspense fallback={<ProductGridSkeleton />}>
-      <ApparelData />
+      <ProductProvider initialProducts={products}>
+        <ProductListing products={products}/>
+      </ProductProvider>
     </Suspense>
   );
 }
