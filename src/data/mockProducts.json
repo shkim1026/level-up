@@ -1,0 +1,310 @@
+[
+  {
+    "id": 1,
+    "title": "Cowboy Bebop T-Shirt",
+    "handle": "cowboy-bebop-t-shirt",
+    "body_html": "The Oversized Tie-Dye T-Shirt embraces two fashion trends in one and is a streetwear essential. The durable shirt is made from 100% heavyweight cotton and has extended sleeves.",
+    "vendor": "Level Up Threads",
+    "type": "Apparel",
+    "tags": ["Cowboy Bebop", "Anime", "T-Shirt", "Apparel", "Featured"],
+    "price": 2000,
+    "compare_at_price": 1500,
+    "available": true,
+    "variants": [
+      { "id": 101, "title": "Small", "price": 2000, "compare_at_price": 1500, "available": true },
+      { "id": 102, "title": "Medium", "price": 2000, "compare_at_price": 1500, "available": true },
+      { "id": 103, "title": "Large", "price": 2000, "compare_at_price": 1500, "available": true },
+      { "id": 104, "title": "X Large", "price": 2000, "compare_at_price": 1500, "available": true }
+    ],
+    "images": [
+      { "src": "/products/mockShirt-main-front.jpg" },
+      { "src": "/products/mockShirt-main-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-front.jpg" },
+      { "src": "/products/mockShirt-maleModel-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-close.jpg" },
+      { "src": "/products/mockShirt-femaleModel-front.jpg" },
+      { "src": "/products/mockShirt-femaleModel-back.jpg" },
+      { "src": "/products/mockShirt-femaleModel-close.jpg" }
+    ],
+    "image": { "src": "/products/mockShirt-main-front.jpg" },
+    "metafields": {
+      "hover-image": { "src": "/products/mockShirt-main-back.jpg" },
+      "series": "Cowboy Bebop",
+      "category": "T-Shirt",
+      "featured": true,
+      "popularity": 100,
+      "rating": 4.8,
+      "new": false,
+      "product-features": [
+        "100% US grown cotton",
+        "Oversized fit",
+        "Ribbed neck",
+        "Blank product sourced from Honduras"
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "title": "DanDaDan T-Shirt",
+    "handle": "dandadan-t-shirt",
+    "body_html": "A comfortable and bold oversized tee inspired by the hit manga DanDaDan. Perfect for casual wear or anime conventions.",
+    "vendor": "Level Up Threads",
+    "type": "Apparel",
+    "tags": ["DanDaDan", "Anime", "T-Shirt", "Apparel", "Featured"],
+    "price": 2500,
+    "compare_at_price": null,
+    "available": true,
+    "variants": [
+      { "id": 201, "title": "Small", "price": 2500, "compare_at_price": null, "available": true },
+      { "id": 202, "title": "Medium", "price": 2500, "compare_at_price": null, "available": true },
+      { "id": 203, "title": "Large", "price": 2500, "compare_at_price": null, "available": true },
+      { "id": 204, "title": "X Large", "price": 2500, "compare_at_price": null, "available": true }
+    ],
+    "images": [
+      { "src": "/products/mockShirt-main-front.jpg" },
+      { "src": "/products/mockShirt-main-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-front.jpg" },
+      { "src": "/products/mockShirt-maleModel-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-close.jpg" },
+      { "src": "/products/mockShirt-femaleModel-front.jpg" },
+      { "src": "/products/mockShirt-femaleModel-back.jpg" },
+      { "src": "/products/mockShirt-femaleModel-close.jpg" }
+    ],
+    "image": { "src": "/products/mockShirt-main-front.jpg" },
+    "metafields": {
+      "hover-image": { "src": "/products/mockShirt-main-back.jpg" },
+      "series": "DanDaDan",
+      "category": "T-Shirt",
+      "featured": true,
+      "popularity": 90,
+      "rating": 4.6,
+      "new": true,
+      "product-features": [
+        "100% US grown cotton",
+        "Oversized fit",
+        "Ribbed neck",
+        "Blank product sourced from Honduras"
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "title": "Overwatch - Ana T-Shirt",
+    "handle": "overwatch-ana-t-shirt",
+    "body_html": "Celebrate Ana from Overwatch with this high-quality oversized tee, designed for comfort and gaming fans alike.",
+    "vendor": "Level Up Threads",
+    "type": "Apparel",
+    "tags": ["Overwatch", "Ana", "Video Game","T-Shirt", "Apparel", "Featured"],
+    "price": 2000,
+    "compare_at_price": null,
+    "available": true,
+    "variants": [
+      { "id": 301, "title": "Small", "price": 2000, "compare_at_price": null, "available": true },
+      { "id": 302, "title": "Medium", "price": 2000, "compare_at_price": null, "available": true },
+      { "id": 303, "title": "Large", "price": 2000, "compare_at_price": null, "available": true },
+      { "id": 304, "title": "X Large", "price": 2000, "compare_at_price": null, "available": true }
+    ],
+    "images": [
+      { "src": "/products/mockShirt-main-front.jpg" },
+      { "src": "/products/mockShirt-main-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-front.jpg" },
+      { "src": "/products/mockShirt-maleModel-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-close.jpg" },
+      { "src": "/products/mockShirt-femaleModel-front.jpg" },
+      { "src": "/products/mockShirt-femaleModel-back.jpg" },
+      { "src": "/products/mockShirt-femaleModel-close.jpg" }
+    ],
+    "image": { "src": "/products/mockShirt-main-front.jpg" },
+    "metafields": {
+      "hover-image": { "src": "/products/mockShirt-main-back.jpg" },
+      "series": "Overwatch",
+      "category": "T-Shirt",
+      "featured": true,
+      "popularity": 88,
+      "rating": 4.8,
+      "new": true,
+      "product-features": [
+        "100% US grown cotton",
+        "Oversized fit",
+        "Ribbed neck",
+        "Blank product sourced from Honduras"
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "title": "Overwatch - Tracer T-Shirt",
+    "handle": "overwatch-tracer-t-shirt",
+    "body_html": "Show your love for Tracer, the iconic time-jumping hero of Overwatch, with this bold oversized tee.",
+    "vendor": "Level Up Threads",
+    "type": "Apparel",
+    "tags": ["Overwatch", "Tracer", "Video Game", "T-Shirt", "Apparel", "Featured"],
+    "price": 2000,
+    "compare_at_price": null,
+    "available": true,
+    "variants": [
+      { "id": 401, "title": "Small", "price": 2000, "compare_at_price": null, "available": true },
+      { "id": 402, "title": "Medium", "price": 2000, "compare_at_price": null, "available": true },
+      { "id": 403, "title": "Large", "price": 2000, "compare_at_price": null, "available": true },
+      { "id": 404, "title": "X Large", "price": 2000, "compare_at_price": null, "available": true }
+    ],
+    "images": [
+      { "src": "/products/mockShirt-main-front.jpg" },
+      { "src": "/products/mockShirt-main-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-front.jpg" },
+      { "src": "/products/mockShirt-maleModel-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-close.jpg" },
+      { "src": "/products/mockShirt-femaleModel-front.jpg" },
+      { "src": "/products/mockShirt-femaleModel-back.jpg" },
+      { "src": "/products/mockShirt-femaleModel-close.jpg" }
+    ],
+    "image": { "src": "/products/mockShirt-main-front.jpg" },
+    "metafields": {
+      "hover-image": { "src": "/products/mockShirt-main-back.jpg" },
+      "series": "Overwatch",
+      "category": "T-Shirt",
+      "featured": true,
+      "popularity": 31,
+      "rating": 4.4,
+      "new": true,
+      "product-features": [
+        "100% US grown cotton",
+        "Oversized fit",
+        "Ribbed neck",
+        "Blank product sourced from Honduras"
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "title": "DanDaDan - Japanese Jacket",
+    "handle": "dandadan-japanese-jacket",
+    "body_html": "A sleek Japanese-style bomber jacket featuring designs inspired by DanDaDan’s stylish manga art.",
+    "vendor": "Level Up Threads",
+    "type": "Apparel",
+    "tags": ["DanDaDan", "Anime", "Apparel",  "Jacket", "Featured"],
+    "price": 8000,
+    "compare_at_price": null,
+    "available": true,
+    "variants": [
+      { "id": 501, "title": "Small", "price": 8000, "compare_at_price": null, "available": true },
+      { "id": 502, "title": "Medium", "price": 8000, "compare_at_price": null, "available": true },
+      { "id": 503, "title": "Large", "price": 8000, "compare_at_price": null, "available": true },
+      { "id": 504, "title": "X Large", "price": 8000, "compare_at_price": null, "available": true }
+    ],
+    "images": [
+      { "src": "/products/mockShirt-main-front.jpg" },
+      { "src": "/products/mockShirt-main-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-front.jpg" },
+      { "src": "/products/mockShirt-maleModel-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-close.jpg" },
+      { "src": "/products/mockShirt-femaleModel-front.jpg" },
+      { "src": "/products/mockShirt-femaleModel-back.jpg" },
+      { "src": "/products/mockShirt-femaleModel-close.jpg" }
+    ],
+    "image": { "src": "/products/mockShirt-main-front.jpg" },
+    "metafields": {
+      "hover-image": { "src": "/products/mockShirt-main-back.jpg" },
+      "series": "DanDaDan",
+      "category": "Jacket",
+      "featured": true,
+      "popularity": 69,
+      "rating": 4.0,
+      "new": true,
+      "product-features": [
+        "Premium polyester blend",
+        "Embroidered back panel",
+        "Japanese-inspired cut",
+        "Ribbed cuffs and waist"
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "title": "The Cake is a Lie Sweatshirt",
+    "handle": "the-cake-is-a-lie-sweatshirt",
+    "body_html": "Stay cozy while referencing a gaming classic. The Cake is a Lie sweatshirt is made for Portal fans and comfort lovers.",
+    "vendor": "Level Up Threads",
+    "type": "Apparel",
+    "tags": ["Portal", "Video Game", "Sweatshirt", "Apparel"],
+    "price": 4500,
+    "compare_at_price": null,
+    "available": true,
+    "variants": [
+      { "id": 601, "title": "Small", "price": 4500, "compare_at_price": null, "available": true },
+      { "id": 602, "title": "Medium", "price": 4500, "compare_at_price": null, "available": true },
+      { "id": 603, "title": "Large", "price": 4500, "compare_at_price": null, "available": true },
+      { "id": 604, "title": "X Large", "price": 4500, "compare_at_price": null, "available": true }
+    ],
+    "images": [
+      { "src": "/products/mockShirt-main-front.jpg" },
+      { "src": "/products/mockShirt-main-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-front.jpg" },
+      { "src": "/products/mockShirt-maleModel-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-close.jpg" },
+      { "src": "/products/mockShirt-femaleModel-front.jpg" },
+      { "src": "/products/mockShirt-femaleModel-back.jpg" },
+      { "src": "/products/mockShirt-femaleModel-close.jpg" }
+    ],
+    "image": { "src": "/products/mockShirt-main-front.jpg" },
+    "metafields": {
+      "hover-image": { "src": "/products/mockShirt-main-back.jpg" },
+      "series": "Portal",
+      "category": "Sweatshirt",
+      "featured": false,
+      "popularity": 42,
+      "rating": 4.2,
+      "new": true,
+      "product-features": [
+        "Soft cotton-poly blend",
+        "Classic fit",
+        "Ribbed cuffs and hem",
+        "Durable print"
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "title": "Ramyunster T-Shirt",
+    "handle": "ramyunster-t-shirt",
+    "body_html": "A quirky and stylish tee inspired by the Myunster brand—perfect for ramen lovers with attitude.",
+    "vendor": "Level Up Threads",
+    "type": "Apparel",
+    "tags": ["Myunster", "T-Shirt", "Apparel", "Featured"],
+    "price": 3500,
+    "compare_at_price": null,
+    "available": true,
+    "variants": [
+      { "id": 701, "title": "Small", "price": 3500, "compare_at_price": null, "available": true },
+      { "id": 702, "title": "Medium", "price": 3500, "compare_at_price": null, "available": true },
+      { "id": 703, "title": "Large", "price": 3500, "compare_at_price": null, "available": true },
+      { "id": 704, "title": "X Large", "price": 3500, "compare_at_price": null, "available": true }
+    ],
+    "images": [
+      { "src": "/products/mockShirt-main-front.jpg" },
+      { "src": "/products/mockShirt-main-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-front.jpg" },
+      { "src": "/products/mockShirt-maleModel-back.jpg" },
+      { "src": "/products/mockShirt-maleModel-close.jpg" },
+      { "src": "/products/mockShirt-femaleModel-front.jpg" },
+      { "src": "/products/mockShirt-femaleModel-back.jpg" },
+      { "src": "/products/mockShirt-femaleModel-close.jpg" }
+    ],
+    "image": { "src": "/products/mockShirt-main-front.jpg" },
+    "metafields": {
+      "hover-image": { "src": "/products/mockShirt-main-back.jpg" },
+      "series": "Myunster",
+      "category": "T-Shirt",
+      "featured": true,
+      "popularity": 55,
+      "rating": 4.9,
+      "new": true,
+      "product-features": [
+        "100% combed cotton",
+        "Relaxed fit",
+        "Durable print",
+        "Pre-shrunk fabric"
+      ]
+    }
+  }
+]
