@@ -54,7 +54,7 @@ export default function CartDrawer() {
         <>
           {/* Overlay */}
           <motion.div
-            className="fixed inset-0 bg-black/40 z-50"
+            className="fixed inset-0 bg-dark-gray/40 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -71,9 +71,9 @@ export default function CartDrawer() {
           >
             {/* Header */}
             <div className="flex justify-between items-center px-5 py-8 border-b">
-              <h2 className="text-xl font-semibold text-black">Your Cart <span>({cartItems.length} items)</span></h2>
+              <h2 className="text-xl font-semibold text-dark-gray">Your Cart <span>({cartItems.length} items)</span></h2>
               
-              <button className="text-black cursor-pointer" onClick={toggleCart}>
+              <button className="text-dark-gray cursor-pointer" onClick={toggleCart}>
                 <TfiClose />
               </button>
             </div>
@@ -101,11 +101,11 @@ export default function CartDrawer() {
                     <div className="flex flex-col w-full">
                       <div className="flex justify-between">
                         <a href={`/products/${item.handle}`}>
-                          <p className="font-semibold text-sm text-black hover:text-gray-600">{item.title}</p>
+                          <p className="font-semibold text-sm text-dark-gray hover:text-gray-600">{item.title}</p>
                         </a>
                         <button
                           onClick={() => removeFromCart(item.id, item.selectedSize)}
-                          className="text-gray-600 cursor-pointer hover:text-black"
+                          className="text-gray-600 cursor-pointer hover:text-dark-gray"
                         >
                           <TfiTrash />
                         </button>
@@ -132,7 +132,7 @@ export default function CartDrawer() {
                           {item.compareAtPrice && (
                             <p className="text-gray-500 line-through mr-2">${(item.compareAtPrice * item.quantity).toFixed(2)}</p>
                           )}
-                          <p className="text-black">${(item.price * item.quantity).toFixed(2)}</p>
+                          <p className="text-dark-gray">${(item.price * item.quantity).toFixed(2)}</p>
                         </div>
                       </div>
                     </div>
@@ -145,7 +145,7 @@ export default function CartDrawer() {
               <button 
                 onClick={handleCheckout}
                 disabled={cartItems.length === 0 || isRedirecting}
-                className="w-full bg-black py-3 font-bold cursor-pointer hover:bg-gray-800 disabled:bg-gray-500 text-white" 
+                className="w-full bg-dark-gray py-3 font-bold cursor-pointer hover:bg-hover-gray disabled:bg-gray-500 text-white" 
               >
                 {isRedirecting 
                   ? "Redirecting..."

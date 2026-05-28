@@ -43,13 +43,13 @@ export default function ProductCard({ product }) {
       </Link>
 
       <Link href={`/collections/${slugify(product.metafields.series)}`}>
-        <h2 className="mb-2 text-xs text-gray-800 font-semibold uppercase hover:underline">
+        <h2 className="mb-2 text-xs text-gray-800 font-semibold uppercase hover:underline transition-opacity duration-300">
           {product.metafields.series}
         </h2>
       </Link>
 
       <Link href={`/products/${product.handle}`}>
-        <h3 className={`mb-1 text-sm text-black text-center uppercase tracking-wider ${raleway.className}`}>
+        <h3 className={`mb-1 text-sm text-dark-gray text-center uppercase tracking-wider ${raleway.className}`}>
           {product.title}
         </h3>
       
@@ -59,7 +59,7 @@ export default function ProductCard({ product }) {
             <p className="text-gray-500 line-through">${product.compareAtPrice}</p>
           </div>
         ) : (
-          <p className="text-black text-center">${product.price}</p>
+          <p className="text-dark-gray text-center">${product.price}</p>
         )}
       </Link>
     </div>

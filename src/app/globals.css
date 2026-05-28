@@ -15,6 +15,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@theme {
+  --color-dark-gray: #212121;
+  --color-hover-gray: #4A4A4A;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

@@ -67,12 +67,12 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
       {results?.length ? (
         <>
           <ul>
-            <p className="text-black font-medium text-gray-700 text-sm underline">Collections</p>
+            <p className="text-dark-gray font-medium text-gray-700 text-sm underline">Collections</p>
             <div className="flex flex-column">
             {[...collections].map((category) => (
               <a key={category} href={`/collections/${slugify(category)}`}>
                 <li className="p-3 hover:bg-gray-100 cursor-pointer">
-                  <p className="text-black">{category}</p>
+                  <p className="text-dark-gray">{category}</p>
                 </li>
               </a>
             ))}
@@ -80,7 +80,7 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
           </ul>
           <hr className="mb-3 text-gray-200"/>
           <ul>
-            <p className="text-black font-medium text-gray-700 text-sm underline">Products</p>
+            <p className="text-dark-gray font-medium text-gray-700 text-sm underline">Products</p>
             {results.map((r) => (
               <a key={r.id} href={`/products/${r.handle}`}>
                 <li className="p-3 hover:bg-gray-100 cursor-pointer flex">
@@ -89,14 +89,14 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
                     : <div className="bg-gray-200 rounded-lg w-25 h-25 flex items-center justify-center text-gray-500">No Image</div>
                   }
                   <div className="flex flex-col ml-5 justify-center">
-                    <h4 className="text-black font-medium">{r.title}</h4>
+                    <h4 className="text-dark-gray font-medium">{r.title}</h4>
                     {r.compareAtPrice ? (
                       <div className="flex items-center">
                         <p className="text-red-500">${r.price}</p>
                         <p className="text-gray-600 ml-2 line-through">${r.compareAtPrice}</p>
                       </div>
                     ) : (
-                      <p className="text-black">${r.price}</p>
+                      <p className="text-dark-gray">${r.price}</p>
                     )}
                   </div>
                 </li>

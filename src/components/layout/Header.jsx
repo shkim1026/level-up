@@ -158,19 +158,19 @@ export default function Header() {
       <nav>
         {promoBannerIsOpen && (
           <div className="promoBanner z-50">
-            <p className="text-xs text-center text-white p-2 uppercase bg-black">Free shipping on all orders $200+</p>
+            <p className="text-xs text-center text-white p-2 uppercase bg-dark-gray">Free shipping on all orders $200+</p>
           </div>
         )}
 
         {/* Mobile Navigation */}
         <div className="relative flex items-center justify-between bg-white h-16 lg:hidden z-50 border-b border-gray-300">
-          <div className="flex gap-5 items-center ml-6 text-black">
+          <div className="flex gap-5 items-center ml-6 text-dark-gray">
             <button onClick={toggleMobileMenu}>
               <TfiMenu className="text-2xl cursor-pointer" />
             </button>
           </div>
           <Link href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="Level up logo.png" alt="logo"/></Link>
-          <div className="flex gap-5 items-center mr-6 text-black">
+          <div className="flex gap-5 items-center mr-6 text-dark-gray">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button onClick={handleShopifyLogin}><FiUser className="text-2xl cursor-pointer"/></button>
             <button onClick={toggleCart} className="relative">
@@ -191,7 +191,7 @@ export default function Header() {
               {/* Background overlay */}
               <motion.div
                 key="mobile-menu-overlay"
-                className="fixed inset-0 bg-black z-40"
+                className="fixed inset-0 bg-dark-gray z-40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 exit={{ opacity: 0 }}
@@ -201,7 +201,7 @@ export default function Header() {
               {/* Sliding menu panel */}
               <motion.div
                 key="mobile-menu"
-                className="fixed top-0 left-0 bg-white h-screen max-w-[92vw] sm:max-w-md z-50 text-black"
+                className="fixed top-0 left-0 bg-white h-screen max-w-[92vw] sm:max-w-md z-50 text-dark-gray"
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 exit={{ width: 0 }}
@@ -235,52 +235,57 @@ export default function Header() {
         </AnimatePresence>
 
         {/* Desktop navigation */}
-        <div className="relative items-center justify-between bg-white h-16 hidden lg:flex z-50 border-b border-gray-300">
-          <div className="flex items-center">
-            <Link href="/" className="w-15 justify-start ml-10 mr-10"><img src="Level up logo.png"/></Link>
-            {navLinksDesktop.map(({ label, href }) => (
-              <Link 
-                key={label} 
-                href={href} 
-                className="
-                  relative
-                  text-black 
-                  font-semibold
-                  mr-8 
-                  uppercase 
-                  text-sm 
-                  tracking-wide 
-                  duration-300 
-                  before:absolute 
-                  before:-bottom-6
-                  before:left-0 
-                  before:w-0 
-                  before:h-0.75 
-                  before:bg-black 
-                  before:transition-all 
-                  before:duration-300 
-                  hover:before:w-full
-                "
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-          <div className="flex gap-5 items-center mr-10 text-black">
-            <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
+        <div className="bg-white hidden lg:block border-b border-gray-300 bg-white z-50">
+          <div className="relative items-center justify-between h-16 flex max-w-[1920px] mx-auto">
+            <div className="flex items-center">
+              <Link href="/" className="w-15 justify-start ml-10 mr-10"><img src="Level up logo.png"/></Link>
+              {navLinksDesktop.map(({ label, href }) => (
+                <Link 
+                  key={label} 
+                  href={href} 
+                  className="
+                    relative
+                    text-dark-gray
+                    hover:text-hover-gray
+                    font-semibold
+                    mr-8 
+                    uppercase 
+                    text-sm 
+                    tracking-wide 
+                    duration-300 
+                    before:absolute 
+                    before:-bottom-6
+                    before:left-0 
+                    before:w-0 
+                    before:h-0.75 
+                    before:bg-hover-gray 
+                    before:transition-all 
+                    before:duration-300 
+                    hover:before:w-full
+                  "
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+            <div className="flex gap-5 items-center mr-10 text-dark-gray">
+              <button onClick={toggleSearchBar} ref={searchButtonRef}>
+                <FiSearch className="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300"/>
+              </button>
 
-            <button onClick={handleShopifyLogin}>
-              <FiUser className="text-2xl cursor-pointer"/>
-            </button>
+              <button onClick={handleShopifyLogin}>
+                <FiUser className="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300"/>
+              </button>
 
-            <button onClick={toggleCart} className="relative">
-              <TfiShoppingCart className="text-2xl cursor-pointer" />
-              {cartItems.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                  {cartItems.length}
-                </span>
-              )}
-            </button>
+              <button onClick={toggleCart} className="relative">
+                <TfiShoppingCart className="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                    {cartItems.length}
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -290,7 +295,7 @@ export default function Header() {
             <>
               <motion.div
                 key="desktop-search-bar-overlay"
-                className="fixed inset-0 bg-black z-40"
+                className="fixed inset-0 bg-dark-gray z-40"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 exit={{ opacity: 0 }}
@@ -300,7 +305,7 @@ export default function Header() {
 
               <motion.div 
                 ref={barRef}
-                className="flex items-center justify-between absolute w-full py-5 px-10 bg-white text-black z-50"
+                className="flex items-center justify-between absolute w-full py-5 px-10 bg-white text-dark-gray z-50"
                 initial={{ opacity: 0, maxHeight: 0 }}
                 animate={{ opacity: 1, maxHeight: 200 }}
                 exit={{ opacity: 0, maxHeight: 0 }}

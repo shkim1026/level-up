@@ -27,7 +27,7 @@ export default function FilterDrawer() {
   return (
     <div className="flex items-center">
       <button
-        className="px-4 py-1 border text-black rounded-lg cursor-pointer"
+        className="px-4 py-1 border text-dark-gray rounded-lg cursor-pointer"
         onClick={() => setOpen(true)}
       >
         Filters
@@ -50,7 +50,7 @@ export default function FilterDrawer() {
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/40 bg-opacity-10 z-50 cursor-pointer"
+          className="fixed inset-0 bg-dark-gray/40 bg-opacity-10 z-50 cursor-pointer"
           onClick={() => setOpen(false)}
         />
       )}

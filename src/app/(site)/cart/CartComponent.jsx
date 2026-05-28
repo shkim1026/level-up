@@ -67,7 +67,7 @@ export default function CartComponent() {
                         </div>
                         <p
                           onClick={() => removeFromCart(item.id, item.selectedSize)}
-                          className="text-gray-600 cursor-pointer hover:text-black underline text-xs pl-4 mb-2"
+                          className="text-gray-600 cursor-pointer hover:text-dark-gray underline text-xs pl-4 mb-2"
                         >Remove</p>
                       </div>
                     </div>
@@ -93,7 +93,7 @@ export default function CartComponent() {
                     </div>
                     <p
                       onClick={() => removeFromCart(item.id, item.selectedSize)}
-                      className="text-gray-600 cursor-pointer hover:text-black underline text-xs"
+                      className="text-gray-600 cursor-pointer hover:text-dark-gray underline text-xs"
                     >Remove</p>
                   </div>
 
@@ -115,7 +115,7 @@ export default function CartComponent() {
 
           <div className="md:flex md:justify-end">
             <Link href="/checkout">
-              <button className="text-white py-3 px-5 bg-black rounded-lg uppercase text-sm cursor-pointer hover:bg-gray-800 w-full text-center md:w-fit">Checkout</button>
+              <button className="text-white py-3 px-5 bg-dark-gray rounded-lg uppercase text-sm cursor-pointer hover:bg-hover-gray w-full text-center md:w-fit">Checkout</button>
             </Link>
           </div>
         </div>

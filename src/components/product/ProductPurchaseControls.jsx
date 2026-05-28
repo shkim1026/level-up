@@ -51,7 +51,7 @@ export default function ProductPurchaseControls({ product }) {
               />
               <label
                 htmlFor={variant.id}
-                className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-black peer-checked:hover:text-white peer-checked:hover:bg-gray-800 peer-checked:border-black hover:bg-gray-300 rounded-sm cursor-pointer"
+                className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-dark-gray peer-checked:hover:text-white peer-checked:hover:bg-hover-gray peer-checked:border-dark-gray hover:bg-gray-300 rounded-sm cursor-pointer"
               >
                 {sizeInitial}
               </label>
@@ -80,7 +80,7 @@ export default function ProductPurchaseControls({ product }) {
 
       {/* Add to Cart */}
       <button 
-        className="mt-7 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition w-full cursor-pointer uppercase tracking-wide"
+        className="mt-7 px-6 py-2 bg-dark-gray text-white rounded-lg hover:bg-hover-gray transition w-full cursor-pointer uppercase tracking-wide"
         onClick={() => addToCart({...product, quantity, selectedSize, variantId})}
       >
         Add to Cart

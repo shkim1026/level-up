@@ -21,11 +21,11 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body
-        className={`${montserrat.className} antialiased bg-white text-black`}
+        className={`${montserrat.className} antialiased bg-white text-dark-gray`}
       >
         <CartProvider>
 
-          <main className="max-w-6x1 mx-auto bg-white text-black min-h-screen">
+          <main className="max-w-6x1 mx-auto bg-white text-dark-gray min-h-screen">
             {children}
           </main>
 
