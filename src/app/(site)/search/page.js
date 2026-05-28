@@ -7,7 +7,7 @@ import { ProductProvider } from "@/context/ProductContext";
 import ProductListing from "@/components/product/ProductListing";
 import { fetchAllShopifyProducts } from "@/data/fetchAllShopifyProducts";
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
   const [products, setProducts] = useState([]);
@@ -29,7 +29,6 @@ export default function SearchPage() {
     : [];
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
       <ProductProvider>
         {query ? (
           <>
@@ -43,6 +42,13 @@ export default function SearchPage() {
           <p className="text-gray-500">Please enter a search term.</p>
         )}
       </ProductProvider>
-    </Suspense>
   );
+}
+
+export default function SearchPage() {
+   return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchContent />
+    </Suspense>
+   );
 }
