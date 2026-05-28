@@ -69,6 +69,7 @@ export async function fetchAllShopifyProducts() {
         "Content-Type": "application/json",
         "X-Shopify-Storefront-Access-Token": SHOPIFY_STOREFRONT_TOKEN,
       },
+      next: { revalidate: 60 },
       body: JSON.stringify({ query }),
       cache: "no-store",
     });

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ProductProvider } from "@/context/ProductContext";
@@ -28,18 +29,20 @@ export default function SearchPage() {
     : [];
 
   return (
-    <ProductProvider>
-      {query ? (
-        <>
-          {searchResults.length > 0 ? (
-            <ProductListing products={searchResults} query={query}/>
-          ): (
-            <p className="text-gray-500">No products found.</p>
-          )}
-        </>
-      ) : (
-        <p className="text-gray-500">Please enter a search term.</p>
-      )}
-    </ProductProvider>
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductProvider>
+        {query ? (
+          <>
+            {searchResults.length > 0 ? (
+              <ProductListing products={searchResults} query={query}/>
+            ): (
+              <p className="text-gray-500">No products found.</p>
+            )}
+          </>
+        ) : (
+          <p className="text-gray-500">Please enter a search term.</p>
+        )}
+      </ProductProvider>
+    </Suspense>
   );
 }
