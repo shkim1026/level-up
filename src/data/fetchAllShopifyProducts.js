@@ -71,7 +71,6 @@ export async function fetchAllShopifyProducts() {
       },
       next: { revalidate: 60 },
       body: JSON.stringify({ query }),
-      cache: "no-store",
     });
 
     const json = await res.json();

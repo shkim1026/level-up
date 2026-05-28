@@ -61,7 +61,6 @@ export async function fetchFeaturedShopifyProducts() {
         "X-Shopify-Storefront-Access-Token": SHOPIFY_STOREFRONT_TOKEN,
       },
       body: JSON.stringify({ query }),
-      cache: "no-store",
     });
 
     const json = await res.json();
