@@ -35,8 +35,8 @@ export default function RootLayout({ children }) {
           </footer>
           <CartDrawer />
         </CartProvider>
-      </body>
       <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      </body>
     </html>
   );
 }
