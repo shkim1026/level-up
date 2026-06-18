@@ -11,7 +11,7 @@ export async function fetchFeaturedShopifyProducts() {
               id
               title
               handle
-              description
+              descriptionHtml
               featuredImage {
                 url
                 altText
@@ -87,7 +87,7 @@ export async function fetchFeaturedShopifyProducts() {
           id: node.id,
           title: node.title,
           handle: node.handle,
-          description: node.description,
+          description: node.descriptionHtml,
           image: node.featuredImage?.url || "",
           images: node.images
             ? node.images.edges.map(edge => ({

@@ -48,35 +48,65 @@ export default function SizeChartPopup() {
                   <thead className="bg-gray-100">
                     <tr>
                       <th className="p-2 border">Size</th>
-                      <th className="p-2 border">Chest (in)</th>
-                      <th className="p-2 border">Waist (in)</th>
                       <th className="p-2 border">Length (in)</th>
+                      <th className="p-2 border">Width (in)</th>
+                      <th className="p-2 border">Chest (in)</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="p-2 border">S</td>
-                      <td className="p-2 border">34-36</td>
-                      <td className="p-2 border">28-30</td>
+                      <td className="p-2 border">XS</td>
                       <td className="p-2 border">27</td>
+                      <td className="p-2 border">16 1/2</td>
+                      <td className="p-2 border">31-34</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 border">S</td>
+                      <td className="p-2 border">28</td>
+                      <td className="p-2 border">18</td>
+                      <td className="p-2 border">34-37</td>
                     </tr>
                     <tr>
                       <td className="p-2 border">M</td>
-                      <td className="p-2 border">38-40</td>
-                      <td className="p-2 border">32-34</td>
-                      <td className="p-2 border">28</td>
+                      <td className="p-2 border">29</td>
+                      <td className="p-2 border">20</td>
+                      <td className="p-2 border">38-41</td>
                     </tr>
                     <tr>
                       <td className="p-2 border">L</td>
-                      <td className="p-2 border">42-44</td>
-                      <td className="p-2 border">36-38</td>
-                      <td className="p-2 border">29</td>
+                      <td className="p-2 border">30</td>
+                      <td className="p-2 border">22</td>
+                      <td className="p-2 border">42-45</td>
                     </tr>
                     <tr>
                       <td className="p-2 border">XL</td>
-                      <td className="p-2 border">46-48</td>
-                      <td className="p-2 border">40-42</td>
+                      <td className="p-2 border">31</td>
+                      <td className="p-2 border">24</td>
+                      <td className="p-2 border">46-49</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 border">2XL</td>
+                      <td className="p-2 border">32</td>
+                      <td className="p-2 border">26</td>
+                      <td className="p-2 border">50-53</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 border">3XL</td>
+                      <td className="p-2 border">33</td>
+                      <td className="p-2 border">28</td>
+                      <td className="p-2 border">54-57</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 border">4XL</td>
+                      <td className="p-2 border">34</td>
                       <td className="p-2 border">30</td>
+                      <td className="p-2 border">58-61</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 border">5XL</td>
+                      <td className="p-2 border">35</td>
+                      <td className="p-2 border">31</td>
+                      <td className="p-2 border">62-65</td>
                     </tr>
                   </tbody>
                 </table>

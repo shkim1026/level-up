@@ -6,6 +6,7 @@ import ProductGridSkeleton from "@/components/product/ProductGridSkeleton";
 
 export default async function NewArrivalsPage() {
   const products = await fetchAllShopifyProducts();
+  console.log("Products:", JSON.stringify(products, null, 2));
   return (
     <Suspense fallback={<ProductGridSkeleton />}>
       <ProductProvider initialProducts={products}>

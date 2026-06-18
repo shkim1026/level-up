@@ -8,7 +8,6 @@ import Image from "next/image";
 import { TfiClose, TfiTrash } from 'react-icons/tfi';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { useEffect } from "react";
-import formatSizeLabel from "@/utils/FormatSizeLabel";
 
 export default function CartDrawer() {
   const { isOpen, toggleCart, closeCart, cartItems, removeFromCart, decreaseCartQuantity, increaseCartQuantity, getCartTotal } = useCart();
@@ -87,7 +86,7 @@ export default function CartDrawer() {
               ) : (
                 cartItems.map((item) => (
                   <div
-                    key={`${item.id}-${item.selectedSize}`}
+                    key={`${item.id}-${item.selectedSize}-${item.selectedColor}`}
                     className="flex items-center border-b pb-2"
                   >
                     <a href={`/products/${item.handle}`}>
@@ -104,16 +103,17 @@ export default function CartDrawer() {
                           <p className="font-semibold text-sm text-dark-gray hover:text-gray-600">{item.title}</p>
                         </a>
                         <button
-                          onClick={() => removeFromCart(item.id, item.selectedSize)}
+                          onClick={() => removeFromCart(item.id, item.selectedSize, item.selectedColor)}
                           className="text-gray-600 cursor-pointer hover:text-dark-gray"
                         >
                           <TfiTrash />
                         </button>
                       </div>
-                      <p className="text-sm text-gray-500">Size: {formatSizeLabel(item.selectedSize)}</p>
+                      <p className="text-sm text-gray-500">Size: {item.selectedSize}</p>
+                      <p className="text-sm text-gray-500">Color: {item.selectedColor}</p>
                       <div className="flex items-center justify-between mt-2">
                         <div className="border rounded-sm border-gray-400 text-gray-500 flex max-w-fit">
-                          <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => decreaseCartQuantity(item.id, item.selectedSize)}>
+                          <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => decreaseCartQuantity(item.id, item.selectedSize, item.selectedColor)}>
                             <span className="sr-only">Decrease quantity</span>
                             <FiMinus />
                           </button>
@@ -123,7 +123,7 @@ export default function CartDrawer() {
                             value={item.quantity}
                             readOnly
                           />
-                          <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => increaseCartQuantity(item.id, item.selectedSize)}>
+                          <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => increaseCartQuantity(item.id, item.selectedSize, item.selectedColor)}>
                             <span className="sr-only">Increase quantity</span>
                             <FiPlus />
                           </button>

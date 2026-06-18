@@ -43,3 +43,22 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.description-html table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+
+.description-html table td,
+.description-html table th {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+}
+
+.description-html table tr:first-child td {
+  background-color: #f9fafb;
+  font-weight: 600;
+}

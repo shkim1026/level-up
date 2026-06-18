@@ -10,7 +10,7 @@ export async function fetchAllShopifyProducts() {
             id
             title
             handle
-            description
+            descriptionHtml
             tags
             featuredImage {
               url
@@ -24,11 +24,15 @@ export async function fetchAllShopifyProducts() {
                 }
               }
             }
-            variants(first: 10) {
+            variants(first: 100) {
               edges {
                 node {
                   id
                   title
+                  image {
+                    url
+                    altText
+                  }
                   price {
                     amount
                     currencyCode
@@ -74,6 +78,8 @@ export async function fetchAllShopifyProducts() {
     });
 
     const json = await res.json();
+    console.log("Raw Shopify response:", JSON.stringify(json, null, 2));
+    console.log("HTTP status:", res.status);
 
     const products =
       json.data?.products?.edges.map(({ node }) => {
@@ -97,7 +103,7 @@ export async function fetchAllShopifyProducts() {
           id: node.id,
           title: node.title,
           handle: node.handle,
-          description: node.description,
+          description: node.descriptionHtml,
           image: node.featuredImage?.url || "",
           images: node.images
             ? node.images.edges.map(edge => ({
@@ -108,6 +114,7 @@ export async function fetchAllShopifyProducts() {
           variants: node.variants?.edges.map(edge => ({
             id: edge.node.id,
             title: edge.node.title,
+            image: edge.node.image?.url || null,
             price: edge.node.price?.amount || "0.00",
             compareAtPrice: edge.node.compareAtPrice?.amount || null,
             currency: edge.node.price?.currencyCode || "USD",

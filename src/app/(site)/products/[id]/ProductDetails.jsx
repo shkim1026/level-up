@@ -51,18 +51,8 @@ export default function ProductDetails({ product, allProducts }) {
           <hr className="text-gray-300 mt-4" />
 
           {/* Description */}
-          <div>
-            <p className="text-sm mt-5">{product.description}</p>
-            <ul>
-              {product.metafields["product-features"]?.map((listItem) => (
-                <li
-                  className="text-sm mt-2 ml-3 list-disc"
-                  key={listItem}
-                >
-                  {listItem}
-                </li>
-              ))}
-            </ul>
+          <div className="text-sm mt-5 description-html">
+            <div dangerouslySetInnerHTML={{ __html: product.description }} />
           </div>
 
           {/* Variant select, Quantity, Add to Cart */}

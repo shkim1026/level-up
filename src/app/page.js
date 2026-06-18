@@ -32,7 +32,7 @@ console.log("featured products:", products)
       
       <div className="relative w-full min-h-[50vh] flex flex-col justify-center items-center text-white">
         <MotionImage 
-          src="/mockHero.jpg"
+          src="/Hero-6-2-26.png"
           alt="hero"
           width={1920}
           height={1080}

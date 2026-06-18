@@ -26,13 +26,15 @@ export function CartProvider({ children }) {
       const existingItem = prev.find(
         (cartItem) => 
           cartItem.id === item.id &&
-          cartItem.selectedSize === item.selectedSize
+          cartItem.selectedSize === item.selectedSize &&
+          cartItem.selectedColor === item.selectedColor
       );
 
       if (existingItem) {
         return prev.map((cartItem) => 
           cartItem.id === item.id &&
-          cartItem.selectedSize === item.selectedSize
+          cartItem.selectedSize === item.selectedSize &&
+          cartItem.selectedColor === item.selectedColor
             ? {...cartItem, quantity: cartItem.quantity + item.quantity }
             : cartItem
         );
@@ -42,18 +44,18 @@ export function CartProvider({ children }) {
     setIsOpen(true);
   };
 
-  const removeFromCart = (id, selectedSize) => {
+  const removeFromCart = (id, selectedSize, selectedColor) => {
     setCartItems((prev) => 
       prev.filter(
-        (item) => !(item.id === id && item.selectedSize === selectedSize)
+        (item) => !(item.id === id && item.selectedSize === selectedSize && item.selectedColor === selectedColor)
       )
     );
   };
 
-  const decreaseCartQuantity = (id, selectedSize) => {
+  const decreaseCartQuantity = (id, selectedSize, selectedColor) => {
     setCartItems((prev) =>
       prev.map((item) => 
-        item.id === id && item.selectedSize === selectedSize
+        item.id === id && item.selectedSize === selectedSize && item.selectedColor === selectedColor
           ? {...item, quantity: Math.max(item.quantity - 1, 1) }
           : item
       )
@@ -61,10 +63,10 @@ export function CartProvider({ children }) {
     );
   };
 
-  const increaseCartQuantity = (id, selectedSize) => {
+  const increaseCartQuantity = (id, selectedSize, selectedColor) => {
     setCartItems((prev) => 
       prev.map((item) => 
-        item.id === id && item.selectedSize === selectedSize
+        item.id === id && item.selectedSize === selectedSize && item.selectedColor === selectedColor
           ? {...item, quantity: Math.max(item.quantity + 1, 1 ) }
           : item
       )
