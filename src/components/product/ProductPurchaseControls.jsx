@@ -6,18 +6,8 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import SizeChartPopup from "@/components/ui/SizePopupChart";
 import colorMap from "@/lib/shopify/colorMap";
 
-export default function ProductPurchaseControls({ product }) {
+export default function ProductPurchaseControls({ product, selectedColor, setSelectedColor }) {
   const [quantity, setQuantity] = useState(1);
-  // const colors = [...new Set(product.variants.map((v) => v.options[0].value))];
-  // const [selectedColor, setSelectedColor] = useState(
-  //   product.variants[0]?.options[0]?.value ?? ""
-  // );
-  // const [selectedSize, setSelectedSize] = useState(
-  //   product.variants[0]?.options[1]?.value ?? ""
-  // );
-  const [selectedColor, setSelectedColor] = useState(
-    product.variants[0]?.options.find((o) => o.name?.toLowerCase() === "color")?.value ?? ""
-  );
   const [selectedSize, setSelectedSize] = useState(
     product.variants[0]?.options.find((o) => o.name?.toLowerCase() === "size")?.value ?? ""
   );
@@ -25,9 +15,7 @@ export default function ProductPurchaseControls({ product }) {
     product.variants.map((v) => v.options.find((o) => o.name?.toLowerCase() === "color")?.value)
     .filter(Boolean)
   )];
-  const [variantId, setVariantId] = useState(
-    product.variants[0]?.id ?? ""
-  );
+  const [variantId, setVariantId] = useState(product.variants[0]?.id ?? "");
 
   const { addToCart } = useCart();
 

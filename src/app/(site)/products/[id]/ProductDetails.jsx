@@ -1,4 +1,6 @@
 
+"use client";
+
 import React from "react";
 import Link from "next/link";
 
@@ -7,6 +9,7 @@ import RelatedProducts from "@/components/product/RelatedProducts";
 import ProductCarousel from "@/components/product/ProductCarousel";
 import ProductPurchaseControls from "@/components/product/ProductPurchaseControls";
 import { slugify } from "@/utils/Slugify";
+import { useState } from "react";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -14,12 +17,16 @@ const raleway = Raleway({
 });
 
 export default function ProductDetails({ product, allProducts }) {
+  const [selectedColor, setSelectedColor] = useState(
+    product.variants[0]?.options.find((o) => o.name?.toLowerCase() === "color")?.value ?? ""
+  );
+
   return (
     <>
       <div className="px-8 mx-auto lg:w-[1200px] lg:flex lg:pt-5">
       
         {/* --- Image Gallery --- */}
-        <ProductCarousel product={product} />
+        <ProductCarousel product={product} selectedColor={selectedColor} />
 
         {/* --- Product Info --- */}
         <div className="mr-auto lg:max-w-md">
@@ -56,8 +63,11 @@ export default function ProductDetails({ product, allProducts }) {
           </div>
 
           {/* Variant select, Quantity, Add to Cart */}
-          <ProductPurchaseControls product={product} />
-
+          <ProductPurchaseControls 
+            product={product} 
+            selectedColor={selectedColor}
+            setSelectedColor={setSelectedColor}
+          />
         </div>
       </div>
 

@@ -64,9 +64,14 @@ export default function Header() {
       return;
     }
     const timeout = setTimeout(() => {
-      const filtered = products.filter((p) => 
-        p.title.toLowerCase().includes(query.toLowerCase())
-      );
+      const lowerQuery = query.toLowerCase();
+      const filtered = products.filter((p) => {
+        const titleMatch = p.title.toLowerCase().includes(lowerQuery);
+        const tagMatch = p.tags?.some((tag) =>
+          tag.toLowerCase().includes(lowerQuery)
+        );
+        return titleMatch || tagMatch;
+      });
       setResults(filtered);
     }, 300);
 
@@ -304,38 +309,39 @@ export default function Header() {
               />
 
               <motion.div 
-                ref={barRef}
                 className="flex items-center justify-between absolute w-full py-5 px-10 bg-white text-dark-gray z-50"
                 initial={{ opacity: 0, maxHeight: 0 }}
                 animate={{ opacity: 1, maxHeight: 200 }}
                 exit={{ opacity: 0, maxHeight: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex-1"
-                >
-                  <FocusSearchBar 
-                    isSearchBarOpen={isSearchBarOpen} 
-                    onClose={() => setIsSearchBarOpen(false)} 
-                    searchButtonRef={searchButtonRef}
-                    query={query}
-                    setQuery={setQuery}
-                  />
-                </motion.div>
-                <motion.button 
-                  initial={{ opacity: 0, rotate: -90 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 90 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex justify-end"
-                  onClick={() => setIsSearchBarOpen(false)}
-                >
-                  <TfiClose className="text-lg cursor-pointer" />
-                </motion.button>
+                <div ref={barRef} className="flex items-center justify-between w-full max-w-[1920px] mx-auto">
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex-1"
+                  >
+                    <FocusSearchBar 
+                      isSearchBarOpen={isSearchBarOpen} 
+                      onClose={() => setIsSearchBarOpen(false)} 
+                      searchButtonRef={searchButtonRef}
+                      query={query}
+                      setQuery={setQuery}
+                    />
+                  </motion.div>
+                  <motion.button 
+                    initial={{ opacity: 0, rotate: -90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: 90 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex justify-end"
+                    onClick={() => setIsSearchBarOpen(false)}
+                  >
+                    <TfiClose className="text-lg cursor-pointer" />
+                  </motion.button>
+                </div>
               </motion.div>
 
               <SearchResults anchorRef={barRef} isSearchBarOpen={isSearchBarOpen} results={results} query={query}/>

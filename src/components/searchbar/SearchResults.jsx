@@ -58,7 +58,7 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
   return createPortal(
     <motion.div 
       className="absolute bg-white z-50 shadow-lg rounded-b-lg overflow-y-auto w-full lg:w-[800px] px-10"
-      style={{top: position.top, left: position.left,}}
+      style={{top: position.top + 20, left: position.left,}}
       initial={{opacity: 0, maxHeight: 0 }}
       animate={{ opacity: 1, maxHeight: 350 }}
       exit={{ opacity: 0, maxHeight: 0 }}
@@ -89,6 +89,7 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
                     : <div className="bg-gray-200 rounded-lg w-25 h-25 flex items-center justify-center text-gray-500">No Image</div>
                   }
                   <div className="flex flex-col ml-5 justify-center">
+                    <p className="text-gray-600 font-small">{r.metafields.series}</p>
                     <h4 className="text-dark-gray font-medium">{r.title}</h4>
                     {r.compareAtPrice ? (
                       <div className="flex items-center">

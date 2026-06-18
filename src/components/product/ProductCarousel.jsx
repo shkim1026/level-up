@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 
-export default function ProductCarousel({ product }) {
+export default function ProductCarousel({ product, selectedColor }) {
   const mainRef = useRef(null);
   const thumbnailRef = useRef(null);
 
@@ -14,6 +14,21 @@ export default function ProductCarousel({ product }) {
       thumbnailRef.current.splide.sync(mainRef.current.splide);
     }
   }, []);
+
+  useEffect(() => {
+    if (!selectedColor || !mainRef.current?.splide) return;
+
+    const variantImage = product.variants.find(
+      (v) => v.options.find((o) => o.name?.toLowerCase() === "color")?.value === selectedColor
+    )?.image;
+
+    if (!variantImage) return;
+
+    const index = product.images.findIndex((img) => img.url === variantImage);
+    if (index !== -1) {
+      mainRef.current.splide.go(index);
+    }
+  }, [selectedColor]);
 
   return (
     <div className="mx-auto flex flex-col items-center place-content-between md:w-[600px] md:h-[700px] lg:mr-20 lg:ml-auto">
