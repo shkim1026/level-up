@@ -5,7 +5,11 @@ import { slugify } from "@/utils/Slugify";
 
 export default function SearchResults({ anchorRef, isSearchBarOpen, results, query }) {
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0});
-  const collections = new Set(results.map((r) => r.metafields.categories))
+  const collections = new Set(
+    results
+      .map((r) => r.metafields.categories)
+      .filter(Boolean)
+  )
 
   // Tracks dropdown position relative to anchor during animation
   useLayoutEffect(() => {
@@ -70,11 +74,11 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
             <p className="text-dark-gray font-medium text-gray-700 text-sm underline">Collections</p>
             <div className="flex flex-column">
             {[...collections].map((category) => (
-              <a key={category} href={`/collections/${slugify(category)}`}>
-                <li className="p-3 hover:bg-gray-100 cursor-pointer">
+              <li key={category} href={`/collections/${slugify(category)}`}>
+                <a className="p-3 hover:bg-gray-100 cursor-pointer">
                   <p className="text-dark-gray">{category}</p>
-                </li>
-              </a>
+                </a>
+              </li>
             ))}
             </div>
           </ul>
