@@ -103,7 +103,8 @@ export default function Header() {
         if (
           containerRef.current && 
           !containerRef.current.contains(e.target) &&
-          (!searchButtonRef.current || !searchButtonRef.current.contains(e.target))
+          (!searchButtonRef.current || !searchButtonRef.current.contains(e.target)) &&
+          !e.target.closest('[data-search-results]')
         ) {
           onClose();
         }
@@ -174,7 +175,7 @@ export default function Header() {
               <TfiMenu className="text-2xl cursor-pointer" />
             </button>
           </div>
-          <Link href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="Level up logo.png" alt="logo"/></Link>
+          <Link href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="Level_up_logo.png" alt="logo"/></Link>
           <div className="flex gap-5 items-center mr-6 text-dark-gray">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button onClick={handleShopifyLogin}><FiUser className="text-2xl cursor-pointer"/></button>
@@ -243,7 +244,7 @@ export default function Header() {
         <div className="bg-white hidden lg:block border-b border-gray-300 bg-white z-50">
           <div className="relative items-center justify-between h-16 flex max-w-[1920px] mx-auto">
             <div className="flex items-center">
-              <Link href="/" className="w-15 justify-start ml-10 mr-10"><img src="Level up logo.png"/></Link>
+              <Link href="/" className="w-15 justify-start ml-10 mr-10"><img src="Level_up_logo.png"/></Link>
               {navLinksDesktop.map(({ label, href }) => (
                 <Link 
                   key={label} 

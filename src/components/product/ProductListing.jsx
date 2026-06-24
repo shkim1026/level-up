@@ -81,7 +81,7 @@ export default function ProductListing({ products: externalProducts, query }) {
     <>
       <PageTitle title={tabTitle} />
 
-      <div className="flex place-content-between mx-10 pt-8">
+      <div className="flex place-content-between px-10 pt-8 max-w-container">
         <FilterDrawer
           allProducts={scopedProducts}
           products={displayedProducts}

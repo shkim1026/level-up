@@ -7,7 +7,7 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0});
   const collections = new Set(
     results
-      .map((r) => r.metafields.categories)
+      .map((r) => r.metafields?.categories)
       .filter(Boolean)
   )
 
@@ -16,12 +16,9 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
     if (!anchorRef.current || !isSearchBarOpen) return;
 
     let rafId = null;
-    let animationFrameCount = 0;
 
     const updatePosition = () => {
       if (!anchorRef.current) return;
-
-      const _ = anchorRef.current.offsetHeight;
 
       const rect = anchorRef.current.getBoundingClientRect();
 
@@ -32,16 +29,7 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
       });
     };
 
-    const smoothTrackPosition = () => {
-      updatePosition();
-      animationFrameCount++;
-
-      if (animationFrameCount < 10) {
-        rafId = requestAnimationFrame(smoothTrackPosition);
-      }
-    };
-
-    rafId = requestAnimationFrame(smoothTrackPosition);
+    updatePosition();
 
     const handleScrollOrResize = () => {
       cancelAnimationFrame(rafId);
@@ -56,11 +44,11 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
       window.removeEventListener("scroll", handleScrollOrResize);
       window.removeEventListener("resize", handleScrollOrResize);
     };
-
   }, [anchorRef, isSearchBarOpen]);
 
   return createPortal(
-    <motion.div 
+    <motion.div
+      data-search-results
       className="absolute bg-white z-50 shadow-lg rounded-b-lg overflow-y-auto w-full lg:w-[800px] px-10"
       style={{top: position.top + 20, left: position.left,}}
       initial={{opacity: 0, maxHeight: 0 }}
@@ -72,13 +60,13 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
         <>
           <ul>
             <p className="text-dark-gray font-medium text-gray-700 text-sm underline">Collections</p>
-            <div className="flex flex-column">
+            <div className="flex">
             {[...collections].map((category) => (
-              <li key={category} href={`/collections/${slugify(category)}`}>
-                <a className="p-3 hover:bg-gray-100 cursor-pointer">
+              <a key={category} href={`/collections/${slugify(category)}`}>
+                <li className="p-3 hover:bg-gray-100 cursor-pointer">
                   <p className="text-dark-gray">{category}</p>
-                </a>
-              </li>
+                </li>
+              </a>
             ))}
             </div>
           </ul>
@@ -89,11 +77,11 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
               <a key={r.id} href={`/products/${r.handle}`}>
                 <li className="p-3 hover:bg-gray-100 cursor-pointer flex">
                   {r.image 
-                    ? <img src={r.image} className="w-25 h-25"/>
-                    : <div className="bg-gray-200 rounded-lg w-25 h-25 flex items-center justify-center text-gray-500">No Image</div>
+                    ? <img src={r.image} className="w-24 h-24 object-cover rounded-md flex-shrink-0"/>
+                    : <div className="bg-gray-200 rounded-lg w-24 h-24 flex items-center justify-center text-gray-500 flex-shrink-0">No Image</div>
                   }
                   <div className="flex flex-col ml-5 justify-center">
-                    <p className="text-gray-600 font-small">{r.metafields.series}</p>
+                    <p className="text-gray-600 font-small">{r.metafields?.series}</p>
                     <h4 className="text-dark-gray font-medium">{r.title}</h4>
                     {r.compareAtPrice ? (
                       <div className="flex items-center">
