@@ -2,7 +2,9 @@ import "./globals.css";
 import { Montserrat } from "next/font/google";
 import { CartProvider } from "@/components/cart/CartContext.jsx";
 import CartDrawer from "@/components/cart/CartDrawer.jsx";
+import Footer from "@/components/footer/Footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Link from "next/link";
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -25,14 +27,10 @@ export default function RootLayout({ children }) {
         className={`${montserrat.className} antialiased bg-white text-dark-gray`}
       >
         <CartProvider>
-
           <main className="max-w-6x1 mx-auto bg-white text-dark-gray min-h-screen">
             {children}
           </main>
-
-          <footer className="w-full bg-gray-100 p-4 text-center text-sm text-gray-600">
-            © {new Date().getFullYear()} Level Up
-          </footer>
+          <Footer />
           <CartDrawer />
         </CartProvider>
       <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />

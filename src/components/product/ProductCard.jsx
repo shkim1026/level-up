@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Raleway } from "next/font/google";
 import { slugify } from "@/utils/Slugify";
+import { formatPrice } from "@/utils/FormatPrice";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -55,11 +56,11 @@ export default function ProductCard({ product }) {
       
         {product.compareAtPrice ? (
           <div className="flex flex-row items-center justify-center">
-            <p className="text-red-500 mr-2">${product.price}</p>
-            <p className="text-gray-500 line-through">${product.compareAtPrice}</p>
+            <p className="text-red-500 mr-2">{formatPrice(product.price)}</p>
+            <p className="text-gray-500 line-through">{formatPrice(product.compareAtPrice)}</p>
           </div>
         ) : (
-          <p className="text-dark-gray text-center">${product.price}</p>
+          <p className="text-dark-gray text-center">{formatPrice(product.price)}</p>
         )}
       </Link>
     </div>

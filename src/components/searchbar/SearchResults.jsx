@@ -50,7 +50,10 @@ export default function SearchResults({ anchorRef, isSearchBarOpen, results, que
     <motion.div
       data-search-results
       className="absolute bg-white z-50 shadow-lg rounded-b-lg overflow-y-auto w-full lg:w-[800px] px-10"
-      style={{top: position.top + 20, left: position.left,}}
+      style={{
+        top: `${position.top + 20}px`,
+        left: `${position.left}px`,
+      }}
       initial={{opacity: 0, maxHeight: 0 }}
       animate={{ opacity: 1, maxHeight: 350 }}
       exit={{ opacity: 0, maxHeight: 0 }}

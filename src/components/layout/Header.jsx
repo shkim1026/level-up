@@ -9,6 +9,7 @@ import SearchResults from '../searchbar/SearchResults';
 import { fetchAllShopifyProducts } from '@/data/fetchAllShopifyProducts';
 import { useCart } from "@/components/cart/CartContext";
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -164,7 +165,9 @@ export default function Header() {
       <nav>
         {promoBannerIsOpen && (
           <div className="promoBanner z-50">
-            <p className="text-xs text-center text-white p-2 uppercase bg-dark-gray">Free shipping on all orders $200+</p>
+            <a href="/apparel">
+              <p className="text-xs text-center text-white p-2 uppercase bg-dark-gray hover:underline">Free shipping on all orders $200+</p>
+            </a>
           </div>
         )}
 
@@ -175,7 +178,9 @@ export default function Header() {
               <TfiMenu className="text-2xl cursor-pointer" />
             </button>
           </div>
-          <Link href="/" className="w-15 absolute left-1/2 -translate-x-1/2"><img src="Level_up_logo.png" alt="logo"/></Link>
+          <Link href="/" className="w-15 absolute left-1/2 -translate-x-1/2">
+            <Image src="/Level_up_logo.png" alt="logo" width={60} height={24}/>
+          </Link>
           <div className="flex gap-5 items-center mr-6 text-dark-gray">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
             <button onClick={handleShopifyLogin}><FiUser className="text-2xl cursor-pointer"/></button>
@@ -244,7 +249,9 @@ export default function Header() {
         <div className="bg-white hidden lg:block border-b border-gray-300 bg-white z-50">
           <div className="relative items-center justify-between h-16 flex max-w-[1920px] mx-auto">
             <div className="flex items-center">
-              <Link href="/" className="w-15 justify-start ml-10 mr-10"><img src="Level_up_logo.png"/></Link>
+              <Link href="/" className="w-15 justify-start ml-10 mr-10">
+                <Image src="/Level_up_logo.png" alt="Level up logo" width={60} height={24}/>
+              </Link>
               {navLinksDesktop.map(({ label, href }) => (
                 <Link 
                   key={label} 

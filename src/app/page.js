@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { fetchFeaturedShopifyProducts } from "@/data/fetchFeaturedShopifyProducts";
 import Header from "@/components/layout/Header";
 
@@ -31,18 +32,20 @@ console.log("featured products:", products)
       <Header />
       
       <div className="relative w-full min-h-[50vh] flex flex-col justify-center items-center text-white">
-        <MotionImage 
-          src="/Hero-6-2-26.png"
-          alt="hero"
-          width={1920}
-          height={1080}
-          size="100vw"
-          style={{ width: "100%", height: "auto" }}
-          priority
-          initial={{ scale: 1.2, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        />
+        <Link href="/collections/warhammer" className="block w-full">
+          <MotionImage 
+            src="/Hero-6-2-26.png"
+            alt="hero"
+            width={1920}
+            height={1080}
+            size="100vw"
+            style={{ width: "100%", height: "auto" }}
+            priority
+            initial={{ scale: 1.2, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          />
+        </Link>
       </div>
 
       <h1 className="text-3x1 text-dark-gray font-bold mb-3 p-6 max-w-container">Featured Products</h1>

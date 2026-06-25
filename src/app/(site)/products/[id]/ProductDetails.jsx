@@ -8,6 +8,7 @@ import { Raleway } from "next/font/google";
 import RelatedProducts from "@/components/product/RelatedProducts";
 import ProductCarousel from "@/components/product/ProductCarousel";
 import ProductPurchaseControls from "@/components/product/ProductPurchaseControls";
+import { formatPrice } from "@/utils/FormatPrice";
 import { slugify } from "@/utils/Slugify";
 import { useState } from "react";
 
@@ -45,14 +46,14 @@ export default function ProductDetails({ product, allProducts }) {
           {product.compareAtPrice? (
             <div className="flex items-center mt-2">
               <p className="text-red-500 text-xl mr-2">
-                ${product.price}
+                {formatPrice(product.price)}
               </p>
               <p className="text-gray-500 line-through">
-                ${product.compareAtPrice}
+                {formatPrice(product.compareAtPrice)}
               </p>
             </div>
           ) : (
-            <p className="mt-2 text-xl">${product.price}</p>
+            <p className="mt-2 text-xl">{formatPrice(product.price)}</p>
           )}
 
           <hr className="text-gray-300 mt-4" />

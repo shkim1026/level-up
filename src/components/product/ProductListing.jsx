@@ -24,14 +24,17 @@ export default function ProductListing({ products: externalProducts, query }) {
   const [scopedProducts, setScopedProducts] = useState(externalProducts ?? []);
   const [tabTitle, setTabTitle] = useState("");
 
-  const FilterDropdown = dynamic(() => import("@/components/filters/FilterDropdown"), { ssr: false });
+  const FilterDropdown = dynamic(() => import("@/components/filters/FilterDropdown"), {
+    ssr: false,
+    loading: () => <div className="w-[168px] h-10" />, //Prevents <h2>{tabTitle}</h2> from shifting on page load
+  });
 
   // Sort logic
   function sortProducts(items, sortKey) {
     const sorted = [...items];
     switch (sortKey) {
       case "popularity":
-        return sorted.sort((a, b) => (b.metafields?.popularity ?? 0) - (a.metafields.popularity ?? 0));
+        return sorted.sort((a, b) => (b.metafields?.popularity ?? 0) - (a.metafields?.popularity ?? 0));
       case "rating":
         return sorted.sort((a, b) => (b.metafields?.rating ?? 0) - (a.metafields?.rating ?? 0));
       case "priceLowHigh":
@@ -90,7 +93,11 @@ export default function ProductListing({ products: externalProducts, query }) {
           handleFilterRemove={handleFilterRemove}
           lastChangedFilter={lastChangedFilter}
         />
-        {query && <h1 className="flex items-center font-medium">Results for: {query}</h1>}
+        {query ? (
+          <h1 className="flex items-center text-medium uppercase">Results for: {query}</h1>
+        ) : (
+          <h1 className="flex items-center text-2xl font-bold uppercase">{tabTitle}</h1>
+        )}
         <FilterDropdown onChange={handleSort} value={sortBy} />
       </div>
       <ProductGrid products={displayedProducts} />
