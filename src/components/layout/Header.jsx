@@ -172,7 +172,7 @@ export default function Header() {
         )}
 
         {/* Mobile Navigation */}
-        <div className="relative flex items-center justify-between bg-white h-16 lg:hidden z-50 border-b border-gray-300">
+        <div className="relative flex items-center justify-between bg-white h-16 lg:hidden z-40 border-b border-gray-300">
           <div className="flex gap-5 items-center ml-6 text-dark-gray">
             <button onClick={toggleMobileMenu}>
               <TfiMenu className="text-2xl cursor-pointer" />

@@ -10,7 +10,7 @@ export default function ProductGridSkeleton() {
       </div>
 
       {/* Product Grid Skeleton */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-1 px-6 max-w-container">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-1 max-w-container">
         {Array.from({ length: 15 }).map((_, i) => (
           <ProductCardSkeleton key={i} />
         ))}

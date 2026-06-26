@@ -65,5 +65,10 @@ body {
 
 .max-w-container {
   max-width: 1920px;
-  margin: 0 auto;
+}
+
+@media (min-width: 798px) {
+  .desktop-only {
+    display: block;
+  }
 }

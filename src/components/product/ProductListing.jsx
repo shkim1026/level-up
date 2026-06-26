@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import ProductGrid from "@/components/product/ProductGrid";
-import FilterDrawer from "@/components/filters/FilterDrawer";
+import FilterBar from "@/components/filters/FilterBar";
+import FilterSidebar from "@/components/filters/FilterSidebar";
+import FilterChips from "../filters/FilterChips";
 import dynamic from "next/dynamic";
 import { useProductContext } from "@/context/ProductContext";
 import PageTitle from "@/utils/PageTitle";
@@ -83,24 +85,33 @@ export default function ProductListing({ products: externalProducts, query }) {
   return (
     <>
       <PageTitle title={tabTitle} />
+      {query ? (
+        <h1 className="block md:hidden text-medium font-bold uppercase pt-6 pb-4 text-center">Results for: {query}</h1>
+      ) : (
+        <h1 className="block md:hidden text-xl font-bold uppercase pt-6 pb-4 text-center">{tabTitle}</h1>
+      )}
 
-      <div className="flex place-content-between px-10 pt-8 max-w-container">
-        <FilterDrawer
-          allProducts={scopedProducts}
-          products={displayedProducts}
-          filters={filters}
-          onFilterChange={handleFilterChange}
-          handleFilterRemove={handleFilterRemove}
-          lastChangedFilter={lastChangedFilter}
-        />
-        {query ? (
-          <h1 className="flex items-center text-medium uppercase">Results for: {query}</h1>
-        ) : (
-          <h1 className="flex items-center text-2xl font-bold uppercase">{tabTitle}</h1>
-        )}
-        <FilterDropdown onChange={handleSort} value={sortBy} />
+      <div className="flex md:px-10 px-4">
+        <FilterSidebar />
+
+        <div className="flex-1">
+          <div className="flex place-content-between items-center max-w-container md:py-6 lg:px-5">
+            <FilterBar />
+            {query ? (
+              <h1 className="hidden md:flex items-center text-medium uppercase">Results for: {query}</h1>
+            ) : (
+              <h1 className="hidden md:flex text-2xl font-bold uppercase">{tabTitle}</h1>
+            )}
+            <FilterDropdown onChange={handleSort} value={sortBy} />
+          </div>
+
+          <div className="lg:hidden mt-3">
+            <FilterChips />
+          </div>
+
+          <ProductGrid products={displayedProducts} />
+        </div>
       </div>
-      <ProductGrid products={displayedProducts} />
     </>
   );
 }

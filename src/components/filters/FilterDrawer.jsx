@@ -16,14 +16,14 @@ export default function FilterDrawer() {
     lastChangedFilter,
   } = useProductContext();
   
-  const allSeries = [...new Set(productsForPage.map((p) => p.metafields.series))];
-  const visibleSeries = [...new Set(filteredProducts.map((p) => p.metafields.series))];
+  const allSeries = [...new Set(productsForPage.map((p) => p.metafields.series))].filter(Boolean);
+  const visibleSeries = [...new Set(filteredProducts.map((p) => p.metafields.series))].filter(Boolean);
   const seriesOptions = lastChangedFilter === "series" ? allSeries : visibleSeries;
 
-  const allCategories = [...new Set(productsForPage.map((p) => p.metafields.categories))];
-  const visibleCategories = [...new Set(filteredProducts.map((p) => p.metafields.categories))];
+  const allCategories = [...new Set(productsForPage.map((p) => p.metafields.categories))].filter(Boolean);
+  const visibleCategories = [...new Set(filteredProducts.map((p) => p.metafields.categories))].filter(Boolean);
   const categoryOptions = lastChangedFilter === "categories" ? allCategories : visibleCategories;
-  
+
   return (
     <div className="flex items-center">
       <button

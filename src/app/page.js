@@ -48,8 +48,8 @@ console.log("featured products:", products)
         </Link>
       </div>
 
-      <h1 className="text-3x1 text-dark-gray font-bold mb-3 p-6 max-w-container">Featured Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-1 pb-10 max-w-container">
+      <h1 className="text-3x1 text-dark-gray font-bold mb-3 p-6 max-w-container my-0 mx-auto">Featured Products</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-1 pb-10 max-w-container my-0 mx-auto">
         {products.map((product, i) => (
             <motion.div
               key={product.id}
