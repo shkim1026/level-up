@@ -31,7 +31,7 @@ console.log("featured products:", products)
     <div>
       <Header />
       
-      <div className="relative w-full min-h-[50vh] flex flex-col justify-center items-center text-white">
+      <div className="relative w-full min-h-[50vh] flex flex-col items-center text-white">
         <Link href="/collections/warhammer" className="block w-full">
           <MotionImage 
             src="/Hero-6-2-26.png"

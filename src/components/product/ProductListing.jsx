@@ -9,6 +9,11 @@ import dynamic from "next/dynamic";
 import { useProductContext } from "@/context/ProductContext";
 import PageTitle from "@/utils/PageTitle";
 
+const FilterDropdown = dynamic(() => import("@/components/filters/FilterDropdown"), {
+  ssr: false,
+  loading: () => <div className="w-[168px] h-10" />, //Prevents <h2>{tabTitle}</h2> from shifting on page load
+});
+
 export default function ProductListing({ products: externalProducts, query }) {
   const {
     filters,
@@ -25,11 +30,6 @@ export default function ProductListing({ products: externalProducts, query }) {
   const [sortBy, setSortBy] = useState(defaultSort);
   const [scopedProducts, setScopedProducts] = useState(externalProducts ?? []);
   const [tabTitle, setTabTitle] = useState("");
-
-  const FilterDropdown = dynamic(() => import("@/components/filters/FilterDropdown"), {
-    ssr: false,
-    loading: () => <div className="w-[168px] h-10" />, //Prevents <h2>{tabTitle}</h2> from shifting on page load
-  });
 
   // Sort logic
   function sortProducts(items, sortKey) {

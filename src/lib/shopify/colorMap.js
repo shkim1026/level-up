@@ -12,6 +12,10 @@ const colorMap = {
   "Yellow": "#ffd667",
   "White": "#ffffff",
   "Solid White Blend": "#F5F5F5",
+  "Navy Blazer": "#171f2c",
+  "Carbon Grey": "#c7c3be",
+  "Light Pink": "#ffd0cc",
+  "Bone": "#f5e8ce",
 };
 
 export default colorMap;

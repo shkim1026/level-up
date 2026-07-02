@@ -1,7 +1,7 @@
 "use client";
 import { useProductContext } from "@/context/ProductContext";
 
-export default function FilterContent() {
+export default function FilterContent({ variant = "chip" }) {
   const {
     productsForPage,
     filteredProducts,
@@ -18,25 +18,35 @@ export default function FilterContent() {
   const visibleCategories = [...new Set(filteredProducts.map((p) => p.metafields.categories))].filter(Boolean);
   const categoryOptions = lastChangedFilter === "categories" ? allCategories : visibleCategories;
 
+  const isCheckbox = variant === "checkbox";
+
+  // Chip style (existing) vs. real checkbox style
+  const inputClassName = isCheckbox
+    ? "w-4 h-4 cursor-pointer accent-dark-gray"
+    : "appearance-none peer";
+
+  const labelClassName = isCheckbox
+    ? "flex items-center text-sm gap-2 cursor-pointer capitalize"
+    : "flex items-center uppercase text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold whitespace-nowrap";
+
+  const wrapperClassName = isCheckbox ? "flex items-center gap-2" : "flex items-center";
+
   return (
     <>
       <div>
         <h3 className="font-medium mb-2 font-semibold">Series</h3>
-        <div className="flex flex-wrap gap-2 items-center">
+        <div className={isCheckbox ? "flex flex-col gap-2" : "flex flex-wrap gap-2 items-center"}>
           {seriesOptions.map((series, index) => (
-            <div className="flex items-center" key={index}>
+            <div className={wrapperClassName} key={index}>
               <input
-                className="appearance-none peer"
+                className={inputClassName}
                 type="checkbox"
-                id={series}
+                id={`series-${series}`}
                 value={series}
                 checked={filters.series.includes(series)}
                 onChange={() => handleFilterChange("series", series)}
               />
-              <label
-                htmlFor={series}
-                className="flex items-center uppercase text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold whitespace-nowrap"
-              >
+              <label htmlFor={`series-${series}`} className={labelClassName}>
                 {series}
               </label>
             </div>
@@ -46,18 +56,18 @@ export default function FilterContent() {
 
       <div className="mt-10">
         <h3 className="font-medium mb-2 font-semibold">Categories</h3>
-        <div className="flex flex-wrap gap-2 items-center">
+        <div className={isCheckbox ? "flex flex-col gap-2" : "flex flex-wrap gap-2 items-center"}>
           {categoryOptions.map((category, index) => (
-            <div className="flex items-center" key={index}>
+            <div className={wrapperClassName} key={index}>
               <input
-                className="appearance-none peer"
+                className={inputClassName}
                 type="checkbox"
-                id={category}
+                id={`category-${category}`}
                 value={category}
                 checked={filters.categories.includes(category)}
                 onChange={() => handleFilterChange("categories", category)}
               />
-              <label htmlFor={category} className="flex items-center uppercase text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold whitespace-nowrap">
+              <label htmlFor={`category-${category}`} className={labelClassName}>
                 {category}
               </label>
             </div>
@@ -67,7 +77,7 @@ export default function FilterContent() {
 
       <div className="mt-10">
         <h3 className="font-medium mb-2 font-semibold">Price</h3>
-        <div className="flex flex-wrap gap-2 items-center">
+        <div className={isCheckbox ? "flex flex-col gap-2" : "flex flex-wrap gap-2 items-center"}>
           {[
             { id: "10-30", label: "$10 - $30", min: 10, max: 30 },
             { id: "30-50", label: "$30 - $50", min: 30, max: 50 },
@@ -80,16 +90,16 @@ export default function FilterContent() {
               })
             )
             .map((range) => (
-              <div className="flex items-center" key={range.id}>
+              <div className={wrapperClassName} key={range.id}>
                 <input
-                  className="appearance-none peer"
+                  className={inputClassName}
                   type="checkbox"
-                  id={range.id}
+                  id={`price-${range.id}`}
                   value={range.id}
                   checked={filters.priceRanges.includes(range.id)}
                   onChange={() => handleFilterChange("priceRanges", range.id)}
                 />
-                <label htmlFor={range.id} className="flex items-center text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold whitespace-nowrap">
+                <label htmlFor={`price-${range.id}`} className={labelClassName}>
                   {range.label}
                 </label>
               </div>
