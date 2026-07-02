@@ -12,7 +12,6 @@ export default function FilterDrawer() {
     filters,
     handleFilterChange,
     handleFilterRemove,
-    handleClearFilters,
     lastChangedFilter,
   } = useProductContext();
   
@@ -136,9 +135,6 @@ export default function FilterDrawer() {
                 </div>
             ))}
           </div>
-        </div>
-        <div className="px-5 mt-10">
-          <button className="underline font-semibold cursor-pointer text-sm" onClick={handleClearFilters}>Clear All</button>
         </div>
       </div>
     </div>

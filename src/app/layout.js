@@ -3,8 +3,10 @@ import { Montserrat } from "next/font/google";
 import { CartProvider } from "@/components/cart/CartContext.jsx";
 import CartDrawer from "@/components/cart/CartDrawer.jsx";
 import Footer from "@/components/footer/Footer";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import Link from "next/link";
+import { ConsentProvider } from "@/context/ConsentContext";
+import CookieConsentBanner from "@/components/consent/CookieConsentBanner";
+import GoogleAnalyticsGate from "@/components/consent/GoogleAnalyticsGate";
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -27,13 +29,16 @@ export default function RootLayout({ children }) {
         className={`${montserrat.className} antialiased bg-white text-dark-gray`}
       >
         <CartProvider>
-          <main className="max-w-6x1 mx-auto bg-white text-dark-gray min-h-screen">
-            {children}
-          </main>
-          <Footer />
-          <CartDrawer />
+          <ConsentProvider>
+            <main className="max-w-6x1 mx-auto bg-white text-dark-gray min-h-screen">
+              {children}
+            </main>
+            <Footer />
+            <CartDrawer />
+            <CookieConsentBanner />
+            <GoogleAnalyticsGate gaId={process.env.NEXT_PUBLIC_GA_ID} />
+          </ConsentProvider>
         </CartProvider>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
       </body>
     </html>
   );

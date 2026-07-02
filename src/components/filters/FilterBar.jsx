@@ -10,8 +10,6 @@ export default function FilterBar() {
   const {
     filteredProducts,
     filters,
-    handleFilterRemove,
-    handleClearFilters,
   } = useProductContext();
 
   const activeFilters = [...filters.series, ...filters.categories, ...filters.priceRanges];
@@ -44,10 +42,7 @@ export default function FilterBar() {
           <button className="cursor-pointer" onClick={() => setOpen(false)}><TfiClose /></button>
         </div>
         <div className="px-5 mt-10">
-          <FilterContent />
-        </div>
-        <div className="px-5 mt-10">
-          <button className="underline font-semibold cursor-pointer text-sm" onClick={handleClearFilters}>Clear All</button>
+          <FilterContent variant="chip" />
         </div>
       </div>
     </div>

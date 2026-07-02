@@ -1,111 +1,150 @@
 "use client";
 import { useProductContext } from "@/context/ProductContext";
 
-export default function FilterContent({ variant = "chip" }) {
+export default function FilterContent({ variant = "checkbox" }) {
   const {
     productsForPage,
     filteredProducts,
     filters,
     handleFilterChange,
+    handleClearFilters,
     lastChangedFilter,
   } = useProductContext();
 
+  const isChip = variant === "chip";
+
   const allSeries = [...new Set(productsForPage.map((p) => p.metafields.series))].filter(Boolean);
   const visibleSeries = [...new Set(filteredProducts.map((p) => p.metafields.series))].filter(Boolean);
-  const seriesOptions = lastChangedFilter === "series" ? allSeries : visibleSeries;
+  const availableSeries = lastChangedFilter === "series" ? allSeries : visibleSeries;
 
   const allCategories = [...new Set(productsForPage.map((p) => p.metafields.categories))].filter(Boolean);
   const visibleCategories = [...new Set(filteredProducts.map((p) => p.metafields.categories))].filter(Boolean);
-  const categoryOptions = lastChangedFilter === "categories" ? allCategories : visibleCategories;
+  const availableCategories = lastChangedFilter === "categories" ? allCategories : visibleCategories;
 
-  const isCheckbox = variant === "checkbox";
+  const priceRangeDefs = [
+    { id: "10-30", label: "$10 - $30", min: 10, max: 30 },
+    { id: "30-50", label: "$30 - $50", min: 30, max: 50 },
+    { id: "50+", label: "$50+", min: 50, max: Infinity },
+  ];
 
-  // Chip style (existing) vs. real checkbox style
-  const inputClassName = isCheckbox
-    ? "w-4 h-4 cursor-pointer accent-dark-gray"
-    : "appearance-none peer";
+  const isPriceRangeAvailable = (range) =>
+    filters.priceRanges.includes(range.id) ||
+    filteredProducts.some((product) => {
+      const productPrice = product.compare_at_price ?? product.price;
+      return productPrice >= range.min && productPrice <= range.max;
+    });
 
-  const labelClassName = isCheckbox
-    ? "flex items-center text-sm gap-2 cursor-pointer capitalize"
-    : "flex items-center uppercase text-sm gap-2 border border-gray-400 rounded-md w-fit py-1 px-2 cursor-pointer peer-checked:bg-gray-300 peer-checked:font-semibold whitespace-nowrap";
+  // Renders one option as either a checklist row (desktop) or a pill chip (mobile)
+  function FilterOption({ idPrefix, value, label, checked, isAvailable, onChange }) {
+    const id = `${idPrefix}-${value}`;
+    const isDisabled = !isAvailable && !checked;
 
-  const wrapperClassName = isCheckbox ? "flex items-center gap-2" : "flex items-center";
+    if (isChip) {
+      return (
+        <div className="flex items-center">
+          <input
+            className="appearance-none peer"
+            type="checkbox"
+            id={id}
+            value={value}
+            checked={checked}
+            disabled={isDisabled}
+            onChange={onChange}
+          />
+          <label
+            htmlFor={id}
+            className={`flex items-center uppercase text-sm gap-2 border rounded-md w-fit py-1 px-2 whitespace-nowrap peer-checked:bg-gray-300 peer-checked:font-semibold ${
+              isAvailable
+                ? "border-gray-400 cursor-pointer"
+                : "border-gray-200 text-gray-300 cursor-not-allowed"
+            }`}
+          >
+            {label}
+          </label>
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex items-center">
+        <input
+          className={isAvailable ? "cursor-pointer" : "cursor-not-allowed"}
+          type="checkbox"
+          id={id}
+          value={value}
+          checked={checked}
+          disabled={isDisabled}
+          onChange={onChange}
+        />
+        <label
+          htmlFor={id}
+          className={`ml-2 text-sm ${
+            isAvailable ? "text-dark-gray cursor-pointer" : "text-gray-300 cursor-not-allowed"
+          } ${checked ? "font-semibold" : ""}`}
+        >
+          {label}
+        </label>
+      </div>
+    );
+  }
+
+  const listLayout = isChip ? "flex flex-wrap gap-2 items-center" : "flex flex-col gap-3";
 
   return (
     <>
       <div>
         <h3 className="font-medium mb-2 font-semibold">Series</h3>
-        <div className={isCheckbox ? "flex flex-col gap-2" : "flex flex-wrap gap-2 items-center"}>
-          {seriesOptions.map((series, index) => (
-            <div className={wrapperClassName} key={index}>
-              <input
-                className={inputClassName}
-                type="checkbox"
-                id={`series-${series}`}
-                value={series}
-                checked={filters.series.includes(series)}
-                onChange={() => handleFilterChange("series", series)}
-              />
-              <label htmlFor={`series-${series}`} className={labelClassName}>
-                {series}
-              </label>
-            </div>
+        <div className={listLayout}>
+          {allSeries.map((series) => (
+            <FilterOption
+              key={series}
+              idPrefix="series"
+              value={series}
+              label={series}
+              checked={filters.series.includes(series)}
+              isAvailable={availableSeries.includes(series) || filters.series.includes(series)}
+              onChange={() => handleFilterChange("series", series)}
+            />
           ))}
         </div>
       </div>
 
       <div className="mt-10">
         <h3 className="font-medium mb-2 font-semibold">Categories</h3>
-        <div className={isCheckbox ? "flex flex-col gap-2" : "flex flex-wrap gap-2 items-center"}>
-          {categoryOptions.map((category, index) => (
-            <div className={wrapperClassName} key={index}>
-              <input
-                className={inputClassName}
-                type="checkbox"
-                id={`category-${category}`}
-                value={category}
-                checked={filters.categories.includes(category)}
-                onChange={() => handleFilterChange("categories", category)}
-              />
-              <label htmlFor={`category-${category}`} className={labelClassName}>
-                {category}
-              </label>
-            </div>
+        <div className={listLayout}>
+          {allCategories.map((category) => (
+            <FilterOption
+              key={category}
+              idPrefix="category"
+              value={category}
+              label={category}
+              checked={filters.categories.includes(category)}
+              isAvailable={availableCategories.includes(category) || filters.categories.includes(category)}
+              onChange={() => handleFilterChange("categories", category)}
+            />
           ))}
         </div>
       </div>
 
       <div className="mt-10">
         <h3 className="font-medium mb-2 font-semibold">Price</h3>
-        <div className={isCheckbox ? "flex flex-col gap-2" : "flex flex-wrap gap-2 items-center"}>
-          {[
-            { id: "10-30", label: "$10 - $30", min: 10, max: 30 },
-            { id: "30-50", label: "$30 - $50", min: 30, max: 50 },
-            { id: "50+", label: "$50+", min: 50, max: Infinity },
-          ]
-            .filter((range) =>
-              filteredProducts.some((product) => {
-                const productPrice = product.compare_at_price ?? product.price;
-                return productPrice >= range.min && productPrice <= range.max;
-              })
-            )
-            .map((range) => (
-              <div className={wrapperClassName} key={range.id}>
-                <input
-                  className={inputClassName}
-                  type="checkbox"
-                  id={`price-${range.id}`}
-                  value={range.id}
-                  checked={filters.priceRanges.includes(range.id)}
-                  onChange={() => handleFilterChange("priceRanges", range.id)}
-                />
-                <label htmlFor={`price-${range.id}`} className={labelClassName}>
-                  {range.label}
-                </label>
-              </div>
-            ))}
+        <div className={listLayout}>
+          {priceRangeDefs.map((range) => (
+            <FilterOption
+              key={range.id}
+              idPrefix="price"
+              value={range.id}
+              label={range.label}
+              checked={filters.priceRanges.includes(range.id)}
+              isAvailable={isPriceRangeAvailable(range)}
+              onChange={() => handleFilterChange("priceRanges", range.id)}
+            />
+          ))}
         </div>
       </div>
+      <button className="underline font-semibold cursor-pointer text-sm mt-10" onClick={handleClearFilters}>
+        Clear All
+      </button>
     </>
   );
 }
