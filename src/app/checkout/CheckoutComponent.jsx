@@ -203,7 +203,7 @@ export default function CheckoutComponent({ cartItems = [] }) {
 
         {/* Right: Cart Summary */}
         <div className="bg-gray-100 rounded-2xl shadow p-6 space-y-6 flex flex-col">
-          <Image src="/Level_up_logo.png" width={200} height={200} alt="Level up logo" className="self-center"/>
+          <Image src="/Level_up_logo.png" width={200} height={200} style={{ width: "auto", height: "auto" }} alt="Level up logo" className="self-center"/>
           <div className="space-y-4">
             {cartItems.length === 0 ? (
               <p className="text-gray-500">Your cart is empty.</p>

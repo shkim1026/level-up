@@ -10,6 +10,7 @@ import { fetchAllShopifyProducts } from '@/data/fetchAllShopifyProducts';
 import { useCart } from "@/components/cart/CartContext";
 import Link from 'next/link';
 import Image from 'next/image';
+import { useAccount } from '../account/AccountContext';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,6 +23,7 @@ export default function Header() {
   const searchButtonRef = useRef(null);
   const router = useRouter();
   const { toggleCart, cartItems } = useCart();
+  const { customer, login, logout } = useAccount();
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearchBar = () => setIsSearchBarOpen((prev) => !prev);
@@ -179,11 +181,13 @@ export default function Header() {
             </button>
           </div>
           <Link href="/" className="w-15 absolute left-1/2 -translate-x-1/2">
-            <Image src="/Level_up_logo.png" alt="logo" width={60} height={24}/>
+            <Image src="/Level_up_logo.png" alt="logo" width={60} height={24} style={{ width: "auto", height: "auto" }}/>
           </Link>
           <div className="flex gap-5 items-center mr-6 text-dark-gray">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
-            <button onClick={handleShopifyLogin}><FiUser className="text-2xl cursor-pointer"/></button>
+            <button onClick={customer ? logout : login}>
+              <FiUser className="text-2xl cursor-pointer"/>
+            </button>
             <button onClick={toggleCart} className="relative">
               <TfiShoppingCart className="text-2xl cursor-pointer" />
               {cartItems.length > 0 && (
@@ -250,7 +254,7 @@ export default function Header() {
           <div className="relative items-center justify-between h-16 flex max-w-[1920px] mx-auto">
             <div className="flex items-center">
               <Link href="/" className="w-15 justify-start ml-10 mr-10">
-                <Image src="/Level_up_logo.png" alt="Level up logo" width={60} height={24}/>
+                <Image src="/Level_up_logo.png" alt="Level up logo" width={60} height={24} style={{ width: "auto", height: "auto" }}/>
               </Link>
               {navLinksDesktop.map(({ label, href }) => (
                 <Link 
@@ -286,7 +290,7 @@ export default function Header() {
                 <FiSearch className="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300"/>
               </button>
 
-              <button onClick={handleShopifyLogin}>
+              <button onClick={customer ? logout : login}>
                 <FiUser className="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300"/>
               </button>
 
