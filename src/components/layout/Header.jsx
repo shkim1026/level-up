@@ -1,7 +1,7 @@
 "use client";
 
-import { FiUser, FiSearch, FiShoppingCart } from 'react-icons/fi';
-import { TfiClose, TfiMenu, TfiShoppingCart, TfiSearch } from 'react-icons/tfi';
+import { FiUser, FiSearch } from 'react-icons/fi';
+import { TfiClose, TfiMenu, TfiShoppingCart } from 'react-icons/tfi';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ import { fetchAllShopifyProducts } from '@/data/fetchAllShopifyProducts';
 import { useCart } from "@/components/cart/CartContext";
 import Link from 'next/link';
 import Image from 'next/image';
-import { useAccount } from '../account/AccountContext';
+import AccountMenu from '@/components/account/AccountMenu';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,7 +23,6 @@ export default function Header() {
   const searchButtonRef = useRef(null);
   const router = useRouter();
   const { toggleCart, cartItems } = useCart();
-  const { customer, login, logout } = useAccount();
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const toggleSearchBar = () => setIsSearchBarOpen((prev) => !prev);
@@ -185,9 +184,9 @@ export default function Header() {
           </Link>
           <div className="flex gap-5 items-center mr-6 text-dark-gray">
             <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
-            <button onClick={customer ? logout : login}>
-              <FiUser className="text-2xl cursor-pointer"/>
-            </button>
+            
+            <AccountMenu iconClassName="text-2xl cursor-pointer" />
+            
             <button onClick={toggleCart} className="relative">
               <TfiShoppingCart className="text-2xl cursor-pointer" />
               {cartItems.length > 0 && (
@@ -290,9 +289,7 @@ export default function Header() {
                 <FiSearch className="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300"/>
               </button>
 
-              <button onClick={customer ? logout : login}>
-                <FiUser className="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300"/>
-              </button>
+              <AccountMenu iconClassName="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300" />
 
               <button onClick={toggleCart} className="relative">
                 <TfiShoppingCart className="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300" />
