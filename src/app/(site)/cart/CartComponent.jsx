@@ -3,10 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { useCart } from "@/components/cart/CartContext";
+import { getOrCreateCart } from "@/lib/shopify/cart";
+import { useState } from "react";
 
 export default function CartComponent() {
   const { cartItems, removeFromCart, decreaseCartQuantity, increaseCartQuantity, getCartTotal } = useCart();
+  const [isRedirecting, setIsRedirecting] = useState(false);
   console.log(cartItems, "cartItems:")
+
+  async function handleCheckout() {
+    if (!cartItems.length) return;
+    try {
+      setIsRedirecting(true);
+      const cart = await getOrCreateCart(cartItems);
+      window.location.href = cart.checkoutUrl;
+    } catch (error) {
+      console.error("Cart checkout failed:", error);
+      setIsRedirecting(false);
+    }
+  }
   return (
     <main className="mx-auto max-w-7xl">
       <h1 className="flex justify-center text-3xl font-semibold uppercase py-10">Cart</h1>
@@ -114,9 +129,13 @@ export default function CartComponent() {
           </div>
 
           <div className="md:flex md:justify-end">
-            <Link href="/checkout">
-              <button className="text-white py-3 px-5 bg-dark-gray rounded-lg uppercase text-sm cursor-pointer hover:bg-hover-gray w-full text-center md:w-fit">Checkout</button>
-            </Link>
+            <button
+              onClick={handleCheckout}
+              disabled={isRedirecting}
+              className="text-white py-3 px-5 bg-dark-gray rounded-lg uppercase text-sm cursor-pointer hover:bg-hover-gray w-full text-center md:w-fit disabled:bg-gray-500"
+            >
+              {isRedirecting ? "Redirecting..." : "Checkout"}
+            </button>
           </div>
         </div>
       )}
