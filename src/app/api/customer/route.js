@@ -11,7 +11,8 @@ export async function GET(request) {
   try {
     const discoveryRes = await fetch(`https://${storeDomain}/.well-known/openid-configuration`);
     const discovery = await discoveryRes.json();
-    const graphqlEndpoint = discovery.graphql_api; // confirm this field name via the console.log below
+    const shopId = discovery.issuer.split("/").pop();
+    const graphqlEndpoint = `https://shopify.com/${shopId}/account/customer/api/2025-10/graphql`;
 
     const query = `
       query getCustomer {
@@ -33,7 +34,6 @@ export async function GET(request) {
     });
 
     const json = await res.json();
-    console.log("Customer Account API response:", json);
 
     return NextResponse.json({ customer: json.data?.customer ?? null });
   } catch (err) {

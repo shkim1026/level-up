@@ -22,8 +22,6 @@ export default function AccountMenu({ iconClassName }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
-  console.log("customer:", customer); // TODO: remove once shape is confirmed
-
   const handleClick = () => {
     if (!customer) {
       login();
@@ -33,8 +31,8 @@ export default function AccountMenu({ iconClassName }) {
   };
 
   return (
-    <div className="relative" ref={containerRef}>
-      <button onClick={handleClick}>
+    <div className="relative flex items-center" ref={containerRef}>
+      <button type="button" onClick={handleClick} className="flex items-center">
         <FiUser className={iconClassName} />
       </button>
 
@@ -45,14 +43,14 @@ export default function AccountMenu({ iconClassName }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 mt-3 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50 text-dark-gray"
+            className="absolute right-0 mt-4 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50 text-dark-gray"
           >
             <div className="px-4 py-3 border-b border-gray-200">
               <p className="text-sm font-semibold truncate">
                 {customer?.firstName || customer?.email || "Account"}
               </p>
-              {customer?.email && (
-                <p className="text-xs text-gray-500 truncate">{customer.email}</p>
+              {customer?.emailAddress?.emailAddress && (
+                <p className="text-xs text-gray-500 truncate">{customer.emailAddress.emailAddress}</p>
               )}
             </div>
             <button
