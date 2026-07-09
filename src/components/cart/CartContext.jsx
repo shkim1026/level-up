@@ -9,6 +9,24 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get("order_complete") === "1") {
+      // Confirmed order completion — clear stale local cart instead of loading it
+      localStorage.removeItem("cartItems");
+      localStorage.removeItem("shopifyCartId");
+      setCartItems([]);
+
+      // Strip the param so refreshing/sharing the URL doesn't re-trigger this
+      params.delete("order_complete");
+      const newSearch = params.toString();
+      const newUrl =
+        window.location.pathname + (newSearch ? `?${newSearch}` : "") + window.location.hash;
+      window.history.replaceState({}, "", newUrl);
+
+      return;
+    }
+
     const saved = localStorage.getItem("cartItems");
     if (saved) setCartItems(JSON.parse(saved));
   }, []);

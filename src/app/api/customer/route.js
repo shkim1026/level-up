@@ -20,6 +20,27 @@ export async function GET(request) {
           firstName
           lastName
           emailAddress { emailAddress }
+          orders(first: 10, sortKey: PROCESSED_AT, reverse: true) {
+            edges {
+              node {
+                id
+                name
+                processedAt
+                financialStatus
+                totalPrice { amount currencyCode }
+                lineItems(first: 50) {
+                  edges {
+                    node {
+                      title
+                      quantity
+                      productId
+                      image { url altText }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     `;
@@ -34,6 +55,7 @@ export async function GET(request) {
     });
 
     const json = await res.json();
+    console.log("Customer + orders raw response:", JSON.stringify(json, null, 2));
 
     return NextResponse.json({ customer: json.data?.customer ?? null });
   } catch (err) {
