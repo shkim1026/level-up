@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Level Up
+
+A headless e-commerce storefront built with Next.js, powered by Shopify's Storefront and Customer Account APIs, with print-on-demand fulfillment via Printful.
+
+**Live site:** [level-up-rouge.vercel.app](https://level-up-rouge.vercel.app)
+
+---
+
+## Features
+
+- **Product browsing & filtering** — series, category, and price-range filters shared across desktop (sidebar) and mobile (drawer/chips) layouts
+- **Search** — debounced, portal-based dropdown matching product titles and tags
+- **Product details** — color/size variant selection synced with an image carousel
+- **Cart** — persisted to `localStorage`, supports multiple variants per product, syncs with Shopify's hosted checkout
+- **Customer accounts** — OAuth/PKCE authentication via Shopify's Customer Account API, with order history
+- **Consent management** — custom cookie consent banner integrated with Shopify's Customer Privacy API and Google Analytics
+- **FAQ** — accordion UI with Printful-specific shipping/returns content
+
+## Tech Stack
+
+| Layer | Tech |
+|---|---|
+| Framework | [Next.js](https://nextjs.org/) (App Router) |
+| Styling | [Tailwind CSS](https://tailwindcss.com/) |
+| Animation | [Framer Motion](https://www.framer.com/motion/) |
+| Carousel | [Splide](https://splidejs.com/) (`@splidejs/react-splide`) |
+| Icons | [React Icons](https://react-icons.github.io/react-icons/) |
+| Commerce | [Shopify Storefront API](https://shopify.dev/docs/api/storefront) & [Customer Account API](https://shopify.dev/docs/api/customer) (GraphQL) |
+| Fulfillment | [Printful](https://www.printful.com/) (print-on-demand) |
+| Deployment | [Vercel](https://vercel.com/) |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Node.js](https://nodejs.org/) 18+
+- A Shopify store on a Storefront API–enabled plan
+- Shopify Storefront API access token and Customer Account API app credentials
+
+### Installation
+
+```powershell
+git clone https://github.com/shkim1026/level-up.git
+cd level-up
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Create a `.env.local` file in the project root:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
+NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN=your-storefront-api-token
+NEXT_PUBLIC_GA_ID=your-google-analytics-id
+```
 
-## Learn More
+Additional Customer Account API credentials (client ID, redirect URIs, etc.) are required for the `/auth` routes — configure these in your Shopify Customer Account API app settings and add the corresponding environment variables.
 
-To learn more about Next.js, take a look at the following resources:
+### Run the dev server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```powershell
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000) to view the app. Note that OAuth login and cookie-based consent behavior rely on domain matching, so some flows are best verified on a deployed Vercel preview URL rather than `localhost`.
 
-## Deploy on Vercel
+### Build & deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```powershell
+npm run build
+npm run start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Or deploy directly with the [Vercel CLI](https://vercel.com/docs/cli):
+
+```powershell
+vercel --prod
+```
+
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── (site)/              # Main storefront routes (apparel, cart, products, etc.)
+│   ├── auth/                 # OAuth/PKCE login, callback, logout routes
+│   └── api/customer/         # Customer session API route
+├── components/
+│   ├── cart/                # CartContext, CartDrawer
+│   ├── filters/              # FilterSidebar, FilterBar, FilterChips, FilterContent
+│   ├── layout/               # Header
+│   ├── product/              # ProductCard, ProductCarousel, ProductListing, etc.
+│   ├── searchbar/             # Portal-based search dropdown
+│   └── faq/                  # FAQ accordion
+├── context/                # ProductContext, AccountContext
+├── data/                   # Shopify data-fetching functions
+├── lib/shopify/             # Cart mutations, customer privacy, color map
+└── utils/                  # Slugify, formatPrice, PageTitle
+```
+
+## Key Implementation Notes
+
+- **Shopify variant options are unordered** — always look up by `option.name` (e.g. `"color"`, `"size"`), never by array index.
+- **Customer Account API vs. Admin API** — field names differ between the two; verify against the [Customer Account API schema](https://shopify.dev/docs/api/customer) specifically.
+- **Non-Plus Shopify plan** — some checkout customizations (like post-purchase cart clearing) are implemented via a `theme.liquid` redirect script rather than Checkout UI Extensions or Shopify Plus–only features.
+
+## Roadmap
+
+- [ ] Refine post-checkout redirect to avoid unconditional script execution
+- [ ] Newsletter/email capture (Klaviyo, Mailchimp, or Shopify Email)
+- [ ] Automated end-to-end testing with Playwright
+
+## License
+
+This project is private and not currently licensed for public use.

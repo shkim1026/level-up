@@ -34,6 +34,11 @@
     transform: translateX(100%);
   }
 }
+
+html {
+  scrollbar-gutter: stable;
+}
+
 .animate-shimmer {
   animation: shimmer 1.5s infinite;
 }

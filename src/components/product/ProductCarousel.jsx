@@ -31,7 +31,7 @@ export default function ProductCarousel({ product, selectedColor }) {
   }, [selectedColor]);
 
   return (
-    <div className="mx-auto flex flex-col items-center place-content-between md:w-[600px] md:h-[700px] lg:mr-20 lg:ml-auto">
+    <div className="mx-auto flex flex-col items-center md:w-[600px] md:h-[700px] lg:mr-10 lg:ml-auto shrink-0">
       <Splide
         options={{
           type: "fade",

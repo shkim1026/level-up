@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from "react";
@@ -11,6 +10,9 @@ import ProductPurchaseControls from "@/components/product/ProductPurchaseControl
 import { formatPrice } from "@/utils/FormatPrice";
 import { slugify } from "@/utils/Slugify";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaChevronUp } from "react-icons/fa";
+import { TbWashTemperature1, TbWashTumbleDry, TbIroning1, TbWashDrycleanOff } from "react-icons/tb";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -21,16 +23,18 @@ export default function ProductDetails({ product, allProducts }) {
   const [selectedColor, setSelectedColor] = useState(
     product.variants[0]?.options.find((o) => o.name?.toLowerCase() === "color")?.value ?? ""
   );
+  const [isDescOpen, setIsDescOpen] = useState(false);
+  const [isFabricCareOpen, setIsFabricCareOpen] = useState(false);
 
   return (
     <>
-      <div className="px-8 mx-auto lg:w-[1200px] lg:flex lg:pt-5">
+      <div className="px-8 mx-auto w-full lg:max-w-[1200px] lg:flex lg:items-start lg:pt-5">
       
         {/* --- Image Gallery --- */}
         <ProductCarousel product={product} selectedColor={selectedColor} />
 
         {/* --- Product Info --- */}
-        <div className="mr-auto lg:max-w-md">
+        <div className="mr-auto lg:w-[28rem] min-w-0">
           <Link href={`/collections/${slugify(product.metafields.series)}`}>
             <h2 className="mt-6 mb-2 text-sm text-gray-400 hover:text-gray-600">
               {product.metafields.series}
@@ -58,17 +62,108 @@ export default function ProductDetails({ product, allProducts }) {
 
           <hr className="text-gray-300 mt-4" />
 
-          {/* Description */}
-          <div className="text-sm mt-5 description-html">
-            <div dangerouslySetInnerHTML={{ __html: product.description }} />
-          </div>
-
           {/* Variant select, Quantity, Add to Cart */}
           <ProductPurchaseControls 
-            product={product} 
-            selectedColor={selectedColor}
-            setSelectedColor={setSelectedColor}
-          />
+              product={product} 
+              selectedColor={selectedColor}
+              setSelectedColor={setSelectedColor}
+            />
+
+          {/* Product Details Dropdown */}
+          <div className="mt-5 pb-2">
+            <button
+              onClick={() => {
+                setIsDescOpen((prev) => !prev)
+                setIsFabricCareOpen(false);
+              }}
+              aria-expanded={isDescOpen}
+              className="flex w-full items-center justify-between gap-4 text-left focus:outline-none cursor-pointer"
+            >
+              <span className="text-sm font-semibold uppercase tracking-wide">Product Details</span>
+              <motion.span
+                animate={{ rotate: isDescOpen ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+                className="text-xl leading-none text-dark-gray"
+                aria-hidden="true"
+              >
+                <FaChevronUp />
+              </motion.span>
+            </button>
+
+            <AnimatePresence initial={false}>
+              {isDescOpen && (
+                <motion.div
+                  key="description-content"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="text-sm pt-3 description-html">
+                    <div dangerouslySetInnerHTML={{ __html: product.description }} />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Fabric Care Dropdown */}
+          <div className="mt-5 pb-2">
+            <button
+              onClick={() => {
+                setIsFabricCareOpen((prev) => !prev); 
+                setIsDescOpen(false)
+              }}
+              aria-expanded={isFabricCareOpen}
+              className="flex w-full items-center justify-between gap-4 text-left focus:outline-none cursor-pointer"
+            >
+              <span className="text-sm font-semibold uppercase tracking-wide">Fabric Care</span>
+              <motion.span
+                animate={{ rotate: isFabricCareOpen ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+                className="text-xl leading-none text-dark-gray"
+                aria-hidden="true"
+              >
+                <FaChevronUp />
+              </motion.span>
+            </button>
+
+            <AnimatePresence initial={false}>
+              {isFabricCareOpen && (
+                <motion.div
+                  key="description-content"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="text-sm pt-3 description-html">
+                    <ul className="space-y-3">
+                      <li className="flex items-start gap-3">
+                        <span className="text-2xl"><TbWashTemperature1 /></span>
+                        Machine wash cold, inside-out, gentle cycle with mild detergent and similar colors. Use non-chlorine bleach, only when necessary. No fabric softeners.
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-2xl"><TbWashTumbleDry /></span>
+                        Tumble dry low, or hang-dry for longest life.
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-2xl"><TbIroning1 /></span>
+                        Cool iron inside-out if necessary. Do not iron decoration.
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="text-2xl"><TbWashDrycleanOff /></span>
+                        Do not dry clean.
+                      </li>
+                    </ul>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
         </div>
       </div>
 

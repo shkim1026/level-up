@@ -15,6 +15,11 @@ export default function ProductPurchaseControls({ product, selectedColor, setSel
     product.variants.map((v) => v.options.find((o) => o.name?.toLowerCase() === "color")?.value)
     .filter(Boolean)
   )];
+  const SIZE_ORDER = ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"];
+  const allSizes = [...new Set(
+    product.variants.map((v) => v.options.find((o) => o.name?.toLowerCase() === "size")?.value)
+    .filter(Boolean)
+  )].sort((a, b) => SIZE_ORDER.indexOf(a) - SIZE_ORDER.indexOf(b));
   const [variantId, setVariantId] = useState(product.variants[0]?.id ?? "");
 
   const { addToCart } = useCart();
@@ -34,8 +39,8 @@ export default function ProductPurchaseControls({ product, selectedColor, setSel
   return (
     <>
       {/* Color Selector */}
-      <div className="text-sm mt-4">
-        <legend>Color:</legend>
+      <div className="text-sm mt-4 font-semibold">
+        <legend>Color: <span className="font-normal">{selectedColor}</span></legend>
       </div>
 
       <div className="mt-3 flex flex-wrap gap-2">
@@ -76,45 +81,53 @@ export default function ProductPurchaseControls({ product, selectedColor, setSel
       </div>
 
       {/* Size Selector */}
-      <div className="flex justify-between text-sm gap-2 mt-4">
+      <div className="flex justify-between text-sm gap-1 mt-4 font-semibold">
         <legend>Size:</legend>
         <SizeChartPopup />
       </div>
       
-      <div className="mt-3 flex">
-        {product.variants
-          .filter((variant) => 
-            variant.options.find((o) => o.name?.toLowerCase() === "color")?.value === selectedColor
-          )
-          .map((variant) => {
-            const sizeValue = variant.options.find((o) => o.name?.toLowerCase() === "size")?.value;
-            return (
-              <div key={variant.id}>
-                <input
-                  type="radio"
-                  value={sizeValue}
-                  id={variant.id}
-                  name="size"
-                  className="sr-only peer"
-                  checked={sizeValue === selectedSize}
-                  onChange={() => {
-                    setVariantId(variant.id);
-                    setSelectedSize(sizeValue);
-                  }}
-                />
-                <label
-                  htmlFor={variant.id}
-                  className="transition-all border px-3 py-2 text-sm mr-2 text-gray-400 peer-checked:text-white peer-checked:bg-dark-gray peer-checked:hover:text-white peer-checked:hover:bg-hover-gray peer-checked:border-dark-gray hover:bg-gray-300 rounded-sm cursor-pointer"
-                >
-                  {sizeValue}
-                </label>
-              </div>
-            );
-          })}
+      <div className="mt-3 flex flex-wrap gap-1">
+        {allSizes.map((sizeValue) => {
+          const variant = product.variants.find(
+            (v) =>
+              v.options.find((o) => o.name?.toLowerCase() === "color")?.value === selectedColor &&
+              v.options.find((o) => o.name?.toLowerCase() === "size")?.value === sizeValue
+          );
+          const isAvailable = Boolean(variant);
+
+          return (
+            <div key={sizeValue} className="pb-4">
+              <input
+                type="radio"
+                value={sizeValue}
+                id={`size-${sizeValue}`}
+                name="size"
+                className="sr-only peer"
+                checked={sizeValue === selectedSize}
+                disabled={!isAvailable}
+                onChange={() => {
+                  if (!isAvailable) return;
+                  setVariantId(variant.id);
+                  setSelectedSize(sizeValue);
+                }}
+              />
+              <label
+                htmlFor={`size-${sizeValue}`}
+                className={`transition-all border px-3 py-2 text-sm mr-2 rounded-sm ${
+                  isAvailable
+                    ? "text-gray-400 cursor-pointer peer-checked:text-white peer-checked:bg-dark-gray peer-checked:hover:text-white peer-checked:hover:bg-hover-gray peer-checked:border-dark-gray hover:bg-gray-300"
+                    : "text-gray-300 border-gray-200 cursor-not-allowed line-through"
+                }`}
+              >
+                {sizeValue}
+              </label>
+            </div>
+          );
+        })}
       </div>
 
       {/* Quantity */}
-      <div className="text-sm mt-6">
+      <div className="text-sm mt-2 font-semibold">
         <legend>Qty:</legend>
       </div>
 

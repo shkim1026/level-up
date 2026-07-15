@@ -9,13 +9,14 @@ import {
 
 const ConsentContext = createContext();
 const EMPTY_CONSENT = { marketing: "", analytics: "", preferences: "", sale_of_data: "" };
+const DECISION_KEY = "cookieConsentDecisionMade";
 
 export function ConsentProvider({ children }) {
   const [api, setApi] = useState(null);
   const [consent, setConsent] = useState(EMPTY_CONSENT);
   const [isBannerOpen, setIsBannerOpen] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
     let cancelled = false;
 
     loadCustomerPrivacyApi()
@@ -23,7 +24,11 @@ export function ConsentProvider({ children }) {
         if (cancelled || !privacyApi) return;
         setApi(privacyApi);
         setConsent(readCurrentConsent(privacyApi));
-        setIsBannerOpen(privacyApi.shouldShowBanner());
+
+        // Show the banner to every visitor until they've made an explicit
+        // choice, regardless of Shopify's region-based shouldShowBanner().
+        const hasDecided = localStorage.getItem(DECISION_KEY) === "true";
+        setIsBannerOpen(!hasDecided)
       })
       .catch((err) => console.warn("Customer Privacy API failed to load:", err));
 
@@ -46,6 +51,7 @@ export function ConsentProvider({ children }) {
       if (!api) return;
       await applyTrackingConsent(api, partialConsent);
       setConsent(readCurrentConsent(api));
+      localStorage.setItem(DECISION_KEY, "true");
       setIsBannerOpen(false);
     },
     [api]
