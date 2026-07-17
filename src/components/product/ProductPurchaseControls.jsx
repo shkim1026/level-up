@@ -32,10 +32,6 @@ export default function ProductPurchaseControls({ product, selectedColor, setSel
     setQuantity(!isNaN(value) && value > 0 ? value : 1);
   };
 
-  console.log("Colors:", colors)
-  console.log("variant options:", product.variants[0]?.options)
-  console.log("variant image:", product.variants[0]?.image)
-
   return (
     <>
       {/* Color Selector */}

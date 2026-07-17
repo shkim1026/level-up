@@ -19,6 +19,7 @@ export default function CartComponent() {
       window.location.href = cart.checkoutUrl;
     } catch (error) {
       console.error("Cart checkout failed:", error);
+      Sentry.captureException(error);
       setIsRedirecting(false);
     }
   }

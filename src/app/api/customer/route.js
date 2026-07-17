@@ -60,6 +60,7 @@ export async function GET(request) {
     return NextResponse.json({ customer: json.data?.customer ?? null });
   } catch (err) {
     console.error("Error fetching customer:", err);
+    Sentry.captureException(err);
     return NextResponse.json({ customer: null });
   }
 }

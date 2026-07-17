@@ -8,7 +8,6 @@ export default function SizeChartPopup({ product }) {
 
   const category = product?.metafields?.categories;
   const chart = sizeCharts[category] ?? defaultSizeChart;
-  console.log("SizeChartPopup category:", category, "| resolved chart:", chart === defaultSizeChart ? "DEFAULT" : category);
 
   // Close on Esc key
   useEffect(() => {

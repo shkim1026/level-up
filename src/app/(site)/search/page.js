@@ -19,6 +19,7 @@ function SearchContent() {
         setProducts(data);
       } catch (error) {
         console.log("Error fetching products:", error);
+        Sentry.captureException(error);
       }
     }
     loadProducts();

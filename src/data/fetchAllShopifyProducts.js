@@ -78,8 +78,6 @@ export async function fetchAllShopifyProducts() {
     });
 
     const json = await res.json();
-    console.log("Raw Shopify response:", JSON.stringify(json, null, 2));
-    console.log("HTTP status:", res.status);
 
     const products =
       json.data?.products?.edges.map(({ node }) => {

@@ -16,6 +16,7 @@ export function AccountProvider({ children }) {
         setCustomer(data.customer);
       } catch (err) {
         console.log("Error loading customer session:", err);
+        Sentry.captureException(err);
       } finally {
         setIsLoading(false);
       }

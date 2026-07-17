@@ -25,7 +25,6 @@ useEffect(() => {
   });
 }, []);
 
-console.log("featured products:", products)
 
   return (
     <div>
