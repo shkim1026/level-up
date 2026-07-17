@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TfiClose } from 'react-icons/tfi';
+import sizeCharts, { defaultSizeChart } from "@/lib/shopify/sizeCharts";
 
-export default function SizeChartPopup() {
+export default function SizeChartPopup({ product }) {
   const [open, setOpen] = useState(false);
+
+  const category = product?.metafields?.categories;
+  const chart = sizeCharts[category] ?? defaultSizeChart;
+  console.log("SizeChartPopup category:", category, "| resolved chart:", chart === defaultSizeChart ? "DEFAULT" : category);
 
   // Close on Esc key
   useEffect(() => {
@@ -54,74 +59,26 @@ export default function SizeChartPopup() {
 
               {/* Popup Content */}
               <h2 className="text-xl font-semibold mb-4 text-center">
-                Size Chart
+                Size Chart{category ? ` — ${category}` : ""}
               </h2>
 
               <div className="overflow-x-auto">
                 <table className="min-w-full border text-sm text-left border-gray-200">
                   <thead className="bg-gray-100">
                     <tr>
-                      <th className="p-2 border">Size</th>
-                      <th className="p-2 border">Length (in)</th>
-                      <th className="p-2 border">Width (in)</th>
-                      <th className="p-2 border">Chest (in)</th>
+                      {chart.headers.map((header) => (
+                        <th key={header} className="p-2 border">{header}</th>
+                      ))}
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="p-2 border">XS</td>
-                      <td className="p-2 border">27</td>
-                      <td className="p-2 border">16 1/2</td>
-                      <td className="p-2 border">31-34</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 border">S</td>
-                      <td className="p-2 border">28</td>
-                      <td className="p-2 border">18</td>
-                      <td className="p-2 border">34-37</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 border">M</td>
-                      <td className="p-2 border">29</td>
-                      <td className="p-2 border">20</td>
-                      <td className="p-2 border">38-41</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 border">L</td>
-                      <td className="p-2 border">30</td>
-                      <td className="p-2 border">22</td>
-                      <td className="p-2 border">42-45</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 border">XL</td>
-                      <td className="p-2 border">31</td>
-                      <td className="p-2 border">24</td>
-                      <td className="p-2 border">46-49</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 border">2XL</td>
-                      <td className="p-2 border">32</td>
-                      <td className="p-2 border">26</td>
-                      <td className="p-2 border">50-53</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 border">3XL</td>
-                      <td className="p-2 border">33</td>
-                      <td className="p-2 border">28</td>
-                      <td className="p-2 border">54-57</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 border">4XL</td>
-                      <td className="p-2 border">34</td>
-                      <td className="p-2 border">30</td>
-                      <td className="p-2 border">58-61</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 border">5XL</td>
-                      <td className="p-2 border">35</td>
-                      <td className="p-2 border">31</td>
-                      <td className="p-2 border">62-65</td>
-                    </tr>
+                    {chart.rows.map((row) => (
+                      <tr key={row[0]}>
+                        {row.map((cell, i) => (
+                          <td key={i} className="p-2 border">{cell}</td>
+                        ))}
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

@@ -81,12 +81,12 @@ export default function ProductPurchaseControls({ product, selectedColor, setSel
       </div>
 
       {/* Size Selector */}
-      <div className="flex justify-between text-sm gap-1 mt-4 font-semibold">
+      <div className="flex justify-between text-sm gap-2 mt-4 font-semibold">
         <legend>Size:</legend>
-        <SizeChartPopup />
+        <SizeChartPopup product={product} />
       </div>
       
-      <div className="mt-3 flex flex-wrap gap-1">
+      <div className="mt-3 flex flex-wrap gap-2">
         {allSizes.map((sizeValue) => {
           const variant = product.variants.find(
             (v) =>
@@ -113,7 +113,7 @@ export default function ProductPurchaseControls({ product, selectedColor, setSel
               />
               <label
                 htmlFor={`size-${sizeValue}`}
-                className={`transition-all border px-3 py-2 text-sm mr-2 rounded-sm ${
+                className={`transition-all border px-3 py-2 text-sm rounded-sm ${
                   isAvailable
                     ? "text-gray-400 cursor-pointer peer-checked:text-white peer-checked:bg-dark-gray peer-checked:hover:text-white peer-checked:hover:bg-hover-gray peer-checked:border-dark-gray hover:bg-gray-300"
                     : "text-gray-300 border-gray-200 cursor-not-allowed line-through"
