@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/nextjs";
+
 const SHOPIFY_ENDPOINT = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/api/2025-01/graphql.json`;
 
 async function fetchShopify(query, variables) {
@@ -120,8 +122,11 @@ export async function getOrCreateCart(cartItems) {
     }
   } catch (error) {
     // If existing cart fails, create a new one
+    Sentry.captureException(error, {
+      tags: { cartFallback: "existing-cart-lookup-failed" },
+      extra: { existingCartId },
+    });
     localStorage.removeItem("shopifyCartId");
     return await createCart(cartItems);
   }
 }
-

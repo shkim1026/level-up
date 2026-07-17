@@ -1,5 +1,6 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "./CartContext";
@@ -26,6 +27,18 @@ export default function CartDrawer() {
       window.location.href = cart.checkoutUrl;
     } catch (error) {
       console.error("Cart checkout failed:", error);
+      Sentry.captureException(error, {
+        extra: {
+          cartItemCount: cartItems.length,
+          cartItems: cartItems.map((item) => ({
+            id: item.id,
+            variantId: item.variantId,
+            quantity: item.quantity,
+            selectedColor: item.selectedColor,
+            selectedSize: item.selectedSize,
+          })),
+        },
+      });
       setIsRedirecting(false);
     }
   }
