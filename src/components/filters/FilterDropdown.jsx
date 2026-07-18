@@ -52,10 +52,11 @@ export default function FilterDropdown({ onChange, value }) {
                 <ListboxOptions
                   static
                   as={motion.div}
+                  modal={false}
                   initial={{ y: -10, opacity: 0 }}
                   animate={{ y: 0,  opacity: 1 }}
                   exit={{ y: -10, opacity: 0 }}
-                  className={`${montserrat.className} z-100 absolute max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-dark-gray/5 focus:outline-none sm:text-sm`}
+                  className={`${montserrat.className} z-[100] absolute max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-dark-gray/5 focus:outline-none sm:text-sm`}
                 >
                   {options.map((opt) => (
                     <ListboxOption
