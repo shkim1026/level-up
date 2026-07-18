@@ -9,10 +9,11 @@ import ProductCarousel from "@/components/product/ProductCarousel";
 import ProductPurchaseControls from "@/components/product/ProductPurchaseControls";
 import { formatPrice } from "@/utils/FormatPrice";
 import { slugify } from "@/utils/Slugify";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronUp } from "react-icons/fa";
 import { TbWashTemperature1, TbWashTumbleDry, TbIroning1, TbWashDrycleanOff } from "react-icons/tb";
+import * as Sentry from "@sentry/nextjs";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -25,6 +26,37 @@ export default function ProductDetails({ product, allProducts }) {
   );
   const [isDescOpen, setIsDescOpen] = useState(false);
   const [isFabricCareOpen, setIsFabricCareOpen] = useState(false);
+  const hasTrackedView = useRef(false);
+
+  useEffect(() => {
+    if (hasTrackedView.current) return;
+    hasTrackedView.current = true;
+
+    const sessionKey = `viewedProduct:${product.id}`;
+
+    let alreadyViewed = false;
+    try {
+      alreadyViewed = ! !sessionStorage.getItem(sessionKey);
+    } catch (err) {
+      console.error("sessionStorage unavailable, skipping dedup:", err);
+      Sentry.captureException(err);
+    }
+
+    if (alreadyViewed) return;
+
+    fetch("/api/track-view", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId: product.id }),
+    })
+      .then(() => {
+        sessionStorage.setItem(sessionKey, "1");
+      })
+      .catch((err) => {
+      console.error("Error tracking product view:", err)
+      Sentry.captureException(err);
+    });
+  }, [product.id]);
 
   return (
     <>
