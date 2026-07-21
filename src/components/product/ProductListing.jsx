@@ -16,11 +16,6 @@ const FilterDropdown = dynamic(() => import("@/components/filters/FilterDropdown
 
 export default function ProductListing({ products: externalProducts, query }) {
   const {
-    filters,
-    handleFilterChange,
-    handleFilterRemove,
-    lastChangedFilter,
-    setLastChangedFilter,
     setProductsForPage,
     filteredProducts,
   } = useProductContext();
@@ -91,7 +86,7 @@ export default function ProductListing({ products: externalProducts, query }) {
         <h1 className="block md:hidden text-xl font-bold uppercase pt-6 pb-4 text-center">{tabTitle}</h1>
       )}
 
-      <div className="flex md:px-10 px-4">
+      <div className="flex md:px-10 px-4 min-h-screen">
         <FilterSidebar />
 
         <div className="flex-1">
