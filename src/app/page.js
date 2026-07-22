@@ -18,33 +18,45 @@ const productVariants = {
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
+  const [isMobile, setIsMobile] = useState(null);
 
-useEffect(() => {
-  fetchFeaturedShopifyProducts().then((data) => {
-    setProducts(data);
-  });
-}, []);
+  useEffect(() => {
+    fetchFeaturedShopifyProducts().then((data) => {
+      setProducts(data);
+    });
+  }, []);
 
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 639px)");
+    setIsMobile(mql.matches);
+
+    const handleChange = (e) => setIsMobile(e.matches);
+    mql.addEventListener("change", handleChange);
+
+    return () => mql.removeEventListener("change", handleChange);
+  }, []);
 
   return (
     <div>
       <Header />
       
-      <div className="relative w-full min-h-[50vh] flex flex-col items-center text-white">
-        <Link href="/collections/warhammer" className="block w-full">
-          <MotionImage 
-            src="/Hero-6-2-26.png"
-            alt="hero"
-            width={1920}
-            height={1080}
-            size="100vw"
-            style={{ width: "100%", height: "auto" }}
-            priority
-            initial={{ scale: 1.2, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          />
-        </Link>
+      <div className="relative w-full min-h-[50vh] flex flex-col justify-center items-center text-white">
+        {isMobile !== null && (
+          <Link href="/collections/warhammer" className="block w-full">
+            <MotionImage
+              src={isMobile ? "/Hero-7-19-26-mobile.jpg" : "/Hero-6-2-26.png"}
+              alt="hero"
+              width={1920}
+              height={1080}
+              sizes="100vw"
+              style={{ width: "100%", height: "auto" }}
+              priority
+              initial={{ scale: 1.2, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            />
+          </Link>
+        )}
       </div>
 
       <h1 className="text-3x1 text-dark-gray font-bold mb-3 p-6 max-w-container my-0 mx-auto">Featured Products</h1>
