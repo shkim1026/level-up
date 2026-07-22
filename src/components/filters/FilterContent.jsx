@@ -27,12 +27,18 @@ export default function FilterContent({ variant = "checkbox" }) {
     { id: "50+", label: "$50+", min: 50, max: Infinity },
   ];
 
-  const isPriceRangeAvailable = (range) =>
-    filters.priceRanges.includes(range.id) ||
-    filteredProducts.some((product) => {
-      const productPrice = product.compare_at_price ?? product.price;
+  const rangeHasProduct = (range, products) =>
+    products.some((product) => {
+      const productPrice = product.compareAtPrice ?? product.price;
       return productPrice >= range.min && productPrice <= range.max;
-    });
+    })
+
+  const allPriceRanges = priceRangeDefs.filter((range) => rangeHasProduct(range, productsForPage));
+  const visiblePriceRanges = priceRangeDefs.filter((range) => rangeHasProduct(range, filteredProducts));
+  const availablePriceRanges = lastChangedFilter === "priceRanges" ? allPriceRanges : visiblePriceRanges;
+
+  const isPriceRangeAvailable = (range) => 
+    filters.priceRanges.includes(range.id) || availablePriceRanges.some((r) => r.id === range.id);
 
   // Renders one option as either a checklist row (desktop) or a pill chip (mobile)
   function FilterOption({ idPrefix, value, label, checked, isAvailable, onChange }) {

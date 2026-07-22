@@ -45,7 +45,7 @@ export default function ProductCard({ product }) {
       </Link>
 
       <Link href={`/collections/${slugify(product.metafields.series)}`}>
-        <h2 className="mb-2 text-xs text-gray-800 font-semibold uppercase hover:underline transition-opacity duration-300">
+        <h2 className="my-2 text-xs text-gray-800 font-semibold uppercase hover:underline transition-opacity duration-300">
           {product.metafields.series}
         </h2>
       </Link>
