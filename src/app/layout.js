@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Montserrat } from "next/font/google";
+import Script from "next/script";
 import { CartProvider } from "@/components/cart/CartContext.jsx";
 import CartDrawer from "@/components/cart/CartDrawer.jsx";
 import Footer from "@/components/footer/Footer";
@@ -19,6 +20,8 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const klaviyoCompanyId = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID;
+
   return (
     <html lang="en">
       <head>
@@ -38,6 +41,13 @@ export default function RootLayout({ children }) {
               <CartDrawer />
               <CookieConsentBanner />
               <GoogleAnalyticsGate gaId={process.env.NEXT_PUBLIC_GA_ID} />
+              {klaviyoCompanyId && (
+                <Script
+                  id="klaviyo-js"
+                  src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${klaviyoCompanyId}`}
+                  strategy="afterInteractive"
+                />
+              )}
             </ConsentProvider>
           </AccountProvider>
         </CartProvider>
