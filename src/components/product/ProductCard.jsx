@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Raleway } from "next/font/google";
 import { slugify } from "@/utils/Slugify";
 import { formatPrice } from "@/utils/FormatPrice";
+import KlaviyoStarRating from "@/components/product/KlaviyoStarRating";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -50,21 +51,23 @@ export default function ProductCard({ product }) {
         </h2>
       </Link>
 
-      <Link href={`/products/${product.handle}`}>
+      <Link href={`/products/${product.handle}`} className="w-full flex flex-col items-center">
         <h3 className={`mb-1 text-sm text-dark-gray text-center uppercase tracking-wider ${raleway.className}`}>
           {product.title}
         </h3>
       
-        {product.compareAtPrice ? (
-          <div className="flex flex-row items-center justify-center">
-            <p className="text-red-500 mr-2">{formatPrice(product.price)}</p>
-            <p className="text-gray-500 line-through">{formatPrice(product.compareAtPrice)}</p>
-          </div>
-        ) : (
-          <p className="text-dark-gray text-center">{formatPrice(product.price)}</p>
-        )}
+        <div className="flex items-center justify-between w-full mt-1">
+          {product.compareAtPrice ? (
+            <div className="flex flex-row items-center justify-center">
+              <p className="text-red-500 mr-2">{formatPrice(product.price)}</p>
+              <p className="text-gray-500 line-through">{formatPrice(product.compareAtPrice)}</p>
+            </div>
+          ) : (
+            <p className="text-dark-gray text-center w-full">{formatPrice(product.price)}</p>
+          )}
+          <KlaviyoStarRating productId={product.id} />
+        </div>
       </Link>
     </div>
-
   );
 }

@@ -42,11 +42,18 @@ export default function RootLayout({ children }) {
               <CookieConsentBanner />
               <GoogleAnalyticsGate gaId={process.env.NEXT_PUBLIC_GA_ID} />
               {klaviyoCompanyId && (
-                <Script
-                  id="klaviyo-js"
-                  src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${klaviyoCompanyId}`}
-                  strategy="afterInteractive"
-                />
+                <>
+                  <Script
+                    id="klaviyo-js"
+                    src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${klaviyoCompanyId}`}
+                    strategy="afterInteractive"
+                  />
+                  <Script
+                    id="klaviyo-reviews-js"
+                    src={`https://static-v2.klaviyo.com/onsite/js/klaviyo_reviews.js?company_id=${klaviyoCompanyId}`}
+                    strategy="afterInteractive"
+                  />
+                </>
               )}
             </ConsentProvider>
           </AccountProvider>

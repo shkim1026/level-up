@@ -7,6 +7,8 @@ import { Raleway } from "next/font/google";
 import RelatedProducts from "@/components/product/RelatedProducts";
 import ProductCarousel from "@/components/product/ProductCarousel";
 import ProductPurchaseControls from "@/components/product/ProductPurchaseControls";
+import KlaviyoStarRating from "@/components/product/KlaviyoStarRating";
+import KlaviyoReviewsWidget from "@/components/product/KlaviyoReviewsWidget";
 import { formatPrice } from "@/utils/FormatPrice";
 import { slugify } from "@/utils/Slugify";
 import { useState, useEffect, useRef } from "react";
@@ -78,19 +80,22 @@ export default function ProductDetails({ product, allProducts }) {
             {product.title}
           </h1>
 
-          {/* Prices */}
-          {product.compareAtPrice? (
-            <div className="flex items-center mt-2">
-              <p className="text-red-500 text-xl mr-2">
-                {formatPrice(product.price)}
-              </p>
-              <p className="text-gray-500 line-through">
-                {formatPrice(product.compareAtPrice)}
-              </p>
-            </div>
-          ) : (
-            <p className="mt-2 text-xl">{formatPrice(product.price)}</p>
-          )}
+          {/* Prices & Star Rating */}
+          <div className="flex items-center justify-between mt-2">
+            {product.compareAtPrice ? (
+              <div className="flex items-center">
+                <p className="text-red-500 text-xl mr-2">
+                  {formatPrice(product.price)}
+                </p>
+                <p className="text-gray-500 line-through">
+                  {formatPrice(product.compareAtPrice)}
+                </p>
+              </div>
+            ) : (
+              <p className="text-xl">{formatPrice(product.price)}</p>
+            )}
+            <KlaviyoStarRating productId={product.id} />
+          </div>
 
           <hr className="text-gray-300 mt-4" />
 
@@ -201,6 +206,9 @@ export default function ProductDetails({ product, allProducts }) {
 
       {/* Related Products */}
       <RelatedProducts currentProduct={product} allProducts={allProducts} />
+      
+      {/* Klaviyo Reviews Section */}
+      <KlaviyoReviewsWidget productId={product.id} />
     </>
   );
 }
