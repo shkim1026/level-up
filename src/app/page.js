@@ -45,7 +45,7 @@ export default function HomePage() {
           <Link href="/collections/warhammer" className="block w-full">
             <MotionImage
               src={isMobile ? "/Hero-7-19-26-mobile.jpg" : "/Hero-6-2-26.png"}
-              alt="hero"
+              alt="Level Up Warhammer Collection Featured Apparel Banner"
               width={1920}
               height={1080}
               sizes="100vw"
@@ -59,7 +59,7 @@ export default function HomePage() {
         )}
       </div>
 
-      <h1 className="text-3x1 text-dark-gray font-bold mb-3 p-6 max-w-container my-0 mx-auto">Featured Products</h1>
+      <h1 className="text-xl text-dark-gray font-bold mt-3 p-6 max-w-container my-0 mx-auto">Featured Products</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-1 pb-10 max-w-container my-0 mx-auto">
         {products.map((product, i) => (
             <motion.div

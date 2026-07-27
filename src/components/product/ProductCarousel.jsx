@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import Image from "next/image";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 
@@ -41,10 +42,21 @@ export default function ProductCarousel({ product, selectedColor }) {
         }}
         ref={mainRef}
         aria-label="Main carousel"
+        className="w-full"
       >
         {product.images.map((image, index) => (
           <SplideSlide key={index}>
-            <img src={image.url} alt={image.altText} />
+            <div className="relative w-full aspect-square overflow-hidden rounded-lg">
+              <Image
+                src={image.url}
+                alt={image.altText || `${product.title} view ${index + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, 1200px"
+                quality={90}
+                priority={index === 0}
+                className="object-cover"
+              />
+            </div>
           </SplideSlide>
         ))}
       </Splide>
@@ -62,14 +74,23 @@ export default function ProductCarousel({ product, selectedColor }) {
         }}
         ref={thumbnailRef}
         aria-label="Product carousel with thumbnails"
-        className="justify-end"
+        className="justify-end w-full"
       >
         {product.images.map((image, index) => (
           <SplideSlide key={index}>
-            <img src={image.url} alt={image.altText} />
+            <div className="relative w-full aspect-square overflow-hidden rounded-md cursor-pointer">
+              <Image
+                src={image.url}
+                alt={image.altText || `${product.title} thumbnail ${index + 1}`}
+                fill
+                sizes="200px"
+                quality={85}
+                className="object-cover"
+              />
+            </div>
           </SplideSlide>
         ))}
       </Splide>
     </div>
-  )
+  );
 }

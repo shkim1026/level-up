@@ -15,18 +15,92 @@ const montserrat = Montserrat({
   weight: ['400', '500', '600', '700'],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://levelupthreads.com";
+
 export const metadata = {
-  description: "Level up Your Threads",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Level Up | Premium Apparel & Streetwear",
+    template: "%s | Level Up",
+  },
+  description: "Elevate your everyday streetwear with Level Up Threads. Built with premium materials, designed for maximum comfort, and tailored to level up your wardrobe.",
+  keywords: ["streetwear", "gaming apparel", "anime streetwear", "hoodies", "t-shirts", "Level Up"],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "Level Up",
+    title: "Level Up | Premium Apparel & Streetwear",
+    description: "Elevate your everyday streetwear with Level Up Threads. Built with premium materials, designed for maximum comfort.",
+    images: [
+      {
+        url: "/Level_up_logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Level Up Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Level Up | Premium Apparel & Streetwear",
+    description: "Elevate your everyday streetwear with Level Up Threads.",
+    images: ["/Level_up_logo.png"],
+  },
 };
 
 export default function RootLayout({ children }) {
   const klaviyoCompanyId = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID;
 
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Level Up",
+    "url": siteUrl,
+    "logo": `${siteUrl}/Level_up_logo.png`,
+    "sameAs": [
+      "https://instagram.com",
+      "https://x.com"
+    ]
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Level Up",
+    "url": siteUrl,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${siteUrl}/search?query={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <html lang="en">
       <head>
-        <title>Level Up</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
       </head>
       <body
         className={`${montserrat.className} antialiased bg-white text-dark-gray`}
