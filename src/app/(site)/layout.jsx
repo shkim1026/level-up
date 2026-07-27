@@ -6,7 +6,7 @@ export default function SiteLayout({ children }) {
     <>
       <Header />
 
-      <main className="max-w-6x1 mx-auto bg-white text-dark-gray min-h-screen">
+      <main id="main-content" tabIndex={-1} className="max-w-6x1 mx-auto bg-white text-dark-gray min-h-screen outline-none">
         {children}
       </main>
     </>

@@ -90,6 +90,19 @@ export default function Header() {
     }
   };
 
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        setIsMobileMenuOpen(false);
+        setIsSearchBarOpen(false);
+      }
+    };
+    if (isMobileMenuOpen || isSearchBarOpen) {
+      window.addEventListener("keydown", handleEsc);
+    }
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [isMobileMenuOpen, isSearchBarOpen]);
+
   // Focus on search bar text input and outside-click handler
   function FocusSearchBar({ isSearchBarOpen, onClose, query, setQuery, searchButtonRef }) {
     const inputRef = useRef(null);
@@ -122,12 +135,13 @@ export default function Header() {
 
     return (
       <div className="flex grow" ref={containerRef}>
-        <FiSearch className="text-2xl text-gray-500 mr-3"/>
+        <FiSearch className="text-2xl text-gray-500 mr-3" aria-hidden="true" />
         <input 
           ref={inputRef} 
           type="text" 
           placeholder="Search For..." 
-          className="focus:outline-none grow uppercase" 
+          aria-label="Search products"
+          className="search-input-no-ring focus:outline-none focus-visible:outline-none grow uppercase" 
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -176,19 +190,21 @@ export default function Header() {
         {/* Mobile Navigation */}
         <div className="relative flex items-center justify-between bg-white h-16 lg:hidden z-40 border-b border-gray-300">
           <div className="flex gap-5 items-center ml-6 text-dark-gray">
-            <button onClick={toggleMobileMenu}>
+            <button onClick={toggleMobileMenu} aria-label="Open navigation menu" aria-expanded={isMobileMenuOpen}>
               <TfiMenu className="text-2xl cursor-pointer" />
             </button>
           </div>
           <Link href="/" className="w-15 absolute left-1/2 -translate-x-1/2">
-            <Image src="/Level_up_logo.png" alt="logo" width={60} height={24} style={{ width: "auto", height: "auto" }}/>
+            <Image src="/Level_up_logo.png" alt="Level up logo" width={60} height={24} style={{ width: "auto", height: "auto" }}/>
           </Link>
           <div className="flex gap-5 items-center mr-6 text-dark-gray">
-            <button onClick={toggleSearchBar} ref={searchButtonRef}><FiSearch className="text-2xl cursor-pointer"/></button>
+            <button onClick={toggleSearchBar} ref={searchButtonRef} aria-label="Open search bar" aria-expanded={isSearchBarOpen}>
+              <FiSearch className="text-2xl cursor-pointer"/>
+            </button>
             
             <AccountMenu iconClassName="text-2xl cursor-pointer" />
             
-            <button onClick={toggleCart} className="relative">
+            <button onClick={toggleCart} aria-label={`Open cart (${cartItems.length} items)`} className="relative">
               <TfiShoppingCart className="text-2xl cursor-pointer" />
               {cartItems.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -212,10 +228,14 @@ export default function Header() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 onClick={() => setIsMobileMenuOpen(false)}
+                aria-hidden="true"
               />
               {/* Sliding menu panel */}
               <motion.div
                 key="mobile-menu"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Navigation menu"
                 className="fixed top-0 left-0 bg-white h-screen max-w-[92vw] sm:max-w-md z-50 text-dark-gray"
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
@@ -229,7 +249,16 @@ export default function Header() {
                   animate="visible"
                   exit="exit"
                 >
-                  <TfiClose className="text-lg cursor-pointer mb-10" onClick={() => setIsMobileMenuOpen(false)} />
+                  <li>
+                    <button
+                      type="button"
+                      aria-label="Close navigation menu"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="mb-10 text-dark-gray hover:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray p-1 rounded-sm"
+                    >
+                      <TfiClose className="text-lg cursor-pointer" />
+                    </button>
+                  </li>
 
                   {navLinks.map(({ label, href }) => (
                     <motion.li
@@ -237,9 +266,9 @@ export default function Header() {
                       className="py-3 mb-0 uppercase text-sm"
                       variants={itemVariants}
                     >
-                      <a href={href} className="cursor-pointer hover:text-gray-400">
+                      <Link href={href} className="cursor-pointer hover:text-gray-400">
                         {label}
-                      </a>
+                      </Link>
                       <hr className="text-gray-300 mt-6"/>
                     </motion.li>
                   ))}
@@ -286,13 +315,13 @@ export default function Header() {
               ))}
             </div>
             <div className="flex gap-5 items-center mr-10 text-dark-gray">
-              <button onClick={toggleSearchBar} ref={searchButtonRef}>
+              <button onClick={toggleSearchBar} ref={searchButtonRef} aria-label="Open search bar" aria-expanded={isSearchBarOpen}>
                 <FiSearch className="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300"/>
               </button>
 
               <AccountMenu iconClassName="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300" />
 
-              <button onClick={toggleCart} className="relative">
+              <button onClick={toggleCart} aria-label={`Open cart (${cartItems.length} items)`} className="relative">
                 <TfiShoppingCart className="text-2xl cursor-pointer hover:text-hover-gray ease-in-out duration-300" />
                 {cartItems.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
@@ -316,16 +345,20 @@ export default function Header() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 onClick={() => setIsSearchBarOpen(false)}
+                aria-hidden="true"
               />
 
               <motion.div 
-                className="flex items-center justify-between absolute w-full py-5 px-10 bg-white text-dark-gray z-50"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Search"
+                className="flex items-center justify-between absolute w-full py-5 px-6 sm:px-10 bg-white text-dark-gray z-50 border-b border-gray-200"
                 initial={{ opacity: 0, maxHeight: 0 }}
                 animate={{ opacity: 1, maxHeight: 200 }}
                 exit={{ opacity: 0, maxHeight: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <div ref={barRef} className="flex items-center justify-between w-full max-w-[1920px] mx-auto">
+                <div ref={barRef} className="relative flex items-center justify-between w-full max-w-[1920px] mx-auto">
                   <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -346,15 +379,21 @@ export default function Header() {
                     animate={{ opacity: 1, rotate: 0 }}
                     exit={{ opacity: 0, rotate: 90 }}
                     transition={{ duration: 0.3 }}
-                    className="flex justify-end"
+                    aria-label="Close search"
+                    className="flex justify-end p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray rounded-sm ml-4"
                     onClick={() => setIsSearchBarOpen(false)}
                   >
                     <TfiClose className="text-lg cursor-pointer" />
                   </motion.button>
+
+                  <SearchResults 
+                    isSearchBarOpen={isSearchBarOpen} 
+                    results={results} 
+                    query={query}
+                    onItemClick={() => setIsSearchBarOpen(false)}
+                  />
                 </div>
               </motion.div>
-
-              <SearchResults anchorRef={barRef} isSearchBarOpen={isSearchBarOpen} results={results} query={query}/>
             </>
           )}
         </AnimatePresence>

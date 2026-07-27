@@ -41,7 +41,13 @@ export default function ProductDetails({ product, allProducts }) {
       alreadyViewed = ! !sessionStorage.getItem(sessionKey);
     } catch (err) {
       console.error("sessionStorage unavailable, skipping dedup:", err);
-      Sentry.captureException(err);
+      Sentry.captureException(err, {
+        contexts: {
+          custom_info: {
+            message: "sessionStorage unavailable, skipping dedup:"
+          }
+        }
+      });
     }
 
     if (alreadyViewed) return;

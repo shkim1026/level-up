@@ -77,3 +77,24 @@ body {
     display: block;
   }
 }
+
+/* --- Global Uniform Focus Ring System --- */
+*:focus-visible {
+  outline: 2px solid #212121 !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
+footer *:focus-visible,
+.bg-dark-gray *:focus-visible,
+.promoBanner *:focus-visible {
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
+.search-input-no-ring:focus-visible,
+input[aria-label="Search products"]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}

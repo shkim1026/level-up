@@ -54,6 +54,16 @@ export default function AccountMenu({ iconClassName }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
+  // Escape key close handler
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
   const handleClick = () => {
     if (!customer) {
       login();
@@ -64,7 +74,15 @@ export default function AccountMenu({ iconClassName }) {
 
   return (
     <>
-      <button type="button" ref={buttonRef} onClick={handleClick} className="flex items-center">
+      <button 
+        type="button" 
+        ref={buttonRef} 
+        onClick={handleClick} 
+        aria-label={customer ? "User account menu" : "Log in to account"} 
+        aria-haspopup="menu" 
+        aria-expanded={isOpen}
+        className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray rounded-sm"
+      >
         <FiUser className={iconClassName} />
       </button>
 
@@ -74,6 +92,8 @@ export default function AccountMenu({ iconClassName }) {
             {isOpen && customer && (
               <motion.div
                 data-account-menu
+                role="menu"
+                aria-label="User account options"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -91,16 +111,18 @@ export default function AccountMenu({ iconClassName }) {
                 </div>
 
                 <Link
+                  role="menuitem"
                   href="/account/orders"
                   onClick={() => setIsOpen(false)}
-                  className="block px-4 py-3 text-sm hover:bg-gray-100 border-b border-gray-200"
+                  className="block px-4 py-3 text-sm hover:bg-gray-100 border-b border-gray-200 focus:outline-none focus-visible:bg-gray-100"
                 >
                   Orders
                 </Link>
 
                 <button
+                  role="menuitem"
                   onClick={logout}
-                  className="w-full text-left px-4 py-3 text-sm hover:bg-gray-100 cursor-pointer"
+                  className="w-full text-left px-4 py-3 text-sm hover:bg-gray-100 cursor-pointer focus:outline-none focus-visible:bg-gray-100"
                 >
                   Logout
                 </button>

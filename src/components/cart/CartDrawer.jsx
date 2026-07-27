@@ -44,19 +44,23 @@ export default function CartDrawer() {
   }
 
   useEffect(() => {
-    if (isOpen) {
-      const scrollBarWidth = window.innerWidth - document.body.offsetWidth;
-      document.body.style.overflow = "hidden";
-      document.body.style.paddingRight = `${scrollBarWidth}px`;
-    } else {
-      document.body.style.overflow = "";
-      document.body.style.paddingRight = "";
-    }
+    if (!isOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") closeCart();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    const scrollBarWidth = window.innerWidth - document.body.offsetWidth;
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = `${scrollBarWidth}px`;
+
     return () => {
+      window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
       document.body.style.paddingRight = "";
     };
-  }, [isOpen]);
+  }, [isOpen, closeCart]);
 
   console.log(cartItems, "cart items")
 
@@ -71,10 +75,14 @@ export default function CartDrawer() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeCart}
+            aria-hidden="true"
           />
 
           {/* Drawer Panel */}
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cart-drawer-title"
             className="fixed right-0 top-0 h-full w-full sm:w-[400px] bg-white shadow-xl z-50 flex flex-col"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -83,9 +91,9 @@ export default function CartDrawer() {
           >
             {/* Header */}
             <div className="flex justify-between items-center px-5 py-8 border-b">
-              <h2 className="text-xl font-semibold text-dark-gray">Your Cart <span>({cartItems.length} items)</span></h2>
+              <h2 id="cart-drawer-title" className="text-xl font-semibold text-dark-gray">Your Cart <span>({cartItems.length} items)</span></h2>
               
-              <button className="text-dark-gray cursor-pointer" onClick={toggleCart}>
+              <button className="text-dark-gray cursor-pointer p-1 rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray" onClick={toggleCart} aria-label="Close cart">
                 <TfiClose />
               </button>
             </div>
@@ -117,7 +125,8 @@ export default function CartDrawer() {
                         </a>
                         <button
                           onClick={() => removeFromCart(item.id, item.selectedSize, item.selectedColor)}
-                          className="text-gray-600 cursor-pointer hover:text-dark-gray"
+                          className="text-gray-600 cursor-pointer hover:text-dark-gray p-1 rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray"
+                          aria-label={`Remove ${item.title} from cart`}
                         >
                           <TfiTrash />
                         </button>
@@ -126,7 +135,7 @@ export default function CartDrawer() {
                       <p className="text-sm text-gray-500">Color: {item.selectedColor}</p>
                       <div className="flex items-center justify-between mt-2">
                         <div className="border rounded-sm border-gray-400 text-gray-500 flex max-w-fit">
-                          <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => decreaseCartQuantity(item.id, item.selectedSize, item.selectedColor)}>
+                          <button className="p-2 cursor-pointer hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray" onClick={() => decreaseCartQuantity(item.id, item.selectedSize, item.selectedColor)}>
                             <span className="sr-only">Decrease quantity</span>
                             <FiMinus />
                           </button>
@@ -134,9 +143,10 @@ export default function CartDrawer() {
                             type="text"
                             className="max-w-8 text-center"
                             value={item.quantity}
+                            aria-label={`Quantity for ${item.title}`}
                             readOnly
                           />
-                          <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => increaseCartQuantity(item.id, item.selectedSize, item.selectedColor)}>
+                          <button className="p-2 cursor-pointer hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray" onClick={() => increaseCartQuantity(item.id, item.selectedSize, item.selectedColor)}>
                             <span className="sr-only">Increase quantity</span>
                             <FiPlus />
                           </button>

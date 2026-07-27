@@ -31,12 +31,18 @@ export default function RootLayout({ children }) {
       <body
         className={`${montserrat.className} antialiased bg-white text-dark-gray`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:p-3 focus:bg-dark-gray focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none"
+        >
+          Skip to main content
+        </a>
         <CartProvider>
           <AccountProvider>
             <ConsentProvider>
-              <main className="max-w-6x1 mx-auto bg-white text-dark-gray min-h-screen">
+              <div className="max-w-6x1 mx-auto bg-white text-dark-gray min-h-screen">
                 {children}
-              </main>
+              </div>
               <Footer />
               <CartDrawer />
               <CookieConsentBanner />

@@ -4,12 +4,14 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { faqData } from "./faqData";
 
-function FAQItem({ item, isOpen, onToggle }) {
+function FAQItem({ item, itemId, isOpen, onToggle }) {
   return (
     <div className="border-b border-neutral-200">
       <button
+        id={`faq-button-${itemId}`}
         onClick={onToggle}
         aria-expanded={isOpen}
+        aria-controls={`faq-content-${itemId}`}
         className="flex w-full items-center justify-between gap-4 py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 rounded-sm"
       >
         <span className="text-sm sm:text-base font-medium text-neutral-900">
@@ -28,6 +30,9 @@ function FAQItem({ item, isOpen, onToggle }) {
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
+            id={`faq-content-${itemId}`}
+            role="region"
+            aria-labelledby={`faq-button-${itemId}`}
             key="content"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -69,7 +74,7 @@ export default function FAQAccordion() {
       </h1>
       <p className="text-sm text-neutral-500 mb-10">
         Can't find what you're looking for?{" "}
-        <a href="/contact" className="underline hover:text-neutral-700">
+        <a href="/contact" className="underline hover:text-neutral-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400">
           Contact us
         </a>
         .
@@ -87,6 +92,7 @@ export default function FAQAccordion() {
                 return (
                   <FAQItem
                     key={key}
+                    itemId={key}
                     item={item}
                     isOpen={openItems.has(key)}
                     onToggle={() => toggleItem(key)}

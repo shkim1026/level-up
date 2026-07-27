@@ -36,7 +36,7 @@ export default function ProductCard({ product }) {
           {product.images?.[1] && (
             <Image
               src={product.images[1].url}
-              alt={product.images[1].altText}
+              alt={product.images[1].altText || product.title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="rounded-lg object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -59,13 +59,19 @@ export default function ProductCard({ product }) {
         <div className="flex items-center justify-between w-full mt-1">
           {product.compareAtPrice ? (
             <div className="flex flex-row items-center justify-center">
-              <p className="text-red-500 mr-2">{formatPrice(product.price)}</p>
-              <p className="text-gray-500 line-through">{formatPrice(product.compareAtPrice)}</p>
+              <p className="text-red-500 mr-2">
+                <span className="sr-only">Sale price: </span>
+                {formatPrice(product.price)}
+              </p>
+              <p className="text-gray-500 line-through">
+                <span className="sr-only">Original price: </span>
+                {formatPrice(product.compareAtPrice)}
+              </p>
             </div>
           ) : (
             <p className="text-dark-gray text-center w-full">{formatPrice(product.price)}</p>
           )}
-          <KlaviyoStarRating productId={product.id} />
+          
         </div>
       </Link>
     </div>

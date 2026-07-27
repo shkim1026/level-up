@@ -26,7 +26,9 @@ export default function SizeChartPopup({ product }) {
       {/* Trigger Button */}
       <button
         onClick={() => setOpen(true)}
-        className="text-sm underline hover:text-gray-700 transition cursor-pointer"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        className="text-sm underline hover:text-gray-700 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray rounded-sm"
       >
         Size Chart
       </button>
@@ -39,9 +41,13 @@ export default function SizeChartPopup({ product }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setOpen(false)}
+            aria-hidden="true"
             className="fixed inset-0 bg-dark-gray/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           >
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="size-chart-title"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -51,13 +57,14 @@ export default function SizeChartPopup({ product }) {
               {/* Close Button */}
               <button
                 onClick={() => setOpen(false)}
-                className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+                aria-label="Close size chart"
+                className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 p-1 rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray"
               >
                 <TfiClose size={20} className="cursor-pointer" />
               </button>
 
               {/* Popup Content */}
-              <h2 className="text-xl font-semibold mb-4 text-center">
+              <h2 id="size-chart-title" className="text-xl font-semibold mb-4 text-center">
                 Size Chart{category ? ` — ${category}` : ""}
               </h2>
 
@@ -66,7 +73,7 @@ export default function SizeChartPopup({ product }) {
                   <thead className="bg-gray-100">
                     <tr>
                       {chart.headers.map((header) => (
-                        <th key={header} className="p-2 border">{header}</th>
+                        <th key={header} scope="col" className="p-2 border font-semibold">{header}</th>
                       ))}
                     </tr>
                   </thead>
@@ -74,7 +81,11 @@ export default function SizeChartPopup({ product }) {
                     {chart.rows.map((row) => (
                       <tr key={row[0]}>
                         {row.map((cell, i) => (
-                          <td key={i} className="p-2 border">{cell}</td>
+                          i === 0 ? (
+                            <th key={i} scope="row" className="p-2 border font-medium text-left">{cell}</th>
+                          ) : (
+                            <td key={i} className="p-2 border text-center">{cell}</td>
+                          )
                         ))}
                       </tr>
                     ))}

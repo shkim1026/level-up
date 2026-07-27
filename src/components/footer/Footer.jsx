@@ -49,27 +49,28 @@ export default function Footer() {
 
           <form onSubmit={handleSubscribe} className="w-full md:w-auto flex-1 max-w-md">
             {status === "success" ? (
-              <div className="flex items-center justify-center md:justify-start gap-2 text-green-400 bg-green-950/40 border border-green-800 rounded-lg p-3 text-sm font-medium">
+              <div aria-live="polite" className="flex items-center justify-center md:justify-start gap-2 text-green-400 bg-green-950/40 border border-green-800 rounded-lg p-3 text-sm font-medium">
                 <FiCheck className="text-lg" />
                 <span>You're in! Use code <strong className="underline">LEVELUP10</strong> at checkout.</span>
               </div>
             ) : (
               <div className="flex flex-col sm:flex-row gap-3">
                 <div className="relative flex-1">
-                  <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-lg" aria-hidden="true" />
                   <input
                     type="email"
                     required
+                    aria-label="Email address for newsletter"
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-gray-900 text-white placeholder-gray-400 pl-10 pr-4 py-3 rounded-lg border border-gray-700 focus:outline-none focus:border-white transition-colors text-sm"
+                    className="w-full bg-gray-900 text-white placeholder-gray-400 pl-10 pr-4 py-3 rounded-lg border border-gray-700 focus:outline-none focus:border-white focus-visible:ring-2 focus-visible:ring-white transition-colors text-sm"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="bg-white text-dark-gray hover:bg-gray-200 font-semibold px-6 py-3 rounded-lg uppercase tracking-wider text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="bg-white text-dark-gray hover:bg-gray-200 font-semibold px-6 py-3 rounded-lg uppercase tracking-wider text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                 >
                   <span>{status === "submitting" ? "Joining..." : "Subscribe"}</span>
                   <FiArrowRight className="text-base" />
@@ -105,15 +106,6 @@ export default function Footer() {
               <FaInstagram />
             </a>
             <a
-              href="https://tiktok.com"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="TikTok"
-              className="text-gray-400 hover:text-white transition-colors text-lg"
-            >
-              <FaTiktok />
-            </a>
-            <a
               href="https://x.com"
               target="_blank"
               rel="noreferrer"
@@ -121,15 +113,6 @@ export default function Footer() {
               className="text-gray-400 hover:text-white transition-colors text-lg"
             >
               <FaXTwitter />
-            </a>
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="YouTube"
-              className="text-gray-400 hover:text-white transition-colors text-lg"
-            >
-              <FaYoutube />
             </a>
           </div>
         </div>
@@ -153,11 +136,6 @@ export default function Footer() {
             <li>
               <Link href="/apparel" className="hover:text-white transition-colors">
                 All Apparel
-              </Link>
-            </li>
-            <li>
-              <Link href="/collections" className="hover:text-white transition-colors">
-                Collections
               </Link>
             </li>
           </ul>
@@ -248,4 +226,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+}

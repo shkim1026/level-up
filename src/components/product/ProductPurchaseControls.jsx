@@ -35,110 +35,117 @@ export default function ProductPurchaseControls({ product, selectedColor, setSel
   return (
     <>
       {/* Color Selector */}
-      <div className="text-sm mt-4 font-semibold">
-        <legend>Color: <span className="font-normal">{selectedColor}</span></legend>
-      </div>
-
-      <div className="mt-3 flex flex-wrap gap-2">
-        {colors.map((color) => (
-          <div key={color}>
-            <input
-              type="radio"
-              value={color}
-              id={`color-${color}`}
-              name="color"
-              className="sr-only peer"
-              checked={color === selectedColor}
-              onChange={() => {
-                setSelectedColor(color);
-                const sameSize = product.variants.find(
-                  (v) =>
-                    v.options.find((o) => o.name?.toLowerCase() === "color")?.value === color &&
-                    v.options.find((o) => o.name?.toLowerCase() === "size")?.value === selectedSize
-                );
-                const fallback = product.variants.find(
-                  (v) => v.options.find((o) => o.name?.toLowerCase() === "color")?.value === color
-                );
-                const target = sameSize || fallback;
-                if (target) {
-                  setVariantId(target.id);
-                  setSelectedSize(target.options.find((o) => o.name?.toLowerCase() === "size")?.value);
-                }
-              }}
-            />
-          <label
-            htmlFor={`color-${color}`}
-            className="block relative w-8 h-8 rounded-full border-2 border-gray-300 peer-checked:border-dark-gray cursor-pointer hover:scale-110 transition-all"
-            style={{ backgroundColor: colorMap[color] || "#ccc" }}
-            title={color}
-          />
-          </div>
-        ))}
-      </div>
-
-      {/* Size Selector */}
-      <div className="flex justify-between text-sm gap-2 mt-4 font-semibold">
-        <legend>Size:</legend>
-        <SizeChartPopup product={product} />
-      </div>
-      
-      <div className="mt-3 flex flex-wrap gap-2">
-        {allSizes.map((sizeValue) => {
-          const variant = product.variants.find(
-            (v) =>
-              v.options.find((o) => o.name?.toLowerCase() === "color")?.value === selectedColor &&
-              v.options.find((o) => o.name?.toLowerCase() === "size")?.value === sizeValue
-          );
-          const isAvailable = Boolean(variant);
-
-          return (
-            <div key={sizeValue} className="pb-4">
+      <fieldset className="border-0 p-0 m-0">
+        <legend className="text-sm mt-4 font-semibold">
+          Color: <span className="font-normal">{selectedColor}</span>
+        </legend>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {colors.map((color) => (
+            <div key={color}>
               <input
                 type="radio"
-                value={sizeValue}
-                id={`size-${sizeValue}`}
-                name="size"
+                value={color}
+                id={`color-${color}`}
+                name="color"
                 className="sr-only peer"
-                checked={sizeValue === selectedSize}
-                disabled={!isAvailable}
+                checked={color === selectedColor}
                 onChange={() => {
-                  if (!isAvailable) return;
-                  setVariantId(variant.id);
-                  setSelectedSize(sizeValue);
+                  setSelectedColor(color);
+                  const sameSize = product.variants.find(
+                    (v) =>
+                      v.options.find((o) => o.name?.toLowerCase() === "color")?.value === color &&
+                      v.options.find((o) => o.name?.toLowerCase() === "size")?.value === selectedSize
+                  );
+                  const fallback = product.variants.find(
+                    (v) => v.options.find((o) => o.name?.toLowerCase() === "color")?.value === color
+                  );
+                  const target = sameSize || fallback;
+                  if (target) {
+                    setVariantId(target.id);
+                    setSelectedSize(target.options.find((o) => o.name?.toLowerCase() === "size")?.value);
+                  }
                 }}
               />
               <label
-                htmlFor={`size-${sizeValue}`}
-                className={`transition-all border px-3 py-2 text-sm rounded-sm ${
-                  isAvailable
-                    ? "text-gray-400 cursor-pointer peer-checked:text-white peer-checked:bg-dark-gray peer-checked:hover:text-white peer-checked:hover:bg-hover-gray peer-checked:border-dark-gray hover:bg-gray-300"
-                    : "text-gray-300 border-gray-200 cursor-not-allowed line-through"
-                }`}
+                htmlFor={`color-${color}`}
+                className="block relative w-8 h-8 rounded-full border-2 border-gray-300 peer-checked:border-dark-gray peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-dark-gray cursor-pointer hover:scale-110 transition-all"
+                style={{ backgroundColor: colorMap[color] || "#ccc" }}
+                title={color}
               >
-                {sizeValue}
+                <span className="sr-only">{color}</span>
               </label>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      </fieldset>
+
+      {/* Size Selector */}
+      <fieldset className="border-0 p-0 m-0">
+        <div className="flex justify-between text-sm gap-2 mt-4 font-semibold">
+          <legend>Size:</legend>
+          <SizeChartPopup product={product} />
+        </div>
+        
+        <div className="mt-3 flex flex-wrap gap-2">
+          {allSizes.map((sizeValue) => {
+            const variant = product.variants.find(
+              (v) =>
+                v.options.find((o) => o.name?.toLowerCase() === "color")?.value === selectedColor &&
+                v.options.find((o) => o.name?.toLowerCase() === "size")?.value === sizeValue
+            );
+            const isAvailable = Boolean(variant);
+
+            return (
+              <div key={sizeValue} className="pb-4">
+                <input
+                  type="radio"
+                  value={sizeValue}
+                  id={`size-${sizeValue}`}
+                  name="size"
+                  className="sr-only peer"
+                  checked={sizeValue === selectedSize}
+                  disabled={!isAvailable}
+                  onChange={() => {
+                    if (!isAvailable) return;
+                    setVariantId(variant.id);
+                    setSelectedSize(sizeValue);
+                  }}
+                />
+                <label
+                  htmlFor={`size-${sizeValue}`}
+                  className={`transition-all border px-3 py-2 text-sm rounded-sm peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-dark-gray ${
+                    isAvailable
+                      ? "text-gray-400 cursor-pointer peer-checked:text-white peer-checked:bg-dark-gray peer-checked:hover:text-white peer-checked:hover:bg-hover-gray peer-checked:border-dark-gray hover:bg-gray-300"
+                      : "text-gray-300 border-gray-200 cursor-not-allowed line-through"
+                  }`}
+                >
+                  {sizeValue}
+                </label>
+              </div>
+            );
+          })}
+        </div>
+      </fieldset>
 
       {/* Quantity */}
       <div className="text-sm mt-2 font-semibold">
-        <legend>Qty:</legend>
+        <label htmlFor="product-quantity-input">Qty:</label>
       </div>
 
       <div className="border rounded-sm border-gray-400 text-gray-500 mt-2 flex max-w-fit">
-        <button className="p-3 cursor-pointer hover:bg-gray-300" onClick={decrement}>
+        <button className="p-3 cursor-pointer hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray" onClick={decrement}>
           <span className="sr-only">Decrease quantity</span>
           <FiMinus />
         </button>
         <input
+          id="product-quantity-input"
           type="text"
-          className="max-w-8 text-center"
+          aria-label="Product quantity"
+          className="max-w-8 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray"
           value={quantity}
           onChange={handleChange}
         />
-        <button className="p-3 cursor-pointer hover:bg-gray-300" onClick={increment}>
+        <button className="p-3 cursor-pointer hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray" onClick={increment}>
           <span className="sr-only">Increase quantity</span>
           <FiPlus />
         </button>
@@ -146,7 +153,7 @@ export default function ProductPurchaseControls({ product, selectedColor, setSel
 
       {/* Add to Cart */}
       <button 
-        className="mt-7 px-6 py-2 bg-dark-gray text-white rounded-lg hover:bg-hover-gray transition w-full cursor-pointer uppercase tracking-wide"
+        className="mt-7 px-6 py-2 bg-dark-gray text-white rounded-lg hover:bg-hover-gray transition w-full cursor-pointer uppercase tracking-wide focus:outline-none focus-visible:ring-2 focus-visible:ring-dark-gray"
         onClick={() => {
           const variantImage = product.variants.find(
             (v) => v.options.find((o) => o.name?.toLowerCase() === "color")?.value === selectedColor

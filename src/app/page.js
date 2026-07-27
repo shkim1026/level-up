@@ -40,7 +40,7 @@ export default function HomePage() {
     <div>
       <Header />
       
-      <div className="relative w-full min-h-[50vh] flex flex-col justify-center items-center text-white">
+      <div className="relative w-full flex flex-col justify-center items-center text-white">
         {isMobile !== null && (
           <Link href="/collections/warhammer" className="block w-full">
             <MotionImage

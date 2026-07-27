@@ -3,6 +3,7 @@
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import * as Sentry from "@sentry/nextjs";
 import { ProductProvider } from "@/context/ProductContext";
 import ProductListing from "@/components/product/ProductListing";
 import { fetchAllShopifyProducts } from "@/data/fetchAllShopifyProducts";
