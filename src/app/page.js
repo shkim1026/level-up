@@ -37,7 +37,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div>
+    <div className="pb-[3rem]">
       <Header />
       
       <div className="relative w-full flex flex-col justify-center items-center text-white">
@@ -60,7 +60,7 @@ export default function HomePage() {
       </div>
 
       <h1 className="text-xl text-dark-gray font-bold mt-3 p-6 max-w-container my-0 mx-auto">Featured Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-1 pb-10 max-w-container my-0 mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-1 max-w-container my-0 mx-auto">
         {products.map((product, i) => (
             <motion.div
               key={product.id}
@@ -78,6 +78,43 @@ export default function HomePage() {
             </motion.div>
           )
         )}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 max-w-container mx-auto py-[6rem]">
+        <Link href="/collections/cowboy-bebop" className="block w-full p-4">
+          <MotionImage 
+            src="/cowboybebopcollection-banner.jpg" 
+            alt="Cowboy Bebop Collection Banner"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            style={{ width: "100%", height: "auto" }}
+            width={960}
+            height={640}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.5,
+              ease: "easeOut",
+            }}
+          />
+        </Link>
+        <Link href="/collections/portal" className="block w-full p-4">
+          <MotionImage 
+            src="/portalcollection-banner.jpg" 
+            alt="Portal Collection Banner"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            style={{ width: "100%", height: "auto" }}
+            width={960}
+            height={640}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.6,
+              duration: 0.5,
+              ease: "easeOut",
+            }}
+          />
+        </Link>
       </div>
     </div>
   )
