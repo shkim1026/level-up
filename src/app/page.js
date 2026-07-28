@@ -80,7 +80,7 @@ export default function HomePage() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 max-w-container mx-auto py-[6rem]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 max-w-container mx-auto py-[5rem]">
         <Link href="/collections/cowboy-bebop" className="block w-full p-4">
           <MotionImage 
             src="/cowboybebopcollection-banner.jpg" 
@@ -91,6 +91,7 @@ export default function HomePage() {
             height={640}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{
               delay: 0.3,
               duration: 0.5,
@@ -108,6 +109,7 @@ export default function HomePage() {
             height={640}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{
               delay: 0.6,
               duration: 0.5,
