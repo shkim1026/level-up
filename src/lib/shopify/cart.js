@@ -88,45 +88,12 @@ export async function addLinesToCart(cartId, cartItems) {
 }
 
 export async function getOrCreateCart(cartItems) {
-  const existingCartId = localStorage.getItem("shopifyCartId");
-
-  if (!existingCartId) {
-    return await createCart(cartItems);
-  }
-
   try {
-    const cartQuery = `
-      query getCart($id: ID!) {
-        cart(id: $id) {
-          id
-          lines(first: 100) {
-            edges {
-              node {
-                merchandise {id}
-                quantity
-              }
-            }
-          }
-          checkoutUrl
-        }
-      }
-    `;
-
-    const data = await fetchShopify(cartQuery, { id: existingCartId });
-    const existingCart = data.cart;
-
-    if (!existingCart.lines.edges.length) {
-      return await addLinesToCart(existingCart, cartItems);
-    } else {
-      return existingCart;
-    }
-  } catch (error) {
-    // If existing cart fails, create a new one
-    Sentry.captureException(error, {
-      tags: { cartFallback: "existing-cart-lookup-failed" },
-      extra: { existingCartId },
-    });
-    localStorage.removeItem("shopifyCartId");
     return await createCart(cartItems);
+  } catch (error) {
+    Sentry.captureException(error, {
+      tags: { cartFallback: "cart-creation-failed" },
+    });
+    throw error;
   }
 }

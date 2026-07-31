@@ -5,6 +5,7 @@ import { FiMinus, FiPlus } from 'react-icons/fi';
 import { useCart } from "@/components/cart/CartContext";
 import { getOrCreateCart } from "@/lib/shopify/cart";
 import { useState } from "react";
+import * as Sentry from "@sentry/nextjs";
 
 export default function CartComponent() {
   const { cartItems, removeFromCart, decreaseCartQuantity, increaseCartQuantity, getCartTotal } = useCart();
@@ -66,7 +67,7 @@ export default function CartComponent() {
                       {/* QUANTITY FOR MOBILE */}
                       <div className="md:hidden flex items-center col-start-4 mr-auto">
                         <div className="border rounded-sm border-gray-400 text-gray-500 flex mb-2">
-                          <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => decreaseCartQuantity(item.id, item.selectedSize)}>
+                          <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => decreaseCartQuantity(item.id, item.selectedSize, item.selectedColor)}>
                             <span className="sr-only">Decrease quantity</span>
                             <FiMinus />
                           </button>
@@ -76,13 +77,13 @@ export default function CartComponent() {
                             value={item.quantity}
                             readOnly
                           />
-                          <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => increaseCartQuantity(item.id, item.selectedSize)}>
+                          <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => increaseCartQuantity(item.id, item.selectedSize, item.selectedColor)}>
                             <span className="sr-only">Increase quantity</span>
                             <FiPlus />
                           </button>
                         </div>
                         <p
-                          onClick={() => removeFromCart(item.id, item.selectedSize)}
+                          onClick={() => removeFromCart(item.id, item.selectedSize, item.selectedColor)}
                           className="text-gray-600 cursor-pointer hover:text-dark-gray underline text-xs pl-4 mb-2"
                         >Remove</p>
                       </div>
@@ -92,7 +93,7 @@ export default function CartComponent() {
 
                   <div className="hidden md:flex flex-col items-center col-start-4 my-auto">
                     <div className="border rounded-sm border-gray-400 text-gray-500 flex">
-                      <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => decreaseCartQuantity(item.id, item.selectedSize)}>
+                      <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => decreaseCartQuantity(item.id, item.selectedSize, item.selectedColor)}>
                         <span className="sr-only">Decrease quantity</span>
                         <FiMinus />
                       </button>
@@ -102,13 +103,13 @@ export default function CartComponent() {
                         value={item.quantity}
                         readOnly
                       />
-                      <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => increaseCartQuantity(item.id, item.selectedSize)}>
+                      <button className="p-2 cursor-pointer hover:bg-gray-300" onClick={() => increaseCartQuantity(item.id, item.selectedSize, item.selectedColor)}>
                         <span className="sr-only">Increase quantity</span>
                         <FiPlus />
                       </button>
                     </div>
                     <p
-                      onClick={() => removeFromCart(item.id, item.selectedSize)}
+                      onClick={() => removeFromCart(item.id, item.selectedSize, item.selectedColor)}
                       className="text-gray-600 cursor-pointer hover:text-dark-gray underline text-xs"
                     >Remove</p>
                   </div>

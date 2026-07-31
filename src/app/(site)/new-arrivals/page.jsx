@@ -19,11 +19,16 @@ export const metadata = {
 
 export default async function NewArrivalsPage() {
   const products = await fetchAllShopifyProducts();
-  console.log("Products:", JSON.stringify(products, null, 2));
+  const newArrivals = [...products].sort((a, b) => {
+    const isNewA = a.metafields?.new ? 1 : 0;
+    const isNewB = b.metafields?.new ? 1 : 0;
+    return isNewB - isNewA;
+  });
+
   return (
     <Suspense fallback={<ProductGridSkeleton />}>
-      <ProductProvider initialProducts={products}>
-        <ProductListing products={products} />
+      <ProductProvider initialProducts={newArrivals}>
+        <ProductListing products={newArrivals} />
       </ProductProvider>
     </Suspense>
   )

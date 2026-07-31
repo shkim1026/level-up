@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
+import * as Sentry from "@sentry/nextjs";
 
 export const AccountContext = createContext();
 

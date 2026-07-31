@@ -26,8 +26,15 @@ function SearchContent() {
     loadProducts();
   }, []);
 
-  const searchResults = query
-    ? products.filter((p) => p.title.toLowerCase().includes(query))
+  const lowerQuery = query ? query.toLowerCase().trim() : "";
+  const searchResults = lowerQuery
+    ? products.filter((p) => {
+        const titleMatch = p.title?.toLowerCase().includes(lowerQuery);
+        const tagMatch = p.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery));
+        const seriesMatch = p.metafields?.series?.toLowerCase().includes(lowerQuery);
+        const categoryMatch = p.metafields?.categories?.toLowerCase().includes(lowerQuery);
+        return titleMatch || tagMatch || seriesMatch || categoryMatch;
+      })
     : [];
 
   return (

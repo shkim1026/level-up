@@ -48,7 +48,7 @@ export default async function SeriesPage({ params }) {
     const categoryValue = p?.metafields?.categories?.trim();
 
     const seriesSlugified = seriesValue ? slugify(seriesValue) : null;
-    const categorySlugified = seriesValue ? slugify(categoryValue) : null;
+    const categorySlugified = categoryValue ? slugify(categoryValue) : null;
 
     return seriesSlugified === seriesSlug || categorySlugified === seriesSlug;
   });

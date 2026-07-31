@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 
 export async function POST(request) {
   try {
@@ -62,6 +63,7 @@ export async function POST(request) {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       console.error("Brevo API error:", errorData);
+      Sentry.captureException(new Error(`Brevo API Error: ${errorData.message || response.statusText}`));
       return NextResponse.json(
         { error: errorData.message || "Failed to send email via Brevo." },
         { status: response.status }
@@ -71,6 +73,7 @@ export async function POST(request) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Contact API error:", error);
+    Sentry.captureException(error);
     return NextResponse.json(
       { error: "An unexpected error occurred while sending your message." },
       { status: 500 }

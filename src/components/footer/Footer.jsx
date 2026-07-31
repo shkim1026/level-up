@@ -27,10 +27,21 @@ export default function Footer() {
     if (!email || !email.includes("@")) return;
 
     setStatus("submitting");
+
+    if (typeof window !== "undefined") {
+      window._klaviyo = window._klaviyo || [];
+      try {
+        window._klaviyo.push(["identify", { $email: email }]);
+        window._klaviyo.push(["track", "Newsletter Subscription", { email }]);
+      } catch (err) {
+        console.warn("Klaviyo tracking error:", err);
+      }
+    }
+
     setTimeout(() => {
       setStatus("success");
       setEmail("");
-    }, 600);
+    }, 400);
   };
 
   return (
@@ -94,8 +105,8 @@ export default function Footer() {
             Elevate your everyday streetwear. Built with premium materials, designed for maximum comfort, and tailored to level up your wardrobe.
           </p>
 
-          {/* Social Icons */}
-          <div className="flex items-center gap-4 pt-2">
+          {/* Social Icons (Hidden until created)*/}
+          <div className="flex items-center gap-4 pt-2 hidden">
             <a
               href="https://instagram.com"
               target="_blank"

@@ -19,11 +19,16 @@ export const metadata = {
 
 export default async function BestSellersPage() {
   const products = await fetchAllShopifyProducts();
+  const bestSellers = [...products].sort((a, b) => {
+    const popA = a.metafields?.popularity ?? 0;
+    const popB = b.metafields?.popularity ?? 0;
+    return popB - popA;
+  });
   
   return (
     <Suspense fallback={<ProductGridSkeleton />}>
-      <ProductProvider initialProducts={products}>
-        <ProductListing products={products}/>
+      <ProductProvider initialProducts={bestSellers}>
+        <ProductListing products={bestSellers}/>
       </ProductProvider>
     </Suspense>
   )

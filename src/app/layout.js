@@ -125,7 +125,7 @@ export default function RootLayout({ children }) {
         <CartProvider>
           <AccountProvider>
             <ConsentProvider>
-              <div className="max-w-6x1 mx-auto bg-white text-dark-gray min-h-screen">
+              <div className="mx-auto bg-white text-dark-gray min-h-screen">
                 {children}
               </div>
               <Footer />
