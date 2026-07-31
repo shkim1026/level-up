@@ -85,7 +85,7 @@ export default function ProductDetailsSkeleton() {
         <div className="flex justify-center mb-6">
           <div className="w-48 h-7 bg-gray-200 rounded" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-1 max-w-container my-0 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-1 max-w-container my-0 mx-auto pb-20">
           {Array.from({ length: 4 }).map((_, i) => (
             <ProductCardSkeleton key={i} />
           ))}

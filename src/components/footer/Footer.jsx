@@ -93,7 +93,7 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Links */}
-      <div className="max-w-6xl mx-auto py-12 px-6 sm:px-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 text-sm">
+      <div className="max-w-6xl mx-auto py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 text-sm">
         {/* Brand Column */}
         <div className="lg:col-span-2 space-y-4">
           <Link href="/" className="inline-block">
