@@ -27,7 +27,6 @@ export default function ShippingPolicyPage() {
         </h2>
         <ul className="list-disc pl-5 space-y-2">
           <li><strong>Standard Shipping (US):</strong> 3–6 business days after fulfillment.</li>
-          <li><strong>Free Shipping:</strong> Automatically applied on US orders of $200 or more.</li>
           <li><strong>International Shipping:</strong> 7–15 business days depending on customs processing in the destination country.</li>
         </ul>
 

@@ -182,7 +182,7 @@ export default function Header() {
         {promoBannerIsOpen && (
           <div className="promoBanner z-50">
             <a href="/apparel">
-              <p className="text-xs text-center text-white p-2 uppercase bg-dark-gray hover:underline">Free shipping on all orders $200+</p>
+              <p className="text-xs text-center text-white p-2 uppercase bg-dark-gray hover:underline">Free shipping on all orders $100+</p>
             </a>
           </div>
         )}

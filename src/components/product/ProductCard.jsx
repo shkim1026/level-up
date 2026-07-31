@@ -71,7 +71,6 @@ export default function ProductCard({ product }) {
           ) : (
             <p className="text-dark-gray text-center w-full">{formatPrice(product.price)}</p>
           )}
-          
         </div>
       </Link>
     </div>
