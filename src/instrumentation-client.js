@@ -12,6 +12,15 @@ Sentry.init({
   // Enable logs to be sent to Sentry
   enableLogs: true,
 
+  // Ignore ad-blocker network fetch failures and transient browser aborts/disconnects
+  ignoreErrors: [
+    "TypeError: Failed to fetch (fast.a.klaviyo.com)",
+    /Failed to fetch \(fast\.a\.klaviyo\.com\)/i,
+    /NetworkError: A network error occurred/i,
+    /NetworkError when attempting to fetch resource/i,
+    /TypeError: Load failed/i,
+  ],
+
   dataCollection: {
     // To disable sending user data and HTTP bodies, uncomment the lines below. For more info visit:
     // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#dataCollection
