@@ -23,11 +23,14 @@ export default function ShippingPolicyPage() {
         </p>
 
         <h2 className="text-xl font-bold uppercase text-dark-gray mt-8 mb-2">
-          2. Domestic & International Shipping Rates
+          2. Shipping Destinations & Rates
         </h2>
+        <p className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r text-amber-900 font-medium">
+          <strong>Note:</strong> We currently only ship to addresses within the <strong>United States</strong> and <strong>Canada</strong> as we work on expanding our business internationally.
+        </p>
         <ul className="list-disc pl-5 space-y-2">
-          <li><strong>Standard Shipping (US):</strong> 3–6 business days after fulfillment.</li>
-          <li><strong>International Shipping:</strong> 7–15 business days depending on customs processing in the destination country.</li>
+          <li><strong>United States:</strong> 3–6 business days after fulfillment.</li>
+          <li><strong>Canada:</strong> 4–8 business days after fulfillment (customs processing times may vary).</li>
         </ul>
 
         <h2 className="text-xl font-bold uppercase text-dark-gray mt-8 mb-2">

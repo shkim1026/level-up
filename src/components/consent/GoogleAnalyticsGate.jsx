@@ -5,6 +5,8 @@ import { useConsent } from "@/context/ConsentContext";
 
 export default function GoogleAnalyticsGate({ gaId }) {
   const { consent } = useConsent();
-  if (!gaId || consent.analytics !== "yes") return null;
+
+  if (!gaId || consent.analytics !== "no") return null;
+  
   return <GoogleAnalytics gaId={gaId} />;
 }
