@@ -27,7 +27,7 @@ export async function POST(request) {
     const getQuery = `
       query getPopularity($id: ID!) {
         product(id: $id) {
-          metafield(namespace: "global", key: "popularity") {
+          metafield(namespace: "custom", key: "popularity") {
             value
             type
           }
@@ -51,7 +51,7 @@ export async function POST(request) {
       metafields: [
         {
           ownerId: productId,
-          namespace: "global",
+          namespace: "custom",
           key: "popularity",
           type: metafieldType,
           value: String(currentValue + 1),

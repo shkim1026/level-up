@@ -49,11 +49,11 @@ export async function fetchAllShopifyProducts() {
               }
             }
             metafields(identifiers: [
-              {namespace: "global", key: "popularity"},
-              {namespace: "global", key: "rating"},
-              {namespace: "global", key: "new"},
-              {namespace: "global", key: "series"},
-              {namespace: "global", key: "categories"}
+              {namespace: "custom", key: "popularity"},
+              {namespace: "custom", key: "rating"},
+              {namespace: "custom", key: "new"},
+              {namespace: "custom", key: "series"},
+              {namespace: "custom", key: "categories"}
             ]) {
               key
               namespace
