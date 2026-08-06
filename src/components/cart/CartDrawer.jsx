@@ -116,6 +116,7 @@ export default function CartDrawer() {
                         alt={item.title}
                         width={80}
                         height={80}
+                        unoptimized
                       />
                     </a>
                     <div className="flex flex-col w-full">

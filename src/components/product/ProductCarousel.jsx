@@ -51,6 +51,7 @@ export default function ProductCarousel({ product, selectedColor }) {
                 src={image.url}
                 alt={image.altText || `${product.title} view ${index + 1}`}
                 fill
+                unoptimized
                 sizes="(max-width: 768px) 100vw, 1200px"
                 quality={90}
                 priority={index === 0}
@@ -83,6 +84,7 @@ export default function ProductCarousel({ product, selectedColor }) {
                 src={image.url}
                 alt={image.altText || `${product.title} thumbnail ${index + 1}`}
                 fill
+                unoptimized
                 sizes="200px"
                 quality={85}
                 className="object-cover"

@@ -44,7 +44,7 @@ export default function CartComponent() {
                 <div key={index} className="border-b border-gray-300 md:grid grid-cols-5 gap-4">
                   <div className="flex mx-auto col-start-1 col-end-3">
                     <Link href={`/products/${item.handle}`} className="flex self-center w-[70px] h-[70px] md:w-[200px] md:h-[200px] shrink-0">
-                      <Image src={item.image} width={200} height={200} alt={item.title}/>
+                      <Image src={item.image} width={200} height={200} alt={item.title} unoptimized/>
                     </Link>
                     <div className="flex flex-col space-y-2 my-auto">
                       <Link href={`/collections/${item.metafields.series}`}>
