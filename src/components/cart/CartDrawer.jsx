@@ -51,14 +51,11 @@ export default function CartDrawer() {
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    const scrollBarWidth = window.innerWidth - document.body.offsetWidth;
     document.body.style.overflow = "hidden";
-    document.body.style.paddingRight = `${scrollBarWidth}px`;
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
-      document.body.style.paddingRight = "";
     };
   }, [isOpen, closeCart]);
 

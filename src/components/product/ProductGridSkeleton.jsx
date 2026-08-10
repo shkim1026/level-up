@@ -69,7 +69,7 @@ export default function ProductGridSkeleton() {
           <div className="flex place-content-between items-center max-w-container py-4 md:py-6 lg:px-5 animate-pulse">
             <div className="w-24 h-8 bg-gray-200 rounded-lg" />
             <div className="hidden md:block w-36 h-8 bg-gray-200 rounded" />
-            <div className="w-[10.5rem] h-9 bg-gray-200 rounded-lg" />
+            <div className="w-48 h-9 bg-gray-200 rounded-lg" />
           </div>
 
           {/* Product Grid Skeleton */}

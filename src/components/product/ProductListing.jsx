@@ -11,7 +11,7 @@ import PageTitle from "@/utils/PageTitle";
 
 const FilterDropdown = dynamic(() => import("@/components/filters/FilterDropdown"), {
   ssr: false,
-  loading: () => <div className="w-[168px] h-10" />, //Prevents <h2>{tabTitle}</h2> from shifting on page load
+  loading: () => <div className="w-48 h-10" />, //Prevents <h2>{tabTitle}</h2> from shifting on page load
 });
 
 export default function ProductListing({ products: externalProducts, query }) {
