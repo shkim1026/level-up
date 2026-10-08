@@ -267,7 +267,11 @@ export default function Header() {
                         className="py-3 mb-0 uppercase text-sm"
                         variants={itemVariants}
                       >
-                        <Link href={href} className="cursor-pointer hover:text-gray-400">
+                        <Link 
+                          href={href} 
+                          className="cursor-pointer hover:text-gray-400"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
                           {label}
                         </Link>
                         <hr className="text-gray-300 mt-6"/>
