@@ -4,18 +4,53 @@ import { useRef, useEffect } from "react";
 import Image from "next/image";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+import { getColorForImage } from "@/utils/getColorForImage";
 
-export default function ProductCarousel({ product, selectedColor }) {
+export default function ProductCarousel({ product, selectedColor, setSelectedColor }) {
   const mainRef = useRef(null);
   const thumbnailRef = useRef(null);
+  const isProgrammaticMove = useRef(false);
 
-  // Carousel syncing
+  const selectedColorRef = useRef(selectedColor);
+  selectedColorRef.current = selectedColor;
+
+  const productRef = useRef(product);
+  productRef.current = product;
+
+  // Carousel syncing and slide move listener
   useEffect(() => {
-    if (mainRef.current?.splide && thumbnailRef.current?.splide) {
-      thumbnailRef.current.splide.sync(mainRef.current.splide);
-    }
-  }, []);
+    const mainSplide = mainRef.current?.splide;
+    const thumbSplide = thumbnailRef.current?.splide;
 
+    if (mainSplide && thumbSplide) {
+      thumbSplide.sync(mainSplide);
+    }
+
+    if (!mainSplide) return;
+
+    const onMove = (newIndex) => {
+      if (isProgrammaticMove.current) {
+        isProgrammaticMove.current = false;
+        return;
+      }
+
+      const currentProduct = productRef.current;
+      const targetImage = currentProduct?.images?.[newIndex];
+      const color = getColorForImage(targetImage, currentProduct);
+
+      if (color && color !== selectedColorRef.current && setSelectedColor) {
+        setSelectedColor(color);
+      }
+    };
+
+    mainSplide.on("move", onMove);
+
+    return () => {
+      mainSplide.off("move", onMove);
+    };
+  }, [setSelectedColor]);
+
+  // When selectedColor changes from outside (e.g. user clicked color swatch)
   useEffect(() => {
     if (!selectedColor || !mainRef.current?.splide) return;
 
@@ -26,10 +61,18 @@ export default function ProductCarousel({ product, selectedColor }) {
     if (!variantImage) return;
 
     const index = product.images.findIndex((img) => img.url === variantImage);
-    if (index !== -1) {
+    if (index !== -1 && mainRef.current.splide.index !== index) {
+      isProgrammaticMove.current = true;
       mainRef.current.splide.go(index);
     }
-  }, [selectedColor]);
+  }, [selectedColor, product]);
+
+  const handleImageClick = (index) => {
+    const color = getColorForImage(product.images[index], product);
+    if (color && color !== selectedColor && setSelectedColor) {
+      setSelectedColor(color);
+    }
+  };
 
   return (
     <div className="mx-auto flex flex-col items-center md:w-[600px] md:h-[700px] lg:mr-10 lg:ml-auto shrink-0 gap-[1rem]">
@@ -46,7 +89,10 @@ export default function ProductCarousel({ product, selectedColor }) {
       >
         {product.images.map((image, index) => (
           <SplideSlide key={index}>
-            <div className="relative w-full aspect-square overflow-hidden rounded-lg">
+            <div 
+              className="relative w-full aspect-square overflow-hidden rounded-lg cursor-pointer"
+              onClick={() => handleImageClick(index)}
+            >
               <Image
                 src={image.url}
                 alt={image.altText || `${product.title} view ${index + 1}`}
@@ -79,7 +125,10 @@ export default function ProductCarousel({ product, selectedColor }) {
       >
         {product.images.map((image, index) => (
           <SplideSlide key={index}>
-            <div className="relative w-full aspect-square overflow-hidden rounded-md cursor-pointer">
+            <div 
+              className="relative w-full aspect-square overflow-hidden rounded-md cursor-pointer"
+              onClick={() => handleImageClick(index)}
+            >
               <Image
                 src={image.url}
                 alt={image.altText || `${product.title} thumbnail ${index + 1}`}

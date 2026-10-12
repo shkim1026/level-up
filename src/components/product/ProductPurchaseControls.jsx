@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCart } from "@/components/cart/CartContext";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import SizeChartPopup from "@/components/ui/SizePopupChart";
@@ -21,6 +21,30 @@ export default function ProductPurchaseControls({ product, selectedColor, setSel
     .filter(Boolean)
   )].sort((a, b) => SIZE_ORDER.indexOf(a) - SIZE_ORDER.indexOf(b));
   const [variantId, setVariantId] = useState(product.variants[0]?.id ?? "");
+
+  const selectedSizeRef = useRef(selectedSize);
+  selectedSizeRef.current = selectedSize;
+
+  useEffect(() => {
+    if (!selectedColor) return;
+    const currentSize = selectedSizeRef.current;
+    const sameSize = product.variants.find(
+      (v) =>
+        v.options.find((o) => o.name?.toLowerCase() === "color")?.value === selectedColor &&
+        v.options.find((o) => o.name?.toLowerCase() === "size")?.value === currentSize
+    );
+    const fallback = product.variants.find(
+      (v) => v.options.find((o) => o.name?.toLowerCase() === "color")?.value === selectedColor
+    );
+    const target = sameSize || fallback;
+    if (target) {
+      setVariantId(target.id);
+      const targetSize = target.options.find((o) => o.name?.toLowerCase() === "size")?.value;
+      if (targetSize) {
+        setSelectedSize(targetSize);
+      }
+    }
+  }, [selectedColor, product]);
 
   const { addToCart } = useCart();
 
@@ -51,19 +75,6 @@ export default function ProductPurchaseControls({ product, selectedColor, setSel
                 checked={color === selectedColor}
                 onChange={() => {
                   setSelectedColor(color);
-                  const sameSize = product.variants.find(
-                    (v) =>
-                      v.options.find((o) => o.name?.toLowerCase() === "color")?.value === color &&
-                      v.options.find((o) => o.name?.toLowerCase() === "size")?.value === selectedSize
-                  );
-                  const fallback = product.variants.find(
-                    (v) => v.options.find((o) => o.name?.toLowerCase() === "color")?.value === color
-                  );
-                  const target = sameSize || fallback;
-                  if (target) {
-                    setVariantId(target.id);
-                    setSelectedSize(target.options.find((o) => o.name?.toLowerCase() === "size")?.value);
-                  }
                 }}
               />
               <label

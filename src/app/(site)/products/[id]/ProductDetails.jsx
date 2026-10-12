@@ -71,7 +71,11 @@ export default function ProductDetails({ product, allProducts }) {
       <div className="px-8 mx-auto w-full lg:max-w-[1200px] lg:flex lg:items-start lg:pt-5">
       
         {/* --- Image Gallery --- */}
-        <ProductCarousel product={product} selectedColor={selectedColor} />
+        <ProductCarousel 
+          product={product} 
+          selectedColor={selectedColor} 
+          setSelectedColor={setSelectedColor} 
+        />
 
         {/* --- Product Info --- */}
         <div className="mr-auto lg:w-[28rem] min-w-0">
