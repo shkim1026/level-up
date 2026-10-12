@@ -40,6 +40,8 @@ export function CartProvider({ children }) {
   const closeCart = () => setIsOpen(false);
 
   const addToCart = (item) => {
+    let nextCart = [];
+
     setCartItems((prev) => {
       const existingItem = prev.find(
         (cartItem) => 
@@ -49,17 +51,63 @@ export function CartProvider({ children }) {
       );
 
       if (existingItem) {
-        return prev.map((cartItem) => 
+        nextCart = prev.map((cartItem) => 
           cartItem.id === item.id &&
           cartItem.selectedSize === item.selectedSize &&
           cartItem.selectedColor === item.selectedColor
             ? {...cartItem, quantity: cartItem.quantity + item.quantity }
             : cartItem
         );
+      } else {
+        nextCart = [...prev, item];
       }
-      return [...prev, item];
+      return nextCart;
     })
+
     setIsOpen(true);
+
+    // Klaviyo "Added to Cart" Tracking
+    if (typeof window !== "undefined") {
+      try {
+        const _klaviyo = (window._klaviyo = window._klaviyo || []);
+        const productUrl = item.handle
+          ? `${window.location.origin}/products/${item.handle}`
+          : window.location.origin;
+        const totalCartValue = nextCart.reduce(
+          (total, cartItem) => total + cartItem.price * cartItem.quantity,
+          0
+        );
+  
+        _klaviyo.push([
+          "track",
+          "Added to Cart",
+          {
+            $value: totalCartValue,
+            AddedItemProductName: item.title,
+            AddedItemProductID: item.id,
+            AddedItemPrice: item.price,
+            AddedItemQuantity: item.quantity,
+            AddedItemImage: item.image,
+            AddedItemURL: productUrl,
+            ItemNames: nextCart.map((i) => i.title),
+            CheckoutURL: productUrl,
+            Items: nextCart.map((i) => ({
+              ProductID: i.id,
+              VariantID: i.variantId,
+              ProductName: i.title,
+              Quantity: i.quantity,
+              ItemPrice: i.price,
+              RowTotal: i.price * i.quantity,
+              ImageURL: i.image,
+              URL: i.handle ? `${window.location.origin}/products/${i.handle}` : window.location.origin,
+              Variation: `${i.selectedColor} / ${i.selectedSize}`,
+            })),
+          },
+        ]);
+      } catch (err) {
+        console.warn("Klaviyo tracking error:", err);
+      }
+    }
   };
 
   const removeFromCart = (id, selectedSize, selectedColor) => {
