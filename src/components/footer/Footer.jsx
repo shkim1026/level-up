@@ -29,10 +29,10 @@ export default function Footer() {
     setStatus("submitting");
 
     if (typeof window !== "undefined") {
-      window._klaviyo = window._klaviyo || [];
+      window._learnq = window._learnq || [];
       try {
-        window._klaviyo.push(["identify", { $email: email }]);
-        window._klaviyo.push(["track", "Newsletter Subscription", { email }]);
+        window._learnq.push(["identify", { $email: email }]);
+        window._learnq.push(["track", "Newsletter Subscription", { email }]);
       } catch (err) {
         console.warn("Klaviyo tracking error:", err);
       }

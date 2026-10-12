@@ -69,7 +69,7 @@ export function CartProvider({ children }) {
     // Klaviyo "Added to Cart" Tracking
     if (typeof window !== "undefined") {
       try {
-        const _klaviyo = (window._klaviyo = window._klaviyo || []);
+        const _learnq = (window._learnq = window._learnq || []);
         const productUrl = item.handle
           ? `${window.location.origin}/products/${item.handle}`
           : window.location.origin;
@@ -78,7 +78,7 @@ export function CartProvider({ children }) {
           0
         );
   
-        _klaviyo.push([
+        _learnq.push([
           "track",
           "Added to Cart",
           {
