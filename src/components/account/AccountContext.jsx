@@ -15,6 +15,24 @@ export function AccountProvider({ children }) {
         const res = await fetch("/api/customer");
         const data = await res.json();
         setCustomer(data.customer);
+
+        // Identify logged-in customer to Klaviyo
+        const email = data.customer?.emailAddress?.emailAddress;
+        if (email && typeof window !== "undefined") {
+          try {
+            const _learnq = (window._learnq = window._learnq || []);
+            _learnq.push([
+              "identify",
+              {
+                $email: email,
+                $first_name: data.customer.firstName || "",
+                $last_name: data.customer.lastName || "",
+              },
+            ]);
+          } catch (klaviyoErr) {
+            console.warn("Klaviyo account identify error:", klaviyoErr);
+          }
+        }
       } catch (err) {
         console.log("Error loading customer session:", err);
         const isNetworkError = err?.message === "Failed to fetch" || (typeof navigator !== "undefined" && !navigator.onLine);
